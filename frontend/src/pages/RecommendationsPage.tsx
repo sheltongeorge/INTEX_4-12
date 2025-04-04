@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import ContentRecommendation from '../components/RecommendationContent';
 
 const RecommendationsPage = () => {
   const [contentId, setContentId] = useState('');
@@ -67,6 +68,13 @@ const RecommendationsPage = () => {
           </ul>
         </div>
       )}
+
+      <div className="mt-8">
+        <h3 className="font-semibold text-lg mb-2">
+          Recommended Articles (Content-Based Filtering)
+        </h3>
+        <ContentRecommendation inputContentId={contentId} />
+      </div>
     </div>
   );
 };

@@ -1,33 +1,33 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\shelt\\Desktop\\Winter 2025\\IS 455\\python code\\RecommenderDeploymentProject\\RecommenderApp\\backend\\INTEXApp\\",
+  "WorkspaceRootPath": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\is 455\\python code\\recommenderdeploymentproject\\recommenderapp\\backend\\intexapp\\intexapp\\controllers\\recommendationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\controllers\\recommendationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\recommendationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\is 455\\python code\\recommenderdeploymentproject\\recommenderapp\\backend\\intexapp\\intexapp\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\is 455\\python code\\recommenderdeploymentproject\\recommenderapp\\backend\\intexapp\\intexapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\is 455\\python code\\recommenderdeploymentproject\\recommenderapp\\backend\\intexapp\\intexapp\\data\\recommendation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\data\\recommendation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\data\\recommendation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\is 455\\python code\\recommenderdeploymentproject\\recommenderapp\\backend\\intexapp\\intexapp\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\is 455\\python code\\recommenderdeploymentproject\\recommenderapp\\backend\\intexapp\\intexapp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\is 455\\python code\\recommenderdeploymentproject\\recommenderapp\\backend\\intexapp\\intexapp\\data\\recommendationsdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\data\\recommendationsdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\data\\recommendationsdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -48,22 +48,21 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\IS 455\\python code\\RecommenderDeploymentProject\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Program.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Program.cs",
-              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\IS 455\\python code\\RecommenderDeploymentProject\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Program.cs",
+              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Program.cs",
               "RelativeToolTip": "INTEXApp\\Program.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABcAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-04T16:11:12.48Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-04T16:11:12.48Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "RecommendationsController.cs",
-              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\IS 455\\python code\\RecommenderDeploymentProject\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\RecommendationsController.cs",
+              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\RecommendationsController.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Controllers\\RecommendationsController.cs",
-              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\IS 455\\python code\\RecommenderDeploymentProject\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\RecommendationsController.cs",
+              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\RecommendationsController.cs",
               "RelativeToolTip": "INTEXApp\\Controllers\\RecommendationsController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -74,22 +73,21 @@
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "Recommendation.cs",
-              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\IS 455\\python code\\RecommenderDeploymentProject\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Data\\Recommendation.cs",
+              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Data\\Recommendation.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Data\\Recommendation.cs",
-              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\IS 455\\python code\\RecommenderDeploymentProject\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Data\\Recommendation.cs",
+              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Data\\Recommendation.cs",
               "RelativeToolTip": "INTEXApp\\Data\\Recommendation.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-04T16:10:49.2Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-04T16:10:49.2Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\IS 455\\python code\\RecommenderDeploymentProject\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\appsettings.json",
+              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\appsettings.json",
               "RelativeDocumentMoniker": "INTEXApp\\appsettings.json",
-              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\IS 455\\python code\\RecommenderDeploymentProject\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\appsettings.json",
+              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\appsettings.json",
               "RelativeToolTip": "INTEXApp\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
@@ -99,22 +97,21 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\IS 455\\python code\\RecommenderDeploymentProject\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Properties\\launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "INTEXApp\\Properties\\launchSettings.json",
-              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\IS 455\\python code\\RecommenderDeploymentProject\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Properties\\launchSettings.json",
               "RelativeToolTip": "INTEXApp\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-04T16:10:26.401Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-04T16:10:26.401Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "WeatherForecastController.cs",
-              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\IS 455\\python code\\RecommenderDeploymentProject\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\WeatherForecastController.cs",
+              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\WeatherForecastController.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Controllers\\WeatherForecastController.cs",
-              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\IS 455\\python code\\RecommenderDeploymentProject\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\WeatherForecastController.cs",
+              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\WeatherForecastController.cs",
               "RelativeToolTip": "INTEXApp\\Controllers\\WeatherForecastController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -124,9 +121,9 @@
               "$type": "Document",
               "DocumentIndex": 6,
               "Title": "RecommendationsDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\IS 455\\python code\\RecommenderDeploymentProject\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Data\\RecommendationsDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Data\\RecommendationsDbContext.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Data\\RecommendationsDbContext.cs",
-              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\IS 455\\python code\\RecommenderDeploymentProject\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Data\\RecommendationsDbContext.cs",
+              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Data\\RecommendationsDbContext.cs",
               "RelativeToolTip": "INTEXApp\\Data\\RecommendationsDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
