@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+*.jpg
+*.jpeg
+wwwroot/MoviePosters/
 
 # Editor directories and files
 .vscode/*

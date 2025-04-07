@@ -1,12 +1,20 @@
 {
   "Version": 1,
-  "Hash": "n1yMkLWaR+77/lMnLNIPleV+eoi6IBgD/Na+7kxbDWU=",
+  "Hash": "WpWg7Jd4XqP+s9TIyVYvbLW9Lhzf1JG7mjOaz9QD3GI=",
   "Source": "INTEXApp",
   "BasePath": "_content/INTEXApp",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "INTEXApp\\wwwroot",
+      "Source": "INTEXApp",
+      "ContentRoot": "C:\\Users\\Jaxon\\OneDrive\\Desktop\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\wwwroot\\",
+      "BasePath": "_content/INTEXApp",
+      "Pattern": "**"
+    }
+  ],
   "Assets": [],
   "Endpoints": []
 }
