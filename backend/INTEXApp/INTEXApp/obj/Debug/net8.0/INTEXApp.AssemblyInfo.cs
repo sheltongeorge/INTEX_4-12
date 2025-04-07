@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("INTEXApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d2d6ee29c4aa72dcb6f5d1babe36a7fe1e71c01f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f7385c476c9772a1fd2820b4341e7200820db680")]
 [assembly: System.Reflection.AssemblyProductAttribute("INTEXApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("INTEXApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
