@@ -52,3 +52,19 @@ obj/
 .vscode/
 .idea/
 
+# Ignore Visual Studio .vs folder
+.vs/
+
+# Ignore all cache/config files that don't need to be tracked
+*.suo
+*.user
+*.cache
+*.v2
+*.bin
+*.pdb
+*.dtbcache.v2
+*.futdcache.v2
+*.metadata.v9.bin
+*.projects.v9.bin
+*.strings.v9.bin
+DocumentLayout*.json
