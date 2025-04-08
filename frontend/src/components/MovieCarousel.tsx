@@ -53,19 +53,27 @@ export const MovieCarousel = () => {
                 <div className="hover-info">
                   <h3 className="poster-title">{movie.title}</h3>
                   <p className="poster-rating">Rating: {movie.rating}</p>
+                  <div className="action-buttons">
+                    <button className="circular-button">
+                      <span className="button-icon plus-icon"></span>
+                      <span className="button-tooltip">Add to Watchlist</span>
+                    </button>
+                    <button className="circular-button">
+                      <span className="button-icon more-icon"></span>
+                      <span className="button-tooltip">More Details</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
-
         <button
           className="arrow left-arrow"
           onClick={() => instanceRef.current?.prev()}
         >
           <ArrowLeft size={20} />
         </button>
-
         <button
           className="arrow right-arrow"
           onClick={() => instanceRef.current?.next()}

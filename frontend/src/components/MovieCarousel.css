@@ -30,16 +30,17 @@
 
 /* Slide styling */
 .slide {
-  padding: 20px; /* Extra padding to ensure space for expansion */
+  padding: 20px 20px 90px 20px; /* Extra padding at bottom to create hover area */
   transform-origin: center center;
   transition: all 0.3s ease;
+  position: relative;
 }
 
 /* Poster card styling */
 .poster-card {
   position: relative;
   border-radius: 8px;
-  overflow: visible; /* Changed from hidden to visible to allow info to show */
+  overflow: visible;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   height: 100%;
   transition: all 0.3s ease;
@@ -90,6 +91,21 @@
   pointer-events: none;
 }
 
+/* Create continuous hover area */
+.slide::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.slide:hover::after {
+  height: 170%; /* Extend the hover area to include the info panel */
+}
+
 .poster-title {
   font-size: 14px;
   font-weight: 600;
@@ -101,8 +117,78 @@
 
 .poster-rating {
   font-size: 12px;
-  margin: 0;
+  margin: 0 0 10px 0;
   opacity: 0.8;
+}
+
+/* Button container styling */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+/* Circular button styling */
+.circular-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.circular-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Button icons */
+.button-icon {
+  color: white;
+  font-size: 16px;
+}
+
+/* Tooltip styling */
+.button-tooltip {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+}
+
+.circular-button:hover .button-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Plus icon */
+.plus-icon::before {
+  content: "+";
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* More icon (three dots) */
+.more-icon::before {
+  content: "•••";
+  font-size: 16px;
+  letter-spacing: -2px;
 }
 
 /* Hover state for info */
@@ -168,6 +254,11 @@
   .slide:hover .poster-card {
     transform: scale(1.15);
   }
+  
+  .circular-button {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -185,5 +276,14 @@
   
   .slide:hover .poster-card {
     transform: scale(1.1);
+  }
+  
+  .circular-button {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .action-buttons {
+    gap: 12px;
   }
 }
