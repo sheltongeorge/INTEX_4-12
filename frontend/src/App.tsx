@@ -7,7 +7,6 @@ import AdminMoviesPage from './pages/AdminMoviesPage';
 // import "keen-slider/keen-slider.min.css";
 import { TestPoster } from "./components/TestPoster";
 import { MovieCarousel } from "./components/MovieCarousel";
-
 import HomePage from './pages/HomePage';
 
 function App() {

@@ -71,7 +71,7 @@ const EditMovieForm = ({
     props: any = {}
   ) => (
     <div className="row mb-2 align-items-center">
-      <label className="col-sm-3 col-form-label">{label}</label>
+      <label className="col-sm-3 col-form-label text-white">{label}</label>
       <div className="col-sm-9">
         <input
           type={type}
@@ -87,7 +87,7 @@ const EditMovieForm = ({
   return (
     <form onSubmit={handleSubmit} className="mb-4">
       <div className="row mb-2 align-items-center">
-        <label className="col-sm-3 col-form-label">Type</label>
+        <label className="col-sm-3 col-form-label text-white">Type</label>
         <div className="col-sm-9">
           <select
             className="form-select"
@@ -101,7 +101,7 @@ const EditMovieForm = ({
       </div>
 
       <div className="row mb-2 align-items-start">
-        <label className="col-sm-3 col-form-label">Title</label>
+        <label className="col-sm-3 col-form-label text-white">Title</label>
         <div className="col-sm-9">
           <input
             type="text"
@@ -121,7 +121,7 @@ const EditMovieForm = ({
       {renderField('Country', country, setCountry)}
 
       <div className="row mb-2 align-items-start">
-        <label className="col-sm-3 col-form-label">Release Year</label>
+        <label className="col-sm-3 col-form-label text-white">Release Year</label>
         <div className="col-sm-9">
           <input
             type="text"
@@ -148,7 +148,7 @@ const EditMovieForm = ({
       {renderField('Duration', duration, setDuration)}
 
       <div className="row mb-2 align-items-start">
-        <label className="col-sm-3 col-form-label">Description</label>
+        <label className="col-sm-3 col-form-label text-white">Description</label>
         <div className="col-sm-9">
           <textarea
             className="form-control"

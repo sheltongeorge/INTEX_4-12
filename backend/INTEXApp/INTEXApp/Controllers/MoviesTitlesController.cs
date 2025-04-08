@@ -21,14 +21,16 @@ namespace INTEXApp.Controllers
         {
             var query = _context.MoviesTitles.AsQueryable();
 
-            if (!string.IsNullOrEmpty(titleFilter))
+            if (!string.IsNullOrWhiteSpace(titleFilter))
             {
-                query = query.Where(m => m.Title.Contains(titleFilter));
+                var normalizedFilter = titleFilter.Trim().ToLower();
+                query = query.Where(m => m.Title.ToLower().Contains(normalizedFilter));
             }
 
             var totalNumMovies = query.Count();
 
             var movies = query
+                .OrderBy(m => m.Title)
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -41,6 +43,7 @@ namespace INTEXApp.Controllers
 
             return Ok(result);
         }
+
 
         // GET a single movie by ID
         [HttpGet("{id}")]

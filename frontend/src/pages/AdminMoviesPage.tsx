@@ -15,21 +15,23 @@ const AdminMoviesPage = () => {
   const [totalPages, setTotalPages] = useState<number>(0);
   const [showForm, setShowForm] = useState(false);
   const [editingMovie, setEditingMovie] = useState<MovieTitle | null>(null);
+  const [searchTitle, setSearchTitle] = useState('');
+
+  const loadMovies = async () => {
+    try {
+      const data = await fetchMovies(pageSize, pageNum, searchTitle);
+      setMovies(data.movies);
+      setTotalPages(Math.ceil(data.totalCount / pageSize));
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const loadMovies = async () => {
-      try {
-        const data = await fetchMovies(pageSize, pageNum);
-        setMovies(data.movies);
-        setTotalPages(Math.ceil(data.totalCount / pageSize));
-      } catch (err) {
-        setError((err as Error).message);
-      } finally {
-        setLoading(false);
-      }
-    };
     loadMovies();
-  }, [pageSize, pageNum]);
+  }, [pageSize, pageNum, searchTitle]);
 
   const handleDelete = async (showId: string) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this movie?');
@@ -47,8 +49,21 @@ const AdminMoviesPage = () => {
   if (error) return <p className="text-red-500">Error: {error}</p>;
 
   return (
-    <div>
-      <h1>Admin - Movies</h1>
+    <div style={{ maxHeight: 'calc(100vh - 100px)', overflowY: 'auto' }}>
+      <h1 style={{ color: 'white' }}>Admin - Movies</h1>
+
+      <div className="mb-3 d-flex justify-content-between">
+        <input
+          type="text"
+          className="form-control w-50"
+          placeholder="Search by title..."
+          value={searchTitle}
+          onChange={(e) => {
+            setSearchTitle(e.target.value);
+            setPageNum(1);
+          }}
+        />
+      </div>
 
       {!showForm && (
         <button className="btn btn-success mb-3" onClick={() => setShowForm(true)}>
@@ -60,7 +75,7 @@ const AdminMoviesPage = () => {
         <NewMovieForm
           onSuccess={() => {
             setShowForm(false);
-            fetchMovies(pageSize, pageNum).then((data) => setMovies(data.movies));
+            loadMovies();
           }}
           onCancel={() => setShowForm(false)}
         />
@@ -71,7 +86,7 @@ const AdminMoviesPage = () => {
           movie={editingMovie}
           onSuccess={() => {
             setEditingMovie(null);
-            fetchMovies(pageSize, pageNum).then((data) => setMovies(data.movies));
+            loadMovies();
           }}
           onCancel={() => setEditingMovie(null)}
         />
@@ -80,7 +95,7 @@ const AdminMoviesPage = () => {
       <table className="table table-bordered">
         <thead className="table-dark">
           <tr>
-            <th>ID</th>
+            <th>Type</th>
             <th>Title</th>
             <th>Director</th>
             <th style={{ width: '60%' }}>Cast</th>
@@ -96,7 +111,7 @@ const AdminMoviesPage = () => {
         <tbody>
           {movies.map((m) => (
             <tr key={m.showId}>
-              <td>{m.showId}</td>
+              <td>{m.type}</td>
               <td>{m.title}</td>
               <td>{m.director}</td>
               <td style={{ width: '20%' }}>{m.cast}</td>

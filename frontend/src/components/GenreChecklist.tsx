@@ -24,7 +24,7 @@ const GenreChecklist = ({
 
   return (
     <div className="row mb-3">
-      <label className="col-sm-3 col-form-label">Genres</label>
+      <label className="col-sm-3 col-form-label" style={{ color: 'white' }}>Genres</label>
       <div className="col-sm-9">
         <div className="d-flex flex-wrap">
           {allGenres.map((genre) => (
