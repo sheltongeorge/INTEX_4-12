@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "WpWg7Jd4XqP+s9TIyVYvbLW9Lhzf1JG7mjOaz9QD3GI=",
+  "Hash": "fa50M2c/KTKBeAzhS5T0A/9VIIwSh/yRzbVCBgIsosU=",
   "Source": "INTEXApp",
   "BasePath": "_content/INTEXApp",
   "Mode": "Default",
@@ -10,7 +10,7 @@
     {
       "Name": "INTEXApp\\wwwroot",
       "Source": "INTEXApp",
-      "ContentRoot": "C:\\Users\\Jaxon\\OneDrive\\Desktop\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\wwwroot\\",
       "BasePath": "_content/INTEXApp",
       "Pattern": "**"
     }

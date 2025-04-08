@@ -363,6 +363,324 @@
         }
       }
     },
+    "/api/MovieRatings": {
+      "get": {
+        "tags": [
+          "MovieRatings"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovieRating"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovieRating"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovieRating"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "MovieRatings"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MovieRating"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MovieRating"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MovieRating"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieRating"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieRating"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieRating"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MovieRatings/user": {
+      "get": {
+        "tags": [
+          "MovieRatings"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovieRating"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovieRating"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovieRating"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MovieRatings/user/{showId}": {
+      "get": {
+        "tags": [
+          "MovieRatings"
+        ],
+        "parameters": [
+          {
+            "name": "showId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieRating"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieRating"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieRating"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MovieRatings/movie/{showId}": {
+      "get": {
+        "tags": [
+          "MovieRatings"
+        ],
+        "parameters": [
+          {
+            "name": "showId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovieRating"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovieRating"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovieRating"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MovieRatings/averages": {
+      "get": {
+        "tags": [
+          "MovieRatings"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": { }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": { }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": { }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MoviesTitles": {
+      "get": {
+        "tags": [
+          "MoviesTitles"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovieTitle"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovieTitle"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovieTitle"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MoviesTitles/{id}": {
+      "get": {
+        "tags": [
+          "MoviesTitles"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieTitle"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieTitle"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieTitle"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Recommendations/AllRecommendations": {
       "get": {
         "tags": [
@@ -562,6 +880,195 @@
           "twoFactorRecoveryCode": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MovieRating": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "showId": {
+            "type": "string",
+            "nullable": true
+          },
+          "rating": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MovieTitle": {
+        "type": "object",
+        "properties": {
+          "showId": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "director": {
+            "type": "string",
+            "nullable": true
+          },
+          "cast": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "releaseYear": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rating": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "action": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "adventure": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "animeSeriesInternationalTVShows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "britishTVShowsDocuseriesInternationalTVShows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "children": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "comedies": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "comediesDramasInternationalMovies": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "comediesInternationalMovies": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "comediesRomanticMovies": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "crimeTVShowsDocuseries": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentaries": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentariesInternationalMovies": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "docuseries": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dramas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dramasInternationalMovies": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dramasRomanticMovies": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "familyMovies": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fantasy": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "horrorMovies": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "internationalMoviesThrillers": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "internationalTVShowsRomanticTVDramas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "kidsTV": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "languageTVShows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "musicals": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "natureTV": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "realityTV": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "spirituality": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tvAction": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tvComedies": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tvDramas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "posterUrl": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
           }
         },
         "additionalProperties": false
