@@ -25,3 +25,28 @@ wwwroot/MoviePosters/
 *.njsproj
 *.sln
 *.sw?
+
+
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+
+# Build artifacts
+*.dll
+*.exe
+*.pdb
+*.cache
+*.json
+*.db
+*.nuget.dgspec.json
+*.nuget.props
+*.nuget.targets
+*.sourcelink.json
+
+# VS Code / JetBrains
+.vscode/
+.idea/
