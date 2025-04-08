@@ -1,0 +1,20 @@
+{
+  "Version": 1,
+  "Hash": "y+oqzBwqMEwNlSGDg0WeWBk+TLiYitxFbmDFUTsWGpE=",
+  "Source": "INTEXApp",
+  "BasePath": "_content/INTEXApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "INTEXApp\\wwwroot",
+      "Source": "INTEXApp",
+      "ContentRoot": "C:\\Users\\thebi\\Downloads\\INTEX_4-12-Jaxon\\INTEX_4-12-Jaxon\\backend\\INTEXApp\\INTEXApp\\wwwroot\\",
+      "BasePath": "_content/INTEXApp",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [],
+  "Endpoints": []
+}
