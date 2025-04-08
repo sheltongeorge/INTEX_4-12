@@ -1,0 +1,20 @@
+.homepage-container {
+    background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+    color: white;
+  }
+  
+  .btn-primary {
+    background-color: #e50914;
+    border: none;
+  }
+  
+  .btn-outline-primary {
+    border-color: white;
+    color: white;
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: white;
+    color: #111;
+  }
+  

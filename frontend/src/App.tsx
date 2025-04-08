@@ -8,12 +8,13 @@ import AdminMoviesPage from './pages/AdminMoviesPage';
 // import { MovieCarousel } from './components/MovieCarousel'; // adjust path if needed
 
 
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<RecommendationsPage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/recommendations" element={<RecommendationsPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
