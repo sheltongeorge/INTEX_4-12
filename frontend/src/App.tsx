@@ -5,8 +5,8 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import AdminMoviesPage from './pages/AdminMoviesPage';
 // import "keen-slider/keen-slider.min.css";
-// import { MovieCarousel } from './components/MovieCarousel'; // adjust path if needed
-
+import { TestPoster } from "./components/TestPoster";
+import { MovieCarousel } from "./components/MovieCarousel";
 
 import HomePage from './pages/HomePage';
 
@@ -18,8 +18,10 @@ function App() {
         <Route path="/recommendations" element={<RecommendationsPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/test" element={<TestPoster />} />
         <Route path="/admin" element={<AdminMoviesPage/>} />
-        {/* <Route path="/carousel" element={<MovieCarousel />} /> */}
+        <Route path="/carousel" element={<MovieCarousel />} />
+
       </Routes>
     </Router>
   );

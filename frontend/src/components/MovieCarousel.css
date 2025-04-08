@@ -1,0 +1,611 @@
+/* Main container styling */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  padding: 60px 0;
+  margin: 30px 0;
+}
+
+.carousel-wrapper {
+  position: relative;
+  margin: 0 40px;
+  overflow: visible !important; /* Important to allow overflow */
+}
+
+/* Override keen-slider constraints */
+.keen-slider {
+  overflow: visible !important; /* Allow slides to overflow */
+}
+
+.keen-slider__slide {
+  overflow: visible !important; /* Allow content to overflow */
+  z-index: 1;
+  transition: z-index 0s 0.1s; /* Delay z-index change */
+}
+
+.keen-slider__slide:hover {
+  z-index: 10; /* Higher than other slides when hovered */
+  transition: z-index 0s; /* Immediate z-index change on hover */
+}
+
+/* Slide styling */
+.slide {
+  padding: 20px 20px 90px 20px; /* Extra padding at bottom to create hover area */
+  transform-origin: center center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Poster card styling */
+.poster-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: visible;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  height: 100%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background-color: #111;
+  transform-origin: center center;
+}
+
+/* Hover effects - Apply to .poster-card directly */
+.slide:hover .poster-card {
+  transform: scale(1.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* Poster image styling */
+.poster-image-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 150%; /* 2:3 aspect ratio for movie posters */
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.poster-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Information below poster */
+.hover-info {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  padding: 12px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  text-align: left;
+  opacity: 0;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  top: calc(100% + 8px); /* Position it below the card with a small gap */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+/* Create continuous hover area */
+.slide::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.slide:hover::after {
+  height: 170%; /* Extend the hover area to include the info panel */
+}
+
+.poster-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.poster-rating {
+  font-size: 12px;
+  margin: 0 0 10px 0;
+  opacity: 0.8;
+}
+
+/* Button container styling */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+/* Circular button styling */
+.circular-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.circular-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Button icons */
+.button-icon {
+  color: white;
+  font-size: 16px;
+}
+
+/* Tooltip styling */
+.button-tooltip {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+}
+
+.circular-button:hover .button-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Plus icon */
+.plus-icon::before {
+  content: "+";
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* More icon (three dots) */
+.more-icon::before {
+  content: "•••";
+  font-size: 16px;
+  letter-spacing: -2px;
+}
+
+/* Hover state for info */
+.slide:hover .hover-info {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Navigation arrows styling */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 30;
+  transition: all 0.2s ease;
+}
+
+.arrow:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.arrow:focus {
+  outline: none;
+}
+
+.left-arrow {
+  left: -20px;
+}
+
+.right-arrow {
+  right: -20px;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+  .carousel-wrapper {
+    margin: 0 30px;
+  }
+  
+  .arrow {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .left-arrow {
+    left: -15px;
+  }
+  
+  .right-arrow {
+    right: -15px;
+  }
+  
+  .slide:hover .poster-card {
+    transform: scale(1.15);
+  }
+  
+  .circular-button {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-wrapper {
+    margin: 0 20px;
+  }
+  
+  .poster-title {
+    font-size: 12px;
+  }
+  
+  .poster-rating {
+    font-size: 10px;
+  }
+  
+  .slide:hover .poster-card {
+    transform: scale(1.1);
+  }
+  
+  .circular-button {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .action-buttons {
+    gap: 12px;
+  }
+}
+
+/* Movie Overlay Styles */
+.overlay-active {
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+.movie-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.overlay-content {
+  display: flex;
+  width: 80%;
+  max-width: 1200px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  position: relative;
+  max-height: 85vh;
+}
+
+.close-overlay {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.2s ease;
+}
+
+.close-overlay:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.overlay-poster {
+  flex: 0 0 40%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #111;
+}
+
+.overlay-poster img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.overlay-details {
+  flex: 0 0 60%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.overlay-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 15px;
+  color: white;
+}
+
+.overlay-rating {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #ddd;
+}
+
+/* Metadata row with year, duration, rating */
+.overlay-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.metadata-item {
+  font-size: 14px;
+  color: #ddd;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.mpaa-rating {
+  background-color: rgba(229, 9, 20, 0.2);
+  border: 1px solid rgba(229, 9, 20, 0.5);
+}
+
+/* Star Rating Component */
+.star-rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.star {
+  position: relative;
+  font-size: 24px;
+  color: #aaa;
+  margin-right: 5px;
+}
+
+.star::before {
+  content: "★";
+}
+
+.star.full {
+  color: #f5c518; /* IMDB yellow */
+}
+
+.star.half {
+  position: relative;
+  color: #aaa;
+}
+
+.star.half::after {
+  content: "★";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  overflow: hidden;
+  color: #f5c518;
+}
+
+.rating-value {
+  margin-left: 8px;
+  font-size: 16px;
+  color: #ddd;
+}
+
+.rating-count {
+  margin-left: 8px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.user-rating-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Rate movie section */
+.rate-movie-section {
+  margin-bottom: 25px;
+}
+
+.rating-input {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.rate-star {
+  font-size: 30px;
+  color: #555;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: color 0.2s ease;
+}
+
+.rate-star:hover,
+.rate-star.active {
+  color: #f5c518; /* IMDB yellow */
+}
+
+.user-rating-text {
+  margin-left: 15px;
+  font-size: 16px;
+  color: #ddd;
+}
+
+/* Info sections for director, cast, etc. */
+.overlay-info-section {
+  margin-bottom: 20px;
+}
+
+.info-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ddd;
+  margin-bottom: 5px;
+}
+
+.overlay-info-section p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #aaa;
+  margin: 0;
+}
+
+.overlay-description {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: #aaa;
+}
+
+.overlay-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 15px;
+}
+
+.overlay-button {
+  padding: 10px 20px;
+  background-color: #e50914;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.overlay-button:hover {
+  background-color: #f40612;
+}
+
+/* Media Queries for Overlay */
+@media (max-width: 768px) {
+  .overlay-content {
+    flex-direction: column;
+    width: 90%;
+  }
+  
+  .overlay-poster {
+    flex: 0 0 auto;
+    height: 300px;
+  }
+  
+  .overlay-poster img {
+    height: 100%;
+    width: auto;
+  }
+  
+  .overlay-details {
+    flex: 1;
+  }
+  
+  .overlay-title {
+    font-size: 24px;
+  }
+  
+  .rate-star {
+    font-size: 26px;
+  }
+  
+  .star {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .overlay-content {
+    width: 95%;
+  }
+  
+  .overlay-poster {
+    height: 250px;
+  }
+  
+  .overlay-details {
+    padding: 20px;
+  }
+  
+  .overlay-title {
+    font-size: 20px;
+  }
+  
+  .rate-star {
+    font-size: 22px;
+  }
+  
+  .user-rating-text {
+    font-size: 14px;
+  }
+  
+  .overlay-description {
+    font-size: 14px;
+  }
+  
+  .overlay-button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}

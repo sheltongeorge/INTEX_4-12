@@ -1,13 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Identity.css';
 import '@fortawesome/fontawesome-free/css/all.css';
+import logo from '../assets/cineniche.png';
 
 function LoginPage() {
   // state variables for email and passwords
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [rememberme, setRememberme] = useState<boolean>(false);
+  const [showAnimation, setShowAnimation] = useState<boolean>(true);
+  const [isLogoSpinning, setIsLogoSpinning] = useState<boolean>(false);
+  
+  // Always show animation on login page
+  useEffect(() => {
+    setShowAnimation(true);
+  }, []);
 
   // state variable for error messages
   const [error, setError] = useState<string>('');
@@ -71,88 +79,86 @@ function LoginPage() {
 
   return (
     <div className="container">
-      <div className="row">
-        <div className="card border-0 shadow rounded-3 ">
-          <div className="card-body p-4 p-sm-5">
-            <h5 className="card-title text-center mb-5 fw-light fs-5">
-              Sign In
-            </h5>
-            <form onSubmit={handleSubmit}>
-              <div className="form-floating mb-3">
-                <input
-                  className="form-control"
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={email}
-                  onChange={handleChange}
-                />
-                <label htmlFor="email">Email address</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  className="form-control"
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={password}
-                  onChange={handleChange}
-                />
-                <label htmlFor="password">Password</label>
-              </div>
-
-              <div className="form-check mb-3">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="rememberme"
-                  name="rememberme"
-                  checked={rememberme}
-                  onChange={handleChange}
-                />
-                <label className="form-check-label" htmlFor="rememberme">
-                  Remember password
-                </label>
-              </div>
-              <div className="d-grid mb-2">
-                <button
-                  className="btn btn-primary btn-login text-uppercase fw-bold"
-                  type="submit"
-                >
-                  Sign in
-                </button>
-              </div>
-              <div className="d-grid mb-2">
-                <button
-                  className="btn btn-primary btn-login text-uppercase fw-bold"
-                  onClick={handleRegisterClick}
-                >
-                  Register
-                </button>
-              </div>
-              <hr className="my-4" />
-              <div className="d-grid mb-2">
-                <button
-                  className="btn btn-google btn-login text-uppercase fw-bold"
-                  type="button"
-                >
-                  <i className="fa-brands fa-google me-2"></i> Sign in with
-                  Google
-                </button>
-              </div>
-              <div className="d-grid mb-2">
-                <button
-                  className="btn btn-facebook btn-login text-uppercase fw-bold"
-                  type="button"
-                >
-                  <i className="fa-brands fa-facebook-f me-2"></i> Sign in with
-                  Facebook
-                </button>
-              </div>
-            </form>
-            {error && <p className="error">{error}</p>}
+      <div className={`card border-0 shadow rounded-3 ${showAnimation ? 'card-animate' : ''}`}>
+        <div className="card-body p-4 p-sm-5">
+          <div className="text-center mb-4 position-relative">
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+              <img
+                src={logo}
+                alt="CineNiche Logo"
+                className={`logo-image mb-3 ${isLogoSpinning ? 'logo-spin' : ''}`}
+                onClick={() => {
+                  if (!isLogoSpinning) {
+                    setIsLogoSpinning(true);
+                    
+                    // Reset the animation after it completes
+                    setTimeout(() => {
+                      setIsLogoSpinning(false);
+                    }, 400);
+                  }
+                }}
+              />
+            </div>
           </div>
+          <h5 className="card-title text-center mb-5 fw-light fs-5">
+            Sign In
+          </h5>
+          <form onSubmit={handleSubmit}>
+            <div className="form-floating mb-3">
+              <input
+                className="form-control"
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={handleChange}
+              />
+              <label htmlFor="email">Email address</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                className="form-control"
+                type="password"
+                id="password"
+                name="password"
+                value={password}
+                onChange={handleChange}
+              />
+              <label htmlFor="password">Password</label>
+            </div>
+
+            <div className="form-check mb-3">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value=""
+                id="rememberme"
+                name="rememberme"
+                checked={rememberme}
+                onChange={handleChange}
+              />
+              <label className="form-check-label" htmlFor="rememberme">
+                Remember password
+              </label>
+            </div>
+            <div className="d-grid mb-2">
+              <button
+                className="btn btn-login custom-login-btn text-uppercase fw-bold"
+                type="submit"
+              >
+                Sign in
+              </button>
+            </div>
+            <div className="d-grid mb-2">
+              <button
+                className="btn btn-login custom-login-btn text-uppercase fw-bold"
+                onClick={handleRegisterClick}
+              >
+                Register
+              </button>
+            </div>
+          </form>
+          {error && <p className="error">{error}</p>}
         </div>
       </div>
     </div>
