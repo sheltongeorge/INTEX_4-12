@@ -1,0 +1,70 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+*.jpg
+*.jpeg
+wwwroot/MoviePosters/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+
+
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+
+# Build artifacts
+*.dll
+*.exe
+*.pdb
+*.cache
+*.json
+*.db
+*.nuget.dgspec.json
+*.nuget.props
+*.nuget.targets
+*.sourcelink.json
+
+# VS Code / JetBrains
+.vscode/
+.idea/
+
+# Ignore Visual Studio .vs folder
+.vs/
+
+# Ignore all cache/config files that don't need to be tracked
+*.suo
+*.user
+*.cache
+*.v2
+*.bin
+*.pdb
+*.dtbcache.v2
+*.futdcache.v2
+*.metadata.v9.bin
+*.projects.v9.bin
+*.strings.v9.bin
+DocumentLayout*.json
