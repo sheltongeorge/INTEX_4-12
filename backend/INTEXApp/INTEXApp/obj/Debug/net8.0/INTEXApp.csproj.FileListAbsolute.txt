@@ -672,3 +672,9 @@ C:\Users\Jaxon\OneDrive\Desktop\INTEX_4-12\backend\INTEXApp\INTEXApp\obj\Debug\n
 C:\Users\Jaxon\OneDrive\Desktop\INTEX_4-12\backend\INTEXApp\INTEXApp\obj\Debug\net8.0\INTEXApp.pdb
 C:\Users\Jaxon\OneDrive\Desktop\INTEX_4-12\backend\INTEXApp\INTEXApp\obj\Debug\net8.0\INTEXApp.genruntimeconfig.cache
 C:\Users\Jaxon\OneDrive\Desktop\INTEX_4-12\backend\INTEXApp\INTEXApp\obj\Debug\net8.0\ref\INTEXApp.dll
+C:\Users\shelt\Desktop\Winter 2025\INTEX2025\INTEX_4-12\RecommenderApp\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\INTEXApp.staticwebassets.runtime.json
+C:\Users\shelt\Desktop\Winter 2025\INTEX2025\INTEX_4-12\RecommenderApp\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\shelt\Desktop\Winter 2025\INTEX2025\INTEX_4-12\RecommenderApp\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\shelt\Desktop\Winter 2025\INTEX2025\INTEX_4-12\RecommenderApp\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\shelt\Desktop\Winter 2025\INTEX2025\INTEX_4-12\RecommenderApp\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+C:\Users\shelt\Desktop\Winter 2025\INTEX2025\INTEX_4-12\RecommenderApp\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll

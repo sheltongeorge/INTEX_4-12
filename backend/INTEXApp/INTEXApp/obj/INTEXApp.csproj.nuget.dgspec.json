@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jaxon\\OneDrive\\Desktop\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\INTEXApp.csproj": {}
+    "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\INTEXApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jaxon\\OneDrive\\Desktop\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\INTEXApp.csproj": {
+    "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\INTEXApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jaxon\\OneDrive\\Desktop\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\INTEXApp.csproj",
+        "projectUniqueName": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\INTEXApp.csproj",
         "projectName": "INTEXApp",
-        "projectPath": "C:\\Users\\Jaxon\\OneDrive\\Desktop\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\INTEXApp.csproj",
-        "packagesPath": "C:\\Users\\Jaxon\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jaxon\\OneDrive\\Desktop\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\obj\\",
+        "projectPath": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\INTEXApp.csproj",
+        "packagesPath": "C:\\Users\\shelt\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Jaxon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\shelt\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -44,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -102,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
