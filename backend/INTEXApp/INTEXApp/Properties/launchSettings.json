@@ -2,7 +2,6 @@
   "profiles": {
     "default": {
       "commandName": "Project",
-      "commandLineArgs": "$(ProjectDir)",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {

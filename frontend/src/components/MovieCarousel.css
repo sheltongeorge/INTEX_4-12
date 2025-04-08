@@ -202,8 +202,8 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
@@ -214,6 +214,7 @@
   cursor: pointer;
   z-index: 30;
   transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .arrow:hover {
@@ -333,12 +334,13 @@
   position: absolute;
   top: 15px;
   right: 15px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #e50914;
   color: white;
   border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -348,7 +350,7 @@
 }
 
 .close-overlay:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #f40612;
 }
 
 .overlay-poster {
@@ -379,6 +381,7 @@
   font-weight: 700;
   margin: 0 0 15px;
   color: white;
+  text-align: center;
 }
 
 .overlay-rating {
@@ -393,6 +396,7 @@
   flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 20px;
+  justify-content: center;
 }
 
 .metadata-item {
@@ -460,17 +464,20 @@
 .user-rating-container {
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
 /* Rate movie section */
 .rate-movie-section {
   margin-bottom: 25px;
+  text-align: center;
 }
 
 .rating-input {
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-top: 10px;
 }
 
@@ -517,6 +524,7 @@
   line-height: 1.6;
   margin-bottom: 30px;
   color: #aaa;
+  text-align: center;
 }
 
 .overlay-actions {

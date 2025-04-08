@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\thebi\\downloads\\github test\\intex_4-12\\backend\\intexapp\\intexapp\\intexapp.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\intexapp.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\thebi\\downloads\\github test\\intex_4-12\\backend\\intexapp\\intexapp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
@@ -62,11 +66,23 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
+              "Title": "INTEXApp",
+              "DocumentMoniker": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\INTEXApp.csproj",
+              "RelativeDocumentMoniker": "INTEXApp\\INTEXApp.csproj",
+              "ToolTip": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\INTEXApp.csproj",
+              "RelativeToolTip": "INTEXApp\\INTEXApp.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-08T20:17:00.626Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "MoviesTitlesController.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\MoviesTitlesController.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Controllers\\MoviesTitlesController.cs",
@@ -78,7 +94,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "MovieTitle.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\MovieTitle.cs",
               "RelativeDocumentMoniker": "INTEXApp\\MovieTitle.cs",
@@ -90,7 +106,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "MovieUser.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\MovieUser.cs",
               "RelativeDocumentMoniker": "INTEXApp\\MovieUser.cs",
@@ -102,7 +118,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "MovieRating.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\MovieRating.cs",
               "RelativeDocumentMoniker": "INTEXApp\\MovieRating.cs",
@@ -114,7 +130,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\appsettings.json",
               "RelativeDocumentMoniker": "INTEXApp\\appsettings.json",
@@ -127,7 +143,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Program.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Program.cs",
@@ -139,7 +155,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "MoviesDbContext.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Data\\MoviesDbContext.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Data\\MoviesDbContext.cs",
@@ -151,7 +167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "RecommendationsController.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\RecommendationsController.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Controllers\\RecommendationsController.cs",
@@ -163,7 +179,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Data\\ApplicationDbContext.cs",
@@ -175,7 +191,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "CustomUserClaimsPrincipalFactory.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Services\\CustomUserClaimsPrincipalFactory.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Services\\CustomUserClaimsPrincipalFactory.cs",
@@ -187,7 +203,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "INTEXApp\\Properties\\launchSettings.json",
@@ -199,7 +215,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "Recommendation.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Data\\Recommendation.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Data\\Recommendation.cs",
@@ -211,7 +227,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "RecommendationsDbContext.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Downloads\\github test\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Data\\RecommendationsDbContext.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Data\\RecommendationsDbContext.cs",

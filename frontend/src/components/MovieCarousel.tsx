@@ -311,13 +311,13 @@ export const MovieCarousel = () => {
           className="arrow left-arrow"
           onClick={() => instanceRef.current?.prev()}
         >
-          <ArrowLeft size={20} />
+          <ArrowLeft size={30} />
         </button>
         <button
           className="arrow right-arrow"
           onClick={() => instanceRef.current?.next()}
         >
-          <ArrowRight size={20} />
+          <ArrowRight size={30} />
         </button>
       </div>
 
@@ -326,7 +326,7 @@ export const MovieCarousel = () => {
         <div className="movie-overlay">
           <div className="overlay-content">
             <button className="close-overlay" onClick={closeOverlay}>
-              <X size={24} />
+              Back
             </button>
             <div className="overlay-poster">
               <img
