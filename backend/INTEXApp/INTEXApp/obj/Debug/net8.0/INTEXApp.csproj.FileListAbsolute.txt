@@ -943,3 +943,4 @@ C:\Users\thebi\Downloads\INTEX_4-12-Jaxon\INTEX_4-12-Jaxon\backend\INTEXApp\INTE
 C:\Users\thebi\Downloads\INTEX_4-12-Jaxon\INTEX_4-12-Jaxon\backend\INTEXApp\INTEXApp\obj\Debug\net8.0\INTEXApp.pdb
 C:\Users\thebi\Downloads\INTEX_4-12-Jaxon\INTEX_4-12-Jaxon\backend\INTEXApp\INTEXApp\obj\Debug\net8.0\INTEXApp.genruntimeconfig.cache
 C:\Users\thebi\Downloads\INTEX_4-12-Jaxon\INTEX_4-12-Jaxon\backend\INTEXApp\INTEXApp\obj\Debug\net8.0\ref\INTEXApp.dll
+C:\Users\thebi\Downloads\INTEX_4-12-Jaxon\INTEX_4-12-Jaxon\backend\INTEXApp\INTEXApp\obj\Debug\net8.0\INTEXApp.sourcelink.json

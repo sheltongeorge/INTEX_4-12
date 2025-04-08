@@ -166,11 +166,29 @@ html, body {
   }
   
   .logo-image {
-    max-width: 140px;
+    max-width: 280px;
     height: auto;
     margin: 0 auto;
     display: block;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease;
   }
+  
+  /* Spinning logo animation */
+  @keyframes spinLogo {
+    0% {
+      transform: rotateY(0deg);
+    }
+    100% {
+      transform: rotateY(360deg);
+    }
+  }
+  
+  .logo-spin {
+    animation: spinLogo 0.4s ease-out forwards;
+  }
+  
   
   .form-floating > label {
     color: #aaa;

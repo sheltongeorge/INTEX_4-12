@@ -8,6 +8,7 @@ function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showAnimation, setShowAnimation] = useState<boolean>(false);
+  const [isLogoSpinning, setIsLogoSpinning] = useState<boolean>(false);
   
   // Never show animation on register page
   useEffect(() => {
@@ -73,8 +74,24 @@ function Register() {
     <div className="container">
       <div className={`card border-0 shadow rounded-3 ${showAnimation ? 'card-animate' : ''}`}>
         <div className="card-body p-4 p-sm-5">
-          <div className="text-center mb-4">
-            <img src={logo} alt="CineNiche Logo" className="logo-image mb-3" />
+          <div className="text-center mb-4 position-relative">
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+              <img
+                src={logo}
+                alt="CineNiche Logo"
+                className={`logo-image mb-3 ${isLogoSpinning ? 'logo-spin' : ''}`}
+                onClick={() => {
+                  if (!isLogoSpinning) {
+                    setIsLogoSpinning(true);
+                    
+                    // Reset the animation after it completes
+                    setTimeout(() => {
+                      setIsLogoSpinning(false);
+                    }, 400);
+                  }
+                }}
+              />
+            </div>
           </div>
           <h5 className="card-title text-center mb-5 fw-light fs-5">
             Register
