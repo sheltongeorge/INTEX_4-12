@@ -60,7 +60,7 @@
               "RelativeDocumentMoniker": "INTEXApp\\Program.cs",
               "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Program.cs",
               "RelativeToolTip": "INTEXApp\\Program.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAvwE0AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAADcAAAAAAAAAAAAvwE4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-08T00:30:02.325Z",
               "EditorCaption": ""
@@ -75,8 +75,7 @@
               "RelativeToolTip": "INTEXApp\\Controllers\\MoviesTitlesController.cs",
               "ViewState": "AgIAADoAAAAAAAAAAAAAAEgAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T22:31:23.095Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T22:31:23.095Z"
             },
             {
               "$type": "Document",
@@ -88,8 +87,7 @@
               "RelativeToolTip": "INTEXApp\\Data\\MoviesDbContext.cs",
               "ViewState": "AgIAAF4AAAAAAAAAAAAkwGgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T22:40:12.713Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T22:40:12.713Z"
             },
             {
               "$type": "Document",
@@ -101,8 +99,7 @@
               "RelativeToolTip": "INTEXApp\\Data\\ApplicationDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T22:40:07.456Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T22:40:07.456Z"
             },
             {
               "$type": "Document",
@@ -114,8 +111,7 @@
               "RelativeToolTip": "INTEXApp\\Data\\Recommendation.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T22:42:40.136Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T22:42:40.136Z"
             },
             {
               "$type": "Document",
@@ -127,8 +123,7 @@
               "RelativeToolTip": "INTEXApp\\Data\\RecommendationsDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T22:42:37.685Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T22:42:37.685Z"
             },
             {
               "$type": "Document",
@@ -140,8 +135,7 @@
               "RelativeToolTip": "INTEXApp\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-07T22:42:29.689Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T22:42:29.689Z"
             },
             {
               "$type": "Document",
@@ -153,8 +147,7 @@
               "RelativeToolTip": "INTEXApp\\Controllers\\RoleController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T22:41:49.553Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T22:41:49.553Z"
             },
             {
               "$type": "Document",
@@ -166,8 +159,7 @@
               "RelativeToolTip": "INTEXApp\\Controllers\\RecommendationsController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T22:41:43.389Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T22:41:43.389Z"
             }
           ]
         }
