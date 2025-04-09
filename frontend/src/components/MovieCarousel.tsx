@@ -3,10 +3,15 @@ import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
 import './MovieCarousel.css';
 import { ArrowLeft, ArrowRight, X } from 'lucide-react';
+import fallbackImage from '../assets/Fallback.png'; // adjust path if needed
+
 
 const BLOB_STORAGE_URL = "https://movieposterblob.blob.core.windows.net";
 const BLOB_SAS_TOKEN = "sv=2024-11-04&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-05-15T09:35:14Z&st=2025-04-09T01:35:14Z&spr=https,http&sig=N%2FAK8dhBBarxwU9qBSd0aI0B5iEOqmpnKUJ6Ek1yv0k%3D";
 const CONTAINER_NAME = "movieposters";
+
+
+
 
 // Add this utility function for getting poster URLs
 const getPosterImageUrl = (movieTitle: string): string => {
@@ -75,6 +80,7 @@ export const MovieCarousel = () => {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [showOverlay, setShowOverlay] = useState(false);
   const [userRating, setUserRating] = useState<number | null>(null);
+  const [posterErrors, setPosterErrors] = useState<Record<string, boolean>>({});
   const [movieRatings, setMovieRatings] = useState<
     Map<string, { avg: number; count: number }>
   >(new Map());
@@ -271,28 +277,22 @@ export const MovieCarousel = () => {
                 onClick={() => handleMovieClick(movie)}
               >
                 <div className="poster-image-container">
-                  <img
-                    src={getPosterImageUrl(movie.title)}
-                    alt={movie.title}
-                    className="poster-image"
-                    onError={(e) => {
-                      console.error(`Failed to load image for: ${movie.title}`);
-                      // Try without the space encoding as a fallback
-                      e.currentTarget.src = `https://localhost:7156/MoviePosters/${encodeURIComponent(
-                        movie.title
-                      )}.jpg`;
+                
+{posterErrors[movie.showId] ? (
+  <div className="fallback-wrapper">
+    {/* Make sure fallbackImage is defined properly */}
+    {fallbackImage && <img src={fallbackImage} alt="Fallback" className="poster-image" />}
+    <div className="fallback-overlay-title">{movie.title}</div>
+  </div>
+) : (
+  <img
+    src={getPosterImageUrl(movie.title)}
+    alt={movie.title}
+    className="poster-image"
+    onError={() => setPosterErrors((prev) => ({ ...prev, [movie.showId]: true }))}
+  />
+)}
 
-                      // Add a second error handler for the fallback
-                      e.currentTarget.onerror = () => {
-                        console.error(
-                          `Fallback also failed for: ${movie.title}`
-                        );
-                        e.currentTarget.src =
-                          'https://via.placeholder.com/225x338?text=No+Image';
-                        e.currentTarget.onerror = null; // Prevent infinite loops
-                      };
-                    }}
-                  />
                 </div>
                 <div className="hover-info">
                   <h3 className="poster-title">{movie.title}</h3>
@@ -340,29 +340,27 @@ export const MovieCarousel = () => {
               <X size={24} />
             </button>
             <div className="overlay-poster">
-              <img
-                src={getPosterImageUrl(selectedMovie.title)}
-                alt={selectedMovie.title}
-                onError={(e) => {
-                  console.error(
-                    `Failed to load overlay image for: ${selectedMovie.title}`
-                  );
-                  // Try without the space encoding as a fallback
-                  e.currentTarget.src = `https://localhost:7156/MoviePosters/${encodeURIComponent(
-                    selectedMovie.title
-                  )}.jpg`;
-
-                  // Add a second error handler for the fallback
-                  e.currentTarget.onerror = () => {
-                    console.error(
-                      `Overlay fallback also failed for: ${selectedMovie.title}`
-                    );
-                    e.currentTarget.src =
-                      'https://via.placeholder.com/300x450?text=No+Image';
-                    e.currentTarget.onerror = null; // Prevent infinite loops
-                  };
-                }}
-              />
+<div className="poster-image-container">
+  <img
+    src={getPosterImageUrl(selectedMovie.title)}
+    alt={selectedMovie.title}
+    className="poster-image"
+    onError={(e) => {
+      console.error(`Overlay image not found for: ${selectedMovie.title}`);
+      e.currentTarget.onerror = null; // Prevent infinite loop
+      e.currentTarget.src = fallbackImage; // Local fallback
+      
+      // Add overlay title when fallback image is used
+      const container = e.currentTarget.parentElement;
+      if (container) {
+        const overlay = document.createElement('div');
+        overlay.className = 'fallback-overlay-title';
+        overlay.textContent = selectedMovie.title;
+        container.appendChild(overlay);
+      }
+    }}
+  />
+</div>
             </div>
             <div className="overlay-details">
               <h2 className="overlay-title">{selectedMovie.title}</h2>
