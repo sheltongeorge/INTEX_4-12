@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import './HomePage.css';
+import Header from '../components/header';
 
 function HomePage() {
   const navigate = useNavigate();
@@ -12,7 +13,8 @@ function HomePage() {
     navigate('/register');
   };
 
-  return (
+  return (<div>
+    <Header/>
     <div className="homepage-container d-flex flex-column min-vh-100">
       <header className="d-flex justify-content-between align-items-center p-4">
         <h1 className="fw-bold">CineNiche</h1>
@@ -44,6 +46,7 @@ function HomePage() {
         </button>
       </main>
     </div>
+  </div>
   );
 }
 

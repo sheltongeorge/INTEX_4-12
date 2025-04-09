@@ -9,9 +9,12 @@ import { TestPoster } from "./components/TestPoster";
 import { MovieCarousel } from "./components/MovieCarousel";
 import HomePage from './pages/HomePage';
 import MoviesPage from './pages/MoviesPage';
+import Profile from './components/Profile';
+import AuthorizeView from './components/AuthorizeView';
 
 function App() {
   return (
+
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -22,6 +25,7 @@ function App() {
         <Route path="/admin" element={<AdminMoviesPage/>} />
         <Route path="/carousel" element={<MovieCarousel />} />
         <Route path="/movies" element={<MoviesPage />} />
+        <Route path="/profile" element={    <AuthorizeView><Profile /></AuthorizeView>} />
 
       </Routes>
     </Router>

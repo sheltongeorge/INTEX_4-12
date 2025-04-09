@@ -3,11 +3,14 @@
 @tailwind utilities;
 
 #root {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 0;
+  text-align: left;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
+
 
 .logo {
   height: 6em;

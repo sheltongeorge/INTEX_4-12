@@ -1,4 +1,4 @@
-# Logs
+﻿# Logs
 logs
 *.log
 npm-debug.log*
@@ -6,15 +6,12 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
 node_modules
 dist
 dist-ssr
 *.local
 *.jpg
 *.jpeg
-wwwroot/MoviePosters/
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -25,36 +22,28 @@ wwwroot/MoviePosters/
 *.njsproj
 *.sln
 *.sw?
-
-
-
 # Build results
 bin/
 obj/
-
 # User-specific files
 *.user
 *.suo
-
 # Build artifacts
 *.dll
 *.exe
 *.pdb
 *.cache
-#*.json
+*.json
 *.db
 *.nuget.dgspec.json
 *.nuget.props
 *.nuget.targets
 *.sourcelink.json
-
 # VS Code / JetBrains
 .vscode/
 .idea/
-
 # Ignore Visual Studio .vs folder
 .vs/
-
 # Ignore all cache/config files that don't need to be tracked
 *.suo
 *.user

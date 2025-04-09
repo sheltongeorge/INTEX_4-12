@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import ContentRecommendation from '../components/RecommendationContent';
 import AuthorizeView, { AuthorizedUser } from '../components/AuthorizeView';
 import Logout from '../components/Logout';
+import Header from '../components/header';
 
 const RecommendationsPage = () => {
   const [contentId, setContentId] = useState('');
@@ -44,6 +45,7 @@ const RecommendationsPage = () => {
 
   return (
     <AuthorizeView>
+      <Header/>
       <span>
         <Logout>
           Logout <AuthorizedUser value="email" />
