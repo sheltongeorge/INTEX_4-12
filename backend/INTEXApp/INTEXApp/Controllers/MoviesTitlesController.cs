@@ -7,7 +7,6 @@ namespace INTEXApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class MoviesTitlesController : ControllerBase
     {
         private readonly MoviesDbContext _context;
@@ -64,6 +63,7 @@ namespace INTEXApp.Controllers
         }
 
         // POST - Add a new movie
+        [Authorize(Roles = "Administrator")]
         [HttpPost("AddMovie")]
         public IActionResult AddMovie([FromBody] MovieTitle newMovie)
         {
@@ -73,6 +73,7 @@ namespace INTEXApp.Controllers
         }
 
         // PUT - Update a movie
+        [Authorize(Roles = "Administrator")]
         [HttpPut("UpdateMovie/{id}")]
         public IActionResult UpdateMovie(string id, [FromBody] MovieTitle updatedMovie)
         {
@@ -86,6 +87,7 @@ namespace INTEXApp.Controllers
         }
 
         // DELETE - Delete a movie
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("DeleteMovie/{id}")]
         public IActionResult DeleteMovie(string id)
         {
