@@ -2,6 +2,9 @@
 using INTEXApp.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+
+// This page is used in the /register react page to add a new user to the movies_users table in addition to the aspnetusers table
 
 namespace INTEXApp.Controllers
 {

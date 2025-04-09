@@ -17,7 +17,10 @@ function HomePage() {
       <header className="d-flex justify-content-between align-items-center p-4">
         <h1 className="fw-bold">CineNiche</h1>
         <div>
-          <button className="btn btn-outline-primary me-2" onClick={handleLogin}>
+          <button
+            className="btn btn-outline-primary me-2"
+            onClick={handleLogin}
+          >
             Login
           </button>
           <button className="btn btn-primary" onClick={handleSignup}>
@@ -31,7 +34,8 @@ function HomePage() {
           Discover Hidden Gems, Cult Classics & More
         </h2>
         <p className="lead mb-4">
-          Stream curated indie films, documentaries, and international cinema you won't find anywhere else.
+          Stream curated indie films, documentaries, and international cinema
+          you won't find anywhere else.
           <br />
           Starting at $7.99. Cancel anytime.
         </p>
