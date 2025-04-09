@@ -2,5 +2,9 @@
   "mimeTypes": {
     ".js": "application/javascript",
     ".mjs": "application/javascript"
+  },
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/images/*.{png,jpg,gif}", "/css/*", "/js/*"]
   }
 }
