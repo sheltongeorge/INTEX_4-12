@@ -51,7 +51,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:3003")
+        policy.WithOrigins("http://localhost:3003", "https://intex2-group-4-12-bfccddekgjdectcx.eastus-01.azurewebsites.net/")
             .AllowCredentials()
             .AllowAnyHeader()
             .AllowAnyMethod();
@@ -80,16 +80,7 @@ if (app.Environment.IsDevelopment())
 // Middleware
 app.UseCors("AllowFrontend");
 
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "MoviePosters")),
-    RequestPath = "/MoviePosters",
-    OnPrepareResponse = ctx =>
-    {
-        ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "http://localhost:3003");
-    }
-});
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAuthentication();

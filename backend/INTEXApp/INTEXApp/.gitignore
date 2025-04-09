@@ -12,7 +12,6 @@ dist-ssr
 *.local
 *.jpg
 *.jpeg
-wwwroot/MoviePosters/
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
