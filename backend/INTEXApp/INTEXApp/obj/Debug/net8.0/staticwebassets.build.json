@@ -1,0 +1,20 @@
+{
+  "Version": 1,
+  "Hash": "bMqZB0AsQ1khfof6/QRUU9WZXKMOQ6BiHxdugF+y59M=",
+  "Source": "INTEXApp",
+  "BasePath": "_content/INTEXApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "INTEXApp\\wwwroot",
+      "Source": "INTEXApp",
+      "ContentRoot": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\intexapp\\intexapp\\wwwroot\\",
+      "BasePath": "_content/INTEXApp",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [],
+  "Endpoints": []
+}
