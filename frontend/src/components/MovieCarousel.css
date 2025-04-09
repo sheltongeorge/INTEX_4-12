@@ -305,7 +305,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: fadeIn 0.3s ease;
+  overflow-y: auto; /* Allow scrolling within the overlay */
 }
 
 @keyframes fadeIn {
