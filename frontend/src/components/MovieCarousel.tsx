@@ -226,7 +226,7 @@ export const MovieCarousel = () => {
         );
         const data = await response.json();
         console.log('API response:', data);
-        setMovies(data.slice(0, 30));
+        setMovies(data.movies.slice(0, 30));
         setIsLoadingRatings(true);
       } catch (err) {
         console.error('Error loading movies:', err);
