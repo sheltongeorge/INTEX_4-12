@@ -16,12 +16,28 @@ const Header: React.FC = () => {
         <span className="ml-2 text-lg font-bold"></span>
       </div>
 
-      {/* Logout Button */}
-      <Logout>
-        <button className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-4 rounded">
-          Logout
+      {/* User Info and Logout Section */}
+      <div className="flex items-center" style={{ gap: '16px' }}>
+        {/* Username Button */}
+        <button className="text-sm text-white hover:text-gray-300 bg-transparent border-none cursor-pointer">
+          Username
         </button>
-      </Logout>
+
+        {/* Privacy Policy Button */}
+        <button
+          onClick={() => (window.location.href = '/privacy')}
+          className="text-sm text-white hover:text-gray-300 bg-transparent border-none cursor-pointer"
+        >
+          Privacy Policy
+        </button>
+
+        {/* Logout Button */}
+        <Logout>
+          <button className="text-sm text-white hover:text-gray-300 bg-transparent border-none cursor-pointer">
+            Logout
+          </button>
+        </Logout>
+      </div>
     </header>
   );
 };

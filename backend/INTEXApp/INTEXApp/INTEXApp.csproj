@@ -35,12 +35,8 @@
 
   
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\MoviePosters\" />
   </ItemGroup>
-  
-  <ItemGroup>
-  <Content Remove="wwwroot\MoviePosters\**\*" />
-</ItemGroup>
 
   <ItemGroup>
     <None Update="Identity.sqlite">
