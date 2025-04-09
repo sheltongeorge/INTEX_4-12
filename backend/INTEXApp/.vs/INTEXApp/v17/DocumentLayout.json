@@ -1,22 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\",
+  "WorkspaceRootPath": "C:\\Users\\Owner\\Documents\\INTEX_4-12\\backend\\INTEXApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\controllers\\moviestitlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\moviestitlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\services\\customuserclaimsprincipalfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\services\\customuserclaimsprincipalfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\owner\\documents\\intex_4-12\\backend\\intexapp\\intexapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\owner\\documents\\intex_4-12\\backend\\intexapp\\intexapp\\controllers\\moviestitlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\moviestitlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\owner\\documents\\intex_4-12\\backend\\intexapp\\intexapp\\controllers\\recommendationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\recommendationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\owner\\documents\\intex_4-12\\backend\\intexapp\\intexapp\\controllers\\movieratingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\movieratingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\owner\\documents\\intex_4-12\\backend\\intexapp\\intexapp\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\owner\\documents\\intex_4-12\\backend\\intexapp\\intexapp\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,62 +34,92 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 6,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CustomUserClaimsPrincipalFactory.cs",
-              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Services\\CustomUserClaimsPrincipalFactory.cs",
-              "RelativeDocumentMoniker": "INTEXApp\\Services\\CustomUserClaimsPrincipalFactory.cs",
-              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Services\\CustomUserClaimsPrincipalFactory.cs",
-              "RelativeToolTip": "INTEXApp\\Services\\CustomUserClaimsPrincipalFactory.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "RecommendationsController.cs",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\RecommendationsController.cs",
+              "RelativeDocumentMoniker": "INTEXApp\\Controllers\\RecommendationsController.cs",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\RecommendationsController.cs",
+              "RelativeToolTip": "INTEXApp\\Controllers\\RecommendationsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T18:54:30.496Z",
+              "WhenOpened": "2025-04-09T02:04:57.931Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RoleController.cs",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\RoleController.cs",
+              "RelativeDocumentMoniker": "INTEXApp\\Controllers\\RoleController.cs",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\RoleController.cs",
+              "RelativeToolTip": "INTEXApp\\Controllers\\RoleController.cs",
+              "ViewState": "AgIAAB0AAAAANzMzM7MZwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T02:04:15.951Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MoviesTitlesController.cs",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\MoviesTitlesController.cs",
+              "RelativeDocumentMoniker": "INTEXApp\\Controllers\\MoviesTitlesController.cs",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\MoviesTitlesController.cs",
+              "RelativeToolTip": "INTEXApp\\Controllers\\MoviesTitlesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T01:53:55.745Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "RoleController.cs",
-              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\RoleController.cs",
-              "RelativeDocumentMoniker": "INTEXApp\\Controllers\\RoleController.cs",
-              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\RoleController.cs",
-              "RelativeToolTip": "INTEXApp\\Controllers\\RoleController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAoAAAAAAAAAA==",
+              "Title": "MovieRatingsController.cs",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\MovieRatingsController.cs",
+              "RelativeDocumentMoniker": "INTEXApp\\Controllers\\MovieRatingsController.cs",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\MovieRatingsController.cs",
+              "RelativeToolTip": "INTEXApp\\Controllers\\MovieRatingsController.cs",
+              "ViewState": "AgIAAAYAAACINDMzM3MvwFwAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T17:17:39.884Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Program.cs",
-              "RelativeDocumentMoniker": "INTEXApp\\Program.cs",
-              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Program.cs",
-              "RelativeToolTip": "INTEXApp\\Program.cs",
-              "ViewState": "AgIAAGQAAAAAAAAAAAAgwI4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T17:17:22.731Z",
+              "WhenOpened": "2025-04-08T21:51:23.178Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "MoviesTitlesController.cs",
-              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\MoviesTitlesController.cs",
-              "RelativeDocumentMoniker": "INTEXApp\\Controllers\\MoviesTitlesController.cs",
-              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\MoviesTitlesController.cs",
-              "RelativeToolTip": "INTEXApp\\Controllers\\MoviesTitlesController.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAowGAAAAAmAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Program.cs",
+              "RelativeDocumentMoniker": "INTEXApp\\Program.cs",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Program.cs",
+              "RelativeToolTip": "INTEXApp\\Program.cs",
+              "ViewState": "AgIAADcAAAAANDMzM7MwwE8AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T17:17:22.828Z",
+              "WhenOpened": "2025-04-08T22:08:01.8Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": ".gitignore",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\.gitignore",
+              "RelativeDocumentMoniker": "INTEXApp\\.gitignore",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\.gitignore",
+              "RelativeToolTip": "INTEXApp\\.gitignore",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADoAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-04-08T21:14:20.074Z",
               "EditorCaption": ""
             }
           ]
