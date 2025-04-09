@@ -954,3 +954,8 @@ C:\Users\shelt\Desktop\Winter 2025\INTEX2025\INTEX_4-12\recommenderapp\backend\i
 C:\Users\shelt\Desktop\Winter 2025\INTEX2025\INTEX_4-12\recommenderapp\backend\intexapp\intexapp\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\shelt\Desktop\Winter 2025\INTEX2025\INTEX_4-12\recommenderapp\backend\intexapp\intexapp\obj\Debug\net8.0\INTEXApp.Properties.Resources.resources
 C:\Users\shelt\Desktop\Winter 2025\INTEX2025\INTEX_4-12\recommenderapp\backend\intexapp\intexapp\obj\Debug\net8.0\INTEXApp.csproj.GenerateResource.cache
+C:\Users\shelt\Desktop\Winter 2025\INTEX2025\INTEX_4-12\recommenderapp\backend\intexapp\intexapp\bin\Debug\net8.0\publish\web.config
+C:\Users\shelt\Desktop\Winter 2025\INTEX2025\INTEX_4-12\recommenderapp\backend\intexapp\intexapp\bin\Debug\net8.0\Identity.sqlite
+C:\Users\shelt\Desktop\Winter 2025\INTEX2025\INTEX_4-12\recommenderapp\backend\intexapp\intexapp\bin\Debug\net8.0\Identity.sqlite-shm
+C:\Users\shelt\Desktop\Winter 2025\INTEX2025\INTEX_4-12\recommenderapp\backend\intexapp\intexapp\bin\Debug\net8.0\Identity.sqlite-wal
+C:\Users\shelt\Desktop\Winter 2025\INTEX2025\INTEX_4-12\recommenderapp\backend\intexapp\intexapp\bin\Debug\net8.0\Movies.db
