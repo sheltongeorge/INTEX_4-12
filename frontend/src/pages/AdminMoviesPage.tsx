@@ -5,6 +5,8 @@ import { deleteMovie, fetchMovies } from '../api/MoviesAPI';
 import Pagination from '../components/Pagination';
 import NewMovieForm from '../components/NewMovieForm';
 import EditMovieForm from '../components/EditMovieForm';
+import AuthorizeView, { AuthorizedUser } from '../components/AuthorizeView';
+import Logout from '../components/Logout';
 
 const AdminMoviesPage = () => {
   const [movies, setMovies] = useState<MovieTitle[]>([]);
@@ -34,7 +36,9 @@ const AdminMoviesPage = () => {
   }, [pageSize, pageNum, searchTitle]);
 
   const handleDelete = async (showId: string) => {
-    const confirmDelete = window.confirm('Are you sure you want to delete this movie?');
+    const confirmDelete = window.confirm(
+      'Are you sure you want to delete this movie?'
+    );
     if (!confirmDelete) return;
 
     try {
@@ -49,102 +53,118 @@ const AdminMoviesPage = () => {
   if (error) return <p className="text-red-500">Error: {error}</p>;
 
   return (
-    <div style={{ maxHeight: 'calc(100vh - 100px)', overflowY: 'auto' }}>
-      <h1 style={{ color: 'white' }}>Admin - Movies</h1>
+    <AuthorizeView>
+      <span>
+        <Logout>
+          Logout <AuthorizedUser value="email" />
+        </Logout>
+      </span>
+      <div style={{ maxHeight: 'calc(100vh - 100px)', overflowY: 'auto' }}>
+        <h1 style={{ color: 'white' }}>Admin - Movies</h1>
 
-      <div className="mb-3 d-flex justify-content-between">
-        <input
-          type="text"
-          className="form-control w-50"
-          placeholder="Search by title..."
-          value={searchTitle}
-          onChange={(e) => {
-            setSearchTitle(e.target.value);
+        <div className="mb-3 d-flex justify-content-between">
+          <input
+            type="text"
+            className="form-control w-50"
+            placeholder="Search by title..."
+            value={searchTitle}
+            onChange={(e) => {
+              setSearchTitle(e.target.value);
+              setPageNum(1);
+            }}
+          />
+        </div>
+
+        {!showForm && (
+          <button
+            className="btn btn-success mb-3"
+            onClick={() => setShowForm(true)}
+          >
+            Add Movie
+          </button>
+        )}
+
+        {showForm && (
+          <NewMovieForm
+            onSuccess={() => {
+              setShowForm(false);
+              loadMovies();
+            }}
+            onCancel={() => setShowForm(false)}
+          />
+        )}
+
+        {editingMovie && (
+          <EditMovieForm
+            movie={editingMovie}
+            onSuccess={() => {
+              setEditingMovie(null);
+              loadMovies();
+            }}
+            onCancel={() => setEditingMovie(null)}
+          />
+        )}
+
+        <table className="table table-bordered">
+          <thead className="table-dark">
+            <tr>
+              <th>Type</th>
+              <th>Title</th>
+              <th>Director</th>
+              <th style={{ width: '60%' }}>Cast</th>
+              <th>Country</th>
+              <th>Release Year</th>
+              <th>Rating</th>
+              <th>Duration</th>
+              <th style={{ width: '60%' }}>Description</th>
+              <th style={{ width: '2%' }}>Genres</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {movies.map((m) => (
+              <tr key={m.showId}>
+                <td>{m.type}</td>
+                <td>{m.title}</td>
+                <td>{m.director}</td>
+                <td style={{ width: '20%' }}>{m.cast}</td>
+                <td>{m.country}</td>
+                <td>{m.releaseYear}</td>
+                <td>{m.rating}</td>
+                <td>{m.duration}</td>
+                <td style={{ width: '20%' }}>{m.description}</td>
+                <td style={{ width: '5%' }}>{m.genres?.join(', ')}</td>
+                <td>
+                  <button
+                    className="btn btn-primary btn-sm w-100 mb-1"
+                    onClick={() => setEditingMovie(m)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-danger btn-sm w-100"
+                    onClick={() => handleDelete(m.showId)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <Pagination
+          currentPage={pageNum}
+          totalPages={totalPages}
+          pageSize={pageSize}
+          onPageChange={setPageNum}
+          onPageSizeChange={(newSize) => {
+            setPageSize(newSize);
             setPageNum(1);
           }}
         />
       </div>
-
-      {!showForm && (
-        <button className="btn btn-success mb-3" onClick={() => setShowForm(true)}>
-          Add Movie
-        </button>
-      )}
-
-      {showForm && (
-        <NewMovieForm
-          onSuccess={() => {
-            setShowForm(false);
-            loadMovies();
-          }}
-          onCancel={() => setShowForm(false)}
-        />
-      )}
-
-      {editingMovie && (
-        <EditMovieForm
-          movie={editingMovie}
-          onSuccess={() => {
-            setEditingMovie(null);
-            loadMovies();
-          }}
-          onCancel={() => setEditingMovie(null)}
-        />
-      )}
-
-      <table className="table table-bordered">
-        <thead className="table-dark">
-          <tr>
-            <th>Type</th>
-            <th>Title</th>
-            <th>Director</th>
-            <th style={{ width: '60%' }}>Cast</th>
-            <th>Country</th>
-            <th>Release Year</th>
-            <th>Rating</th>
-            <th>Duration</th>
-            <th style={{ width: '60%' }}>Description</th>
-            <th style={{ width: '2%' }}>Genres</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {movies.map((m) => (
-            <tr key={m.showId}>
-              <td>{m.type}</td>
-              <td>{m.title}</td>
-              <td>{m.director}</td>
-              <td style={{ width: '20%' }}>{m.cast}</td>
-              <td>{m.country}</td>
-              <td>{m.releaseYear}</td>
-              <td>{m.rating}</td>
-              <td>{m.duration}</td>
-              <td style={{ width: '20%' }}>{m.description}</td>
-              <td style={{ width: '5%' }}>{m.genres?.join(', ')}</td>
-              <td>
-                <button className="btn btn-primary btn-sm w-100 mb-1" onClick={() => setEditingMovie(m)}>
-                  Edit
-                </button>
-                <button className="btn btn-danger btn-sm w-100" onClick={() => handleDelete(m.showId)}>
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <Pagination
-        currentPage={pageNum}
-        totalPages={totalPages}
-        pageSize={pageSize}
-        onPageChange={setPageNum}
-        onPageSizeChange={(newSize) => {
-          setPageSize(newSize);
-          setPageNum(1);
-        }}
-      />
-    </div>
+    </AuthorizeView>
   );
 };
 

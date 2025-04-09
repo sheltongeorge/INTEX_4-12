@@ -26,8 +26,13 @@ builder.Services.AddDbContext<MoviesDbContext>(options =>
 // Identity and security
 builder.Services.AddAuthorization();
 
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+//necessary for roles
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+//obsolete if using roles
+//builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -40,8 +45,8 @@ builder.Services.AddScoped<IUserClaimsPrincipalFactory<IdentityUser>, CustomUser
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true;
-    options.Cookie.SameSite = SameSiteMode.None;
-    options.Cookie.Name = ".AspNetCore.Identity.Application";
+    options.Cookie.SameSite = SameSiteMode.None; // change to strict after adding https for production
+    options.Cookie.Name = ".AspNetCore.Identity.Application"; // these need to be the same fields as the mapp.post /logout
     options.LoginPath = "/login";
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
@@ -55,8 +60,11 @@ builder.Services.AddCors(options =>
             .AllowCredentials()
             .AllowAnyHeader()
             .AllowAnyMethod();
+            //.WithExposedHeaders("Content-Security-Policy");
     });
 });
+
+builder.Services.AddSingleton<IEmailSender<IdentityUser>, NoOpEmailSender<IdentityUser>>();
 
 var app = builder.Build();
 
