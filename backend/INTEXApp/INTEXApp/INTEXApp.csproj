@@ -33,8 +33,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\MoviePosters\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
+  
+  <ItemGroup>
+  <Content Remove="wwwroot\MoviePosters\**\*" />
+</ItemGroup>
 
 
 </Project>

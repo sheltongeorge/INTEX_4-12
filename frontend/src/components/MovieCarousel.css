@@ -30,7 +30,7 @@
 
 /* Slide styling */
 .slide {
-  padding: 20px 20px 90px 20px; /* Extra padding at bottom to create hover area */
+  padding: 20px 2px 90px 2px; /* Extra padding at bottom to create hover area */
   transform-origin: center center;
   transition: all 0.3s ease;
   position: relative;
