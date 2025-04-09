@@ -7,13 +7,16 @@ function Logout(props: { children: React.ReactNode }) {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://localhost:7156/logout', {
-        method: 'POST',
-        credentials: 'include', // Ensure cookies are sent
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/logout',
+        {
+          method: 'POST',
+          credentials: 'include', // Ensure cookies are sent
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
       if (response.ok) {
         navigate('/login');

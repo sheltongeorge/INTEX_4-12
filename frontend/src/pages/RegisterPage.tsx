@@ -40,20 +40,26 @@ function Register() {
       setError('');
       try {
         // Register user in Identity database
-        const response = await fetch('https://localhost:7156/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
+        const response = await fetch(
+          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/register',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+          }
+        );
 
         if (!response.ok) throw new Error('Registration failed.');
 
         // Register user in movies_users database
-        const moviesUserResponse = await fetch('https://localhost:7156/api/MovieUsers/AddUser', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: fullName, email: email })
-        });
+        const moviesUserResponse = await fetch(
+          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MovieUsers/AddUser',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: fullName, email: email }),
+          }
+        );
 
         if (!moviesUserResponse.ok) throw new Error('Failed to add user to movie database.');
 
