@@ -58,6 +58,7 @@ const Profile = () => {
   }, [user]);
 
   return (
+    
     <div className="profile-container">
       <h1 className="profile-header">Your Ratings</h1>
       {ratings.length === 0 ? (
@@ -91,4 +92,7 @@ const Profile = () => {
   );
 };
 
+
 export default Profile;
+
+<div style={{ height: '2000px', backgroundColor: '#111' }} />

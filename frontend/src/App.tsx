@@ -14,7 +14,7 @@ import AuthorizeView from './components/AuthorizeView';
 
 function App() {
   return (
-    <AuthorizeView>
+
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -25,11 +25,10 @@ function App() {
         <Route path="/admin" element={<AdminMoviesPage/>} />
         <Route path="/carousel" element={<MovieCarousel />} />
         <Route path="/movies" element={<MoviesPage />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={    <AuthorizeView><Profile /></AuthorizeView>} />
 
       </Routes>
     </Router>
-    </AuthorizeView>
   );
 }
 
