@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\INTEXApp.csproj": {}
+    "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\intexapp\\intexapp\\INTEXApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\INTEXApp.csproj": {
+    "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\intexapp\\intexapp\\INTEXApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\INTEXApp.csproj",
+        "projectUniqueName": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\intexapp\\intexapp\\INTEXApp.csproj",
         "projectName": "INTEXApp",
-        "projectPath": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\INTEXApp.csproj",
+        "projectPath": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\intexapp\\intexapp\\INTEXApp.csproj",
         "packagesPath": "C:\\Users\\shelt\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\obj\\",
+        "outputPath": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\intexapp\\intexapp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

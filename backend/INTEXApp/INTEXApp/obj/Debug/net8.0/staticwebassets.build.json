@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Vv0FRzzb0ekoxckaodVyO7Shfm9Rc4KDPK9ZxCplQwU=",
+  "Hash": "bMqZB0AsQ1khfof6/QRUU9WZXKMOQ6BiHxdugF+y59M=",
   "Source": "INTEXApp",
   "BasePath": "_content/INTEXApp",
   "Mode": "Default",
@@ -10,7 +10,7 @@
     {
       "Name": "INTEXApp\\wwwroot",
       "Source": "INTEXApp",
-      "ContentRoot": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\intexapp\\intexapp\\wwwroot\\",
       "BasePath": "_content/INTEXApp",
       "Pattern": "**"
     }

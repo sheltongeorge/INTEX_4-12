@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HiDPdqHGcyU=",
+  "dgSpecHash": "HvWtL4aYooU=",
   "success": true,
-  "projectFilePath": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\INTEXApp.csproj",
+  "projectFilePath": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\intexapp\\intexapp\\INTEXApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\shelt\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\shelt\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
