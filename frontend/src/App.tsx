@@ -8,7 +8,7 @@ import AdminMoviesPage from './pages/AdminMoviesPage';
 import { TestPoster } from "./components/TestPoster";
 import { MovieCarousel } from "./components/MovieCarousel";
 import HomePage from './pages/HomePage';
-// import MoviesPage from './pages/MoviesPage';
+import MoviesPage from './pages/MoviesPage';
 import Profile from './components/Profile';
 import AuthorizeView from './components/AuthorizeView';
 
@@ -24,7 +24,7 @@ function App() {
         <Route path="/test" element={<TestPoster />} />
         <Route path="/admin" element={<AdminMoviesPage/>} />
         <Route path="/carousel" element={<MovieCarousel />} />
-        {/* <Route path="/movies" element={<MoviesPage />} /> */}
+        <Route path="/movies" element={<MoviesPage />} />
         <Route path="/profile" element={    <AuthorizeView><Profile /></AuthorizeView>} />
 
       </Routes>
