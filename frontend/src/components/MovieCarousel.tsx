@@ -416,7 +416,7 @@ export const MovieCarousel = () => {
                   <h3 className="info-title">Country</h3>
                   <p>{selectedMovie.country}</p>
                 </div>
-              )}
+              )} {/*literally just testing stuff*/}
               {/* User rating input */}
               <div className="rate-movie-section">
                 <h3 className="info-title">Rate this movie</h3>
