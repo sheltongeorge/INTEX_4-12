@@ -150,5 +150,32 @@ namespace INTEXApp.Controllers
 
             return CreatedAtAction(nameof(GetRatingsByMovie), new { showId = rating.ShowId }, rating);
         }
+
+        [HttpGet("userratings/{email}")]
+        public IActionResult GetRatingsByEmail(string email)
+        {
+            var normalizedEmail = email.ToUpper();
+
+            var user = _context.MoviesUsers.FirstOrDefault(u => u.Email.ToUpper() == normalizedEmail);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            var ratings = _context.MoviesRatings
+                .Where(r => r.UserId == user.UserId)
+                .Join(_context.MoviesTitles,
+                      rating => rating.ShowId,
+                      movie => movie.ShowId,
+                      (rating, movie) => new
+                      {
+                          movie.Title,
+                          rating.Rating
+                      })
+                .ToList();
+
+            return Ok(ratings);
+        }
+
     }
 }

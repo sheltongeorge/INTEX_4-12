@@ -9,9 +9,12 @@ import { TestPoster } from "./components/TestPoster";
 import { MovieCarousel } from "./components/MovieCarousel";
 import HomePage from './pages/HomePage';
 import MoviesPage from './pages/MoviesPage';
+import Profile from './components/Profile';
+import AuthorizeView from './components/AuthorizeView';
 
 function App() {
   return (
+    <AuthorizeView>
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -22,9 +25,11 @@ function App() {
         <Route path="/admin" element={<AdminMoviesPage/>} />
         <Route path="/carousel" element={<MovieCarousel />} />
         <Route path="/movies" element={<MoviesPage />} />
+        <Route path="/profile" element={<Profile />} />
 
       </Routes>
     </Router>
+    </AuthorizeView>
   );
 }
 

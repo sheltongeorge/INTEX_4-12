@@ -88,7 +88,7 @@
               "RelativeDocumentMoniker": "INTEXApp\\Program.cs",
               "ToolTip": "C:\\Users\\Jaxon\\OneDrive\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Program.cs",
               "RelativeToolTip": "INTEXApp\\Program.cs",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAAAE4AAAARAAAAAAAAAA==",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAAE4AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-09T02:49:59.661Z",
 >>>>>>> b9664c244f710d3a569438d9d764449e4df6d181
@@ -217,13 +217,8 @@
               "RelativeToolTip": "INTEXApp\\Controllers\\MoviesTitlesController.cs",
               "ViewState": "AgIAAEAAAAAAAAAAAAAkwBEAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-<<<<<<< HEAD
               "WhenOpened": "2025-04-08T22:11:01.643Z"
-=======
-              "WhenOpened": "2025-04-08T22:11:01.643Z",
-              "EditorCaption": ""
 >>>>>>> b9664c244f710d3a569438d9d764449e4df6d181
->>>>>>> c2a9b64a612a93c1698fe5303f4e032cc99ae24d
             }
           ]
         }
