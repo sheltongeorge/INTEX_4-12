@@ -84,7 +84,7 @@ export const MovieCarousel = () => {
     try {
       // Use the new averages endpoint that efficiently returns all ratings
       const response = await fetch(
-        'https://localhost:7156/api/movieratings/averages',
+        'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/movieratings/averages',
         {
           credentials: 'include',
         }
@@ -136,7 +136,7 @@ export const MovieCarousel = () => {
   const fetchUserRatings = async () => {
     try {
       const response = await fetch(
-        'https://localhost:7156/api/movieratings/user',
+        'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/movieratings/user',
         {
           credentials: 'include',
         }
@@ -167,7 +167,7 @@ export const MovieCarousel = () => {
   const fetchUserRatingForMovie = async (showId: string) => {
     try {
       const response = await fetch(
-        `https://localhost:7156/api/movieratings/user/${showId}`,
+        `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/movieratings/user/${showId}`,
         {
           credentials: 'include',
         }
@@ -219,7 +219,7 @@ export const MovieCarousel = () => {
     const fetchMovies = async () => {
       try {
         const response = await fetch(
-          'https://localhost:7156/api/moviestitles',
+          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/moviestitles',
           {
             credentials: 'include',
           }
@@ -446,17 +446,20 @@ export const MovieCarousel = () => {
                   onClick={() => {
                     if (userRating && selectedMovie) {
                       // Submit the rating to our real backend API
-                      fetch('https://localhost:7156/api/movieratings', {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json',
-                        },
-                        credentials: 'include',
-                        body: JSON.stringify({
-                          showId: selectedMovie.showId,
-                          rating: userRating,
-                        }),
-                      })
+                      fetch(
+                        'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/movieratings',
+                        {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          credentials: 'include',
+                          body: JSON.stringify({
+                            showId: selectedMovie.showId,
+                            rating: userRating,
+                          }),
+                        }
+                      )
                         .then((response) => {
                           if (response.ok) {
                             alert(
