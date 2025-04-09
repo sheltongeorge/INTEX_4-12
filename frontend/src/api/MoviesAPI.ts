@@ -5,7 +5,8 @@ interface FetchMoviesResponse {
   totalCount: number;
 }
 
-const API_URL = 'https://localhost:7156/api/MoviesTitles';
+const API_URL =
+  'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesTitles';
 
 // These are the JSON keys coming FROM the backend (camelCase)
 // But also map to the correct display names
