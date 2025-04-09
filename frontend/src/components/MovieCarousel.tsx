@@ -235,6 +235,12 @@ export const MovieCarousel = () => {
   const closeOverlay = () => {
     setShowOverlay(false);
   };
+  
+  useEffect(() => {
+    if (instanceRef.current) {
+      instanceRef.current.update(); // Recalculate dimensions
+    }
+  }, []);
 
   useEffect(() => {
     // Fetch movies
