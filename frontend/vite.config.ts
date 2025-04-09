@@ -20,8 +20,7 @@ export default defineConfig({
         "connect-src *; " +
         "frame-src 'self'; " +
         "font-src 'self' data:;",
-      "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' http://localhost:3003; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net http://localhost:3003; frame-src 'self'; font-src 'self' data:;",
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
     },
   },
 });
