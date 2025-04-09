@@ -13,9 +13,6 @@ import Logout from '../components/Logout';
 const AdminMoviesPageContent = () => {
   const user = useContext(UserContext);
 
-  // if (!user?.roles.includes('Administrator')) {
-  //   return <Navigate to="/login" />;
-  // }v
   if (!user) {
     // User is not yet loaded (AuthorizeView will redirect if unauthorized)
     return null;
