@@ -69,7 +69,6 @@ export const MovieCarousel = () => {
     new Map()
   );
   const [isLoadingRatings, setIsLoadingRatings] = useState(false);
-  const [isLoadingUserRating, setIsLoadingUserRating] = useState(false);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
@@ -166,7 +165,6 @@ export const MovieCarousel = () => {
 
   // Fetch a single user rating for a specific movie
   const fetchUserRatingForMovie = async (showId: string) => {
-    setIsLoadingUserRating(true);
     try {
       const response = await fetch(
         `https://localhost:7156/api/movieratings/user/${showId}`,
@@ -196,7 +194,6 @@ export const MovieCarousel = () => {
       console.error(`Error fetching user rating for movie ${showId}:`, error);
       setUserRating(null);
     } finally {
-      setIsLoadingUserRating(false);
     }
   };
 
