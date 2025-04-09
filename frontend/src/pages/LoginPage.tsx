@@ -48,8 +48,8 @@ function LoginPage() {
     }
 
     const loginUrl = rememberme
-      ? 'https://localhost:7156/login?useCookies=true'
-      : 'https://localhost:7156/login?useSessionCookies=true';
+      ? 'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/login?useCookies=true'
+      : 'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/login?useSessionCookies=true';
 
     try {
       const response = await fetch(loginUrl, {
