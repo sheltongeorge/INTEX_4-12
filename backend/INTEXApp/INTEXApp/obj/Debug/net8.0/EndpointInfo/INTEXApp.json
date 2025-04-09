@@ -776,37 +776,6 @@
         }
       }
     },
-    "/api/MovieUsers/AddUser": {
-      "post": {
-        "tags": [
-          "MovieUsers"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MovieUser"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MovieUser"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/MovieUser"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
     "/api/Recommendations/AllRecommendations": {
       "get": {
         "tags": [
@@ -1244,90 +1213,6 @@
             "type": "string",
             "nullable": true,
             "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "MovieUser": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "phone": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "age": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "gender": {
-            "type": "string",
-            "nullable": true
-          },
-          "netflix": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "amazonPrime": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "disneyPlus": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "paramountPlus": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "max": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "hulu": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "appleTVPlus": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "peacock": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "city": {
-            "type": "string",
-            "nullable": true
-          },
-          "state": {
-            "type": "string",
-            "nullable": true
-          },
-          "zip": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
           }
         },
         "additionalProperties": false

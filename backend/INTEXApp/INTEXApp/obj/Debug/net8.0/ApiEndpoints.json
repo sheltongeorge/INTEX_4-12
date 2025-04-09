@@ -243,22 +243,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "INTEXApp.Controllers.MovieUsersController",
-    "Method": "AddUser",
-    "RelativePath": "api/MovieUsers/AddUser",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "newUser",
-        "Type": "INTEXApp.Data.MovieUser",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "NewsRecommenderApp.Controllers.RecommendationsController",
     "Method": "GetRecommendations",
     "RelativePath": "api/Recommendations/AllRecommendations",
