@@ -41,7 +41,7 @@ obj/
 *.exe
 *.pdb
 *.cache
-*.json
+#*.json
 *.db
 *.nuget.dgspec.json
 *.nuget.props
