@@ -9,14 +9,13 @@ import AuthorizeView, {
   UserContext,
 } from '../components/AuthorizeView';
 import Logout from '../components/Logout';
-import { Navigate } from 'react-router-dom';
 
 const AdminMoviesPageContent = () => {
   const user = useContext(UserContext);
 
   // if (!user?.roles.includes('Administrator')) {
   //   return <Navigate to="/login" />;
-  // }
+  // }v
   if (!user) {
     // User is not yet loaded (AuthorizeView will redirect if unauthorized)
     return null;
