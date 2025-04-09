@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="recommendations.sqlite" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="recommendations.sqlite">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

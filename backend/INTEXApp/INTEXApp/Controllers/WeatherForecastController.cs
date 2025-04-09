@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace NewsRecommenderApp.Controllers
+namespace INTEXApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
