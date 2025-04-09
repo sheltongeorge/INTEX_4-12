@@ -51,7 +51,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:3003")
+        policy.WithOrigins("https://localhost:3003")
             .AllowCredentials()
             .AllowAnyHeader()
             .AllowAnyMethod();
@@ -76,7 +76,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseRouting();
 // Middleware
 app.UseCors("AllowFrontend");
 
