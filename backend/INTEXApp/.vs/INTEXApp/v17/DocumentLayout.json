@@ -106,8 +106,17 @@
               "RelativeToolTip": "INTEXApp\\Program.cs",
               "ViewState": "AgIAADcAAAAANDMzM7MwwE8AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+<<<<<<< HEAD
+              "WhenOpened": "2025-04-09T17:17:22.828Z",
+              "EditorCaption": ""
+=======
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAAE4AAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T02:49:59.661Z"
+=======
               "WhenOpened": "2025-04-08T22:08:01.8Z",
               "EditorCaption": ""
+>>>>>>> 07b63e4d656e2b34a7da70dcbc614212597823b9
             },
             {
               "$type": "Document",

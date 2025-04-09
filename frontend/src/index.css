@@ -16,6 +16,17 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html, body {
+  height: auto;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+#root {
+  height: auto;
+  overflow: visible;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
