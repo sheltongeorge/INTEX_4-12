@@ -3,70 +3,65 @@ import { useNavigate } from 'react-router-dom';
 import logo from '../assets/cineniche.png';
 
 function Register() {
-  // state variables for email and passwords
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showAnimation, setShowAnimation] = useState<boolean>(false);
   const [isLogoSpinning, setIsLogoSpinning] = useState<boolean>(false);
-  
-  // Never show animation on register page
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
   useEffect(() => {
     setShowAnimation(false);
   }, []);
-  const navigate = useNavigate();
-
-  // state variable for error messages
-  const [error, setError] = useState('');
 
   const handleLoginClick = () => {
     navigate('/login');
   };
 
-  // handle change events for input fields
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    if (name === 'fullName') setFullName(value);
     if (name === 'email') setEmail(value);
     if (name === 'password') setPassword(value);
     if (name === 'confirmPassword') setConfirmPassword(value);
   };
 
-  // handle submit event for the form
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // validate email and passwords
-    if (!email || !password || !confirmPassword) {
+    if (!fullName || !email || !password || !confirmPassword) {
       setError('Please fill in all fields.');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setError('Please enter a valid email address.');
     } else if (password !== confirmPassword) {
       setError('Passwords do not match.');
     } else {
-      // clear error message
       setError('');
-      // post data to the /register api
-      fetch('https://localhost:7156/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      })
-        //.then((response) => response.json())
-        .then((data) => {
-          // handle success or error from the server
-          console.log(data);
-          if (data.ok) setError('Successful registration. Please log in.');
-          else setError('Error registering.');
-        })
-        .catch((error) => {
-          // handle network error
-          console.error(error);
-          setError('Error registering.');
+      try {
+        // Register user in Identity database
+        const response = await fetch('https://localhost:7156/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
         });
+
+        if (!response.ok) throw new Error('Registration failed.');
+
+        // Register user in movies_users database
+        const moviesUserResponse = await fetch('https://localhost:7156/api/MovieUsers/AddUser', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: fullName, email: email })
+        });
+
+        if (!moviesUserResponse.ok) throw new Error('Failed to add user to movie database.');
+
+        setError('Successful registration. Please log in.');
+      } catch (err) {
+        setError((err as Error).message);
+        console.error(err);
+      }
     }
   };
 
@@ -83,20 +78,25 @@ function Register() {
                 onClick={() => {
                   if (!isLogoSpinning) {
                     setIsLogoSpinning(true);
-                    
-                    // Reset the animation after it completes
-                    setTimeout(() => {
-                      setIsLogoSpinning(false);
-                    }, 400);
+                    setTimeout(() => setIsLogoSpinning(false), 400);
                   }
                 }}
               />
             </div>
           </div>
-          <h5 className="card-title text-center mb-5 fw-light fs-5">
-            Register
-          </h5>
+          <h5 className="card-title text-center mb-5 fw-light fs-5">Register</h5>
           <form onSubmit={handleSubmit}>
+            <div className="form-floating mb-3">
+              <input
+                className="form-control"
+                type="text"
+                id="fullName"
+                name="fullName"
+                value={fullName}
+                onChange={handleChange}
+              />
+              <label htmlFor="fullName">Full Name</label>
+            </div>
             <div className="form-floating mb-3">
               <input
                 className="form-control"
@@ -132,18 +132,12 @@ function Register() {
             </div>
 
             <div className="d-grid mb-2">
-              <button
-                className="btn btn-login custom-login-btn text-uppercase fw-bold"
-                type="submit"
-              >
+              <button className="btn btn-login custom-login-btn text-uppercase fw-bold" type="submit">
                 Register
               </button>
             </div>
             <div className="d-grid mb-2">
-              <button
-                className="btn btn-login custom-login-btn text-uppercase fw-bold"
-                onClick={handleLoginClick}
-              >
+              <button className="btn btn-login custom-login-btn text-uppercase fw-bold" onClick={handleLoginClick}>
                 Go to Login
               </button>
             </div>

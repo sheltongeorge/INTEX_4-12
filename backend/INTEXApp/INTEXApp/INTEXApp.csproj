@@ -51,6 +51,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+  <Content Remove="wwwroot\MoviePosters\**\*" />
+</ItemGroup>
 
 
 </Project>

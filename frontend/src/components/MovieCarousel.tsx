@@ -3,6 +3,19 @@ import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
 import './MovieCarousel.css';
 import { ArrowLeft, ArrowRight, X } from 'lucide-react';
+
+const BLOB_STORAGE_URL = "https://movieposterblob.blob.core.windows.net";
+const BLOB_SAS_TOKEN = "sv=2024-11-04&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-05-15T09:35:14Z&st=2025-04-09T01:35:14Z&spr=https,http&sig=N%2FAK8dhBBarxwU9qBSd0aI0B5iEOqmpnKUJ6Ek1yv0k%3D";
+const CONTAINER_NAME = "movieposters";
+
+// Add this utility function for getting poster URLs
+const getPosterImageUrl = (movieTitle: string): string => {
+  // Format the blob path - adjust based on your actual folder structure in Azure
+  const blobPath = `${encodeURIComponent(movieTitle)}.jpg`;
+
+  return `${BLOB_STORAGE_URL}/${CONTAINER_NAME}/${blobPath}?${BLOB_SAS_TOKEN}`;
+};
+
 type Movie = {
   showId: string;
   title: string;
@@ -257,15 +270,13 @@ export const MovieCarousel = () => {
               >
                 <div className="poster-image-container">
                   <img
-                    src={`https://localhost:7156/MoviePosters/Movie%20Posters/${encodeURIComponent(
-                      movie.title
-                    )}.jpg`}
+                    src={getPosterImageUrl(movie.title)}
                     alt={movie.title}
                     className="poster-image"
                     onError={(e) => {
                       console.error(`Failed to load image for: ${movie.title}`);
                       // Try without the space encoding as a fallback
-                      e.currentTarget.src = `https://localhost:7156/MoviePosters/Movie Posters/${encodeURIComponent(
+                      e.currentTarget.src = `https://localhost:7156/MoviePosters/${encodeURIComponent(
                         movie.title
                       )}.jpg`;
 
@@ -328,16 +339,14 @@ export const MovieCarousel = () => {
             </button>
             <div className="overlay-poster">
               <img
-                src={`https://localhost:7156/MoviePosters/Movie%20Posters/${encodeURIComponent(
-                  selectedMovie.title
-                )}.jpg`}
+                src={getPosterImageUrl(selectedMovie.title)}
                 alt={selectedMovie.title}
                 onError={(e) => {
                   console.error(
                     `Failed to load overlay image for: ${selectedMovie.title}`
                   );
                   // Try without the space encoding as a fallback
-                  e.currentTarget.src = `https://localhost:7156/MoviePosters/Movie Posters/${encodeURIComponent(
+                  e.currentTarget.src = `https://localhost:7156/MoviePosters/${encodeURIComponent(
                     selectedMovie.title
                   )}.jpg`;
 
@@ -414,7 +423,7 @@ export const MovieCarousel = () => {
                   <h3 className="info-title">Country</h3>
                   <p>{selectedMovie.country}</p>
                 </div>
-              )}
+              )} {/*literally just testing stuff*/}
               {/* User rating input */}
               <div className="rate-movie-section">
                 <h3 className="info-title">Rate this movie</h3>
