@@ -87,5 +87,22 @@ namespace INTEXApp.Controllers
             _context.SaveChanges();
             return NoContent();
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<object>>> GetAll()
+        {
+            var movies = await _context.MoviesTitles
+                .Select(m => new
+                {
+                    m.ShowId,
+                    m.Title,
+                    m.Rating,
+                    m.Description,
+                    PosterUrl = $"/MoviePosters/{m.Title.Replace(":", "").Replace("?", "").Replace("\"", "").Replace("/", "-").Trim()}.jpg"
+                })
+                .ToListAsync();
+
+            return Ok(movies);
+        }
     }
 }
