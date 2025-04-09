@@ -235,27 +235,43 @@ export const MovieCarousel = () => {
   const closeOverlay = () => {
     setShowOverlay(false);
   };
-
+  
   useEffect(() => {
-    // Fetch movies
-    const fetchMovies = async () => {
-      try {
-        const response = await fetch(
-          'https://localhost:7156/api/moviestitles',
-          {
-            credentials: 'include',
-          }
-        );
-        const data = await response.json();
-        setMovies(data.slice(0, 30));
-        setIsLoadingRatings(true);
-      } catch (err) {
-        console.error('Error loading movies:', err);
-      }
-    };
-
-    fetchMovies();
+    if (instanceRef.current) {
+      instanceRef.current.update(); // Recalculate dimensions
+    }
   }, []);
+
+  const [isSliderReady, setIsSliderReady] = useState(false);
+
+useEffect(() => {
+  // Fetch movies
+  const fetchMovies = async () => {
+    try {
+      const response = await fetch(
+        'https://localhost:7156/api/moviestitles',
+        {
+          credentials: 'include',
+        }
+      );
+      const data = await response.json();
+      setMovies(data.slice(0, 30));
+      setIsLoadingRatings(true);
+
+      // Force KeenSlider to recalculate dimensions after movies are set
+      if (instanceRef.current) {
+        instanceRef.current.update();
+      }
+
+      // Mark the slider as ready
+      setIsSliderReady(true);
+    } catch (err) {
+      console.error('Error loading movies:', err);
+    }
+  };
+
+  fetchMovies();
+}, []);
 
   // Fetch ratings after movies are loaded
   useEffect(() => {
@@ -269,55 +285,71 @@ export const MovieCarousel = () => {
       <div
         className={`carousel-wrapper ${showOverlay ? 'overlay-active' : ''}`}
       >
-        <div ref={sliderRef} className="keen-slider">
-          {movies.map((movie) => (
-            <div key={movie.showId} className="keen-slider__slide slide">
-              <div
-                className="poster-card"
-                onClick={() => handleMovieClick(movie)}
-              >
-                <div className="poster-image-container">
-                
-{posterErrors[movie.showId] ? (
-  <div className="fallback-wrapper">
-    {/* Make sure fallbackImage is defined properly */}
-    {fallbackImage && <img src={fallbackImage} alt="Fallback" className="poster-image" />}
-    <div className="fallback-overlay-title">{movie.title}</div>
-  </div>
-) : (
-  <img
-    src={getPosterImageUrl(movie.title)}
-    alt={movie.title}
-    className="poster-image"
-    onError={() => setPosterErrors((prev) => ({ ...prev, [movie.showId]: true }))}
-  />
-)}
-
-                </div>
-                <div className="hover-info">
-                  <h3 className="poster-title">{movie.title}</h3>
-                  <p className="poster-rating">Rating: {movie.rating}</p>
-                  <div className="action-buttons">
-                    <button
-                      className="circular-button"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <span className="button-icon plus-icon"></span>
-                      <span className="button-tooltip">Add to Watchlist</span>
-                    </button>
-                    <button
-                      className="circular-button"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <span className="button-icon more-icon"></span>
-                      <span className="button-tooltip">More Details</span>
-                    </button>
-                  </div>
+       {isSliderReady ? (
+  <div ref={sliderRef} className="keen-slider">
+    {movies.map((movie) => (
+      <div key={movie.showId} className="keen-slider__slide slide">
+        <div
+          className="poster-card"
+          onClick={() => handleMovieClick(movie)}
+        >
+          <div className="poster-image-container">
+            {posterErrors[movie.showId] ? (
+              <div className="fallback-wrapper">
+                {fallbackImage && (
+                  <img
+                    src={fallbackImage}
+                    alt="Fallback"
+                    className="poster-image"
+                  />
+                )}
+                <div className="fallback-overlay-title">
+                  {movie.title}
                 </div>
               </div>
+            ) : (
+              <img
+                src={getPosterImageUrl(movie.title)}
+                alt={movie.title}
+                className="poster-image"
+                onError={() =>
+                  setPosterErrors((prev) => ({
+                    ...prev,
+                    [movie.showId]: true,
+                  }))
+                }
+              />
+            )}
+          </div>
+          <div className="hover-info">
+            <h3 className="poster-title">{movie.title}</h3>
+            <p className="poster-rating">Rating: {movie.rating}</p>
+            <div className="action-buttons">
+              <button
+                className="circular-button"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span className="button-icon plus-icon"></span>
+                <span className="button-tooltip">
+                  Add to Watchlist
+                </span>
+              </button>
+              <button
+                className="circular-button"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span className="button-icon more-icon"></span>
+                <span className="button-tooltip">More Details</span>
+              </button>
             </div>
-          ))}
+          </div>
         </div>
+      </div>
+    ))}
+  </div>
+) : (
+  <div className="loading-placeholder">Loading...</div>
+)}
         <button
           className="arrow left-arrow"
           onClick={() => instanceRef.current?.prev()}
