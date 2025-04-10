@@ -1,42 +1,75 @@
-import React from 'react';
-import Logout from './Logout'; // Import the Logout component
+import React, { useContext } from 'react';
+import Logout from './Logout';
+import { UserContext } from './AuthorizeView';
 
 const Header: React.FC = () => {
+  const user = useContext(UserContext);
+
   return (
     <header className="flex items-center justify-between bg-black text-white px-4 shadow-md" style={{ height: '8vh' }}>
-      {/* Logo Section */}
+      {/* Logo */}
       <div className="flex items-center h-full">
-        <a href="/" className="flex items-center h-full">
-          <img
-            src="src/assets/cineniche.png"
-            alt="Logo"
-            className="h-full w-auto"
-          />
+        <a href="/movies" className="flex items-center h-full">
+          <img src="src/assets/cineniche.png" alt="Logo" className="h-full w-auto" />
         </a>
-        <span className="ml-2 text-lg font-bold"></span>
       </div>
 
-      {/* User Info and Logout Section */}
+      {/* Right Side */}
       <div className="flex items-center" style={{ gap: '16px' }}>
-        {/* Username Button */}
-        <button className="text-sm text-white hover:text-gray-300 bg-transparent border-none cursor-pointer">
-          Username
-        </button>
+        {user ? (
+          <>
+            {/* Show email */}
+            <span className="text-sm text-white">{user.email}</span>
 
-        {/* Privacy Policy Button */}
-        <button
-          onClick={() => (window.location.href = '/privacy')}
-          className="text-sm text-white hover:text-gray-300 bg-transparent border-none cursor-pointer"
-        >
-          Privacy Policy
-        </button>
+            {/* Privacy Policy */}
+            <button
+              onClick={() => (window.location.href = '/privacy')}
+              className="text-sm text-white hover:text-gray-300 bg-transparent border-none cursor-pointer"
+            >
+              Privacy Policy
+            </button>
 
-        {/* Logout Button */}
-        <Logout>
-          <button className="text-sm text-white hover:text-gray-300 bg-transparent border-none cursor-pointer">
-            Logout
-          </button>
-        </Logout>
+            {/* Admin link (only if role includes Administrator) */}
+            {user.roles.includes('Administrator') && (
+              <button
+                onClick={() => (window.location.href = '/admin')}
+                className="text-sm text-white hover:text-gray-300 bg-transparent border-none cursor-pointer"
+              >
+                Admin
+              </button>
+            )}
+
+            {/* Logout */}
+            <Logout>
+              <button className="text-sm text-white hover:text-gray-300 bg-transparent border-none cursor-pointer">
+                Logout
+              </button>
+            </Logout>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => (window.location.href = '/privacy')}
+              className="text-sm text-white hover:text-gray-300 bg-transparent border-none cursor-pointer"
+            >
+              Privacy Policy
+            </button>
+
+            <button
+              onClick={() => (window.location.href = '/login')}
+              className="text-sm text-white hover:text-gray-300 bg-transparent border-none cursor-pointer"
+            >
+              Login
+            </button>
+
+            <button
+              onClick={() => (window.location.href = '/register')}
+              className="text-sm text-white hover:text-gray-300 bg-transparent border-none cursor-pointer"
+            >
+              Sign Up
+            </button>
+          </>
+        )}
       </div>
     </header>
   );
