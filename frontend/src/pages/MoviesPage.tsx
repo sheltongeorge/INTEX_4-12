@@ -5,8 +5,8 @@ import Header from '../components/header';
 const MoviesPage: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
   const [userEmail, setUserEmail] = useState<string>('');
-  const [topRatedTitle, setTopRatedTitle] = useState<string | null>(null);
-  const [recommendedMovies, setRecommendedMovies] = useState<any[]>([]);
+  const [topRatedMovies, setTopRatedMovies] = useState<{title: string, showId: string}[]>([]);
+  const [recommendationsMap, setRecommendationsMap] = useState<Record<string, any[]>>({});
 
   type Movie = {
     showId: string;
@@ -42,7 +42,7 @@ const MoviesPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const fetchTopRatedMovie = async () => {
+    const fetchTopRatedMovies = async () => {
       try {
         const response = await fetch(`https://localhost:7156/api/movieratings/userratings/${encodeURIComponent(userEmail)}`, {
           credentials: 'include',
@@ -51,8 +51,20 @@ const MoviesPage: React.FC = () => {
         if (response.ok) {
           const ratings = await response.json();
           if (ratings.length > 0) {
-            const highestRated = ratings.reduce((max: any, curr: any) => curr.rating > max.rating ? curr : max, ratings[0]);
-            setTopRatedTitle(highestRated.title);
+            // Sort ratings by rating value in descending order
+            const sortedRatings = [...ratings].sort((a, b) => b.rating - a.rating);
+            
+            // Take the top 5 or fewer if user hasn't rated 5 movies
+            const top5Ratings = sortedRatings.slice(0, 5);
+            
+            // Extract title and showId from each rating
+            const topMovies = top5Ratings.map(rating => ({
+              title: rating.title,
+              showId: rating.showId
+            }));
+            
+            setTopRatedMovies(topMovies);
+            console.log('Top 5 rated movies:', topMovies.map(m => m.title));
           }
         }
       } catch (error) {
@@ -61,7 +73,7 @@ const MoviesPage: React.FC = () => {
     };
 
     if (userEmail) {
-      fetchTopRatedMovie();
+      fetchTopRatedMovies();
     }
   }, [userEmail]);
 
@@ -102,29 +114,42 @@ const MoviesPage: React.FC = () => {
       }
     };
 
-    const getRecommendedMovies = async () => {
-      if (!topRatedTitle) return;
-      const recs = await fetchRecommendationsData(topRatedTitle);
-      const bestMatch = findBestRecommendationMatch(recs, topRatedTitle);
-
-      if (bestMatch) {
-        const titles = [
-          bestMatch.recommendation1,
-          bestMatch.recommendation2,
-          bestMatch.recommendation3,
-          bestMatch.recommendation4,
-          bestMatch.recommendation5,
-          bestMatch.recommendation6,
-          bestMatch.recommendation7,
-          bestMatch.recommendation8
-        ].filter(Boolean);
-        const found = await fetchMovieDetailsForTitles(titles);
-        setRecommendedMovies(found);
+    const getRecommendedMoviesForAll = async () => {
+      if (topRatedMovies.length === 0) return;
+      
+      // Get all recommendations data once (to avoid multiple API calls)
+      const allRecsData = await fetchRecommendationsData("");
+      const newRecommendationsMap: Record<string, any[]> = {};
+      
+      // Process each top rated movie
+      for (const movie of topRatedMovies) {
+        const bestMatch = findBestRecommendationMatch(allRecsData, movie.title);
+        
+        if (bestMatch) {
+          const titles = [
+            bestMatch.recommendation1,
+            bestMatch.recommendation2,
+            bestMatch.recommendation3,
+            bestMatch.recommendation4,
+            bestMatch.recommendation5,
+            bestMatch.recommendation6,
+            bestMatch.recommendation7,
+            bestMatch.recommendation8
+          ].filter(Boolean);
+          
+          const found = await fetchMovieDetailsForTitles(titles);
+          if (found.length > 0) {
+            newRecommendationsMap[movie.title] = found;
+            console.log(`Found ${found.length} recommendations for "${movie.title}"`);
+          }
+        }
       }
+      
+      setRecommendationsMap(newRecommendationsMap);
     };
 
-    getRecommendedMovies();
-  }, [topRatedTitle]);
+    getRecommendedMoviesForAll();
+  }, [topRatedMovies]);
 
   return (
     <div>
@@ -153,17 +178,23 @@ const MoviesPage: React.FC = () => {
           <MovieCarousel categoryTitle="Top Reviewed" categoryType="top_rated" />
         </div>
 
-        {recommendedMovies.length > 0 && (
-          <>
-            <br /><br />
-            <h2 className="text-xl font-bold mb-2 text-white">
-              Because you liked "{topRatedTitle}"
-            </h2>
-            <div className="overflow-x-auto overflow-y-hidden hide-scrollbar" style={{ height: 'auto' }}>
-              <MovieCarousel categoryTitle="Because you watched" customMovies={recommendedMovies} />
-            </div>
-          </>
-        )}
+        {/* Generate a carousel for each of the top 5 rated movies */}
+        {topRatedMovies.map((movie, index) => (
+          recommendationsMap[movie.title] && recommendationsMap[movie.title].length > 0 && (
+            <React.Fragment key={movie.showId}>
+              <br /><br />
+              <h2 className="text-xl font-bold mb-2 text-white">
+                Because you liked "{movie.title}"
+              </h2>
+              <div className="overflow-x-auto overflow-y-hidden hide-scrollbar" style={{ height: 'auto' }}>
+                <MovieCarousel
+                  categoryTitle={`Because you liked ${movie.title}`}
+                  customMovies={recommendationsMap[movie.title]}
+                />
+              </div>
+            </React.Fragment>
+          )
+        ))}
       </div>
     </div>
   );
