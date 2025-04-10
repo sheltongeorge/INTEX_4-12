@@ -2,8 +2,23 @@
 .carousel-container {
   position: relative;
   width: 100%;
-  padding: 60px 0;
+  padding: 30px 0;
   margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Category carousels */
+.category-carousel-container {
+  margin-bottom: 20px;
+}
+
+.category-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0 0 15px 40px;
+  color: #333;
 }
 
 .carousel-wrapper {

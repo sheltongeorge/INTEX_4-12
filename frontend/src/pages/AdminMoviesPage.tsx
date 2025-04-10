@@ -9,7 +9,6 @@ import AuthorizeView, {
   UserContext,
 } from '../components/AuthorizeView';
 import Logout from '../components/Logout';
-import Header from '../components/header';
 
 const AdminMoviesPageContent = () => {
   const user = useContext(UserContext);
@@ -18,7 +17,7 @@ const AdminMoviesPageContent = () => {
     // User is not yet loaded (AuthorizeView will redirect if unauthorized)
     return null;
   }
-
+  
   if (!user.roles.includes('Administrator')) {
     // User is logged in, but not an admin
     return <p className="text-danger">Access Denied: Admins only.</p>;
@@ -66,7 +65,11 @@ const AdminMoviesPageContent = () => {
 
   return (
     <>
-      <Header />
+      <span>
+        <Logout>
+          Logout <AuthorizedUser value="email" />
+        </Logout>
+      </span>
 
       <div style={{ maxHeight: 'calc(100vh - 100px)', overflowY: 'auto' }}>
         <h1 style={{ color: 'white' }}>Admin - Movies</h1>
