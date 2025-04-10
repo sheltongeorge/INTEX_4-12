@@ -4,6 +4,9 @@ import 'keen-slider/keen-slider.min.css';
 import './MovieCarousel.css';
 import { ArrowLeft, ArrowRight, X } from 'lucide-react';
 import fallbackImage from '../assets/Fallback.png'; // adjust path if needed
+import { useContext } from 'react';
+import { UserContext } from './AuthorizeView'; // path might need to adjust
+
 
 const BLOB_STORAGE_URL = 'https://movieposterblob.blob.core.windows.net';
 const BLOB_SAS_TOKEN =
@@ -95,6 +98,9 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   const [showOverlay, setShowOverlay] = useState(false);
   const [userRating, setUserRating] = useState<number | null>(null);
   const [posterErrors, setPosterErrors] = useState<Record<string, boolean>>({});
+  const user = useContext(UserContext);
+  console.log("🚨 UserContext in Carousel:", user);
+
   const [movieRatings, setMovieRatings] = useState<
     Map<string, { avg: number; count: number }>
   >(new Map());
@@ -103,39 +109,21 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   );
   const [isLoadingRatings, setIsLoadingRatings] = useState(false);
   const [isLoadingUserRating, setIsLoadingUserRating] = useState(false);
-  const [similarMovies, setSimilarMovies] = useState<Movie[]>([]);
-  const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [recommendationCategories, setRecommendationCategories] = useState<Record<string, Movie[]>>({});
   const [isLoadingRecommendations, setIsLoadingRecommendations] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
-    slides: { perView: 5, spacing: 16 },
+    slides: { perView: 6, spacing: 10 },
+    drag: true,
+    rubberband: true,
     breakpoints: {
       '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
       '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
     },
   });
 
-  // Add this near your other state declarations
-  const [similarSliderRef] = useKeenSlider({
-    loop: true,
-    slides: { perView: 4, spacing: 16 },
-    breakpoints: {
-      '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
-      '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
-    },
-  });
-  // Add this near your other slider references
-  const [recommendationsSliderRef, recommendationsInstanceRef] = useKeenSlider({
-    loop: true,
-    slides: { perView: 4, spacing: 16 },
-    breakpoints: {
-      '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
-      '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
-    },
-  });
   // Fetch movie ratings from backend
   const fetchMovieRatings = async () => {
     try {
@@ -192,10 +180,6 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   // Fetch the current user's ratings
   const fetchUserRatings = async () => {
     try {
-      // Add timeout to the fetch request using AbortController
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
-
       const response = await fetch(
         'https://localhost:7156/api/movieratings/user',
         {
@@ -741,82 +725,41 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   const fetchUserRatingForMovie = async (showId: string) => {
     setIsLoadingUserRating(true);
     try {
-      // Add timeout to the fetch request using AbortController
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
-
       const response = await fetch(
         `https://localhost:7156/api/movieratings/user/${showId}`,
         {
           credentials: 'include',
-          signal: controller.signal,
-          headers: {
-            Accept: 'application/json',
-          },
         }
       );
 
-      // Clear the timeout since we got a response
-      clearTimeout(timeoutId);
-
-      if (response.status === 400) {
-        console.warn(
-          `Server returned 400 Bad Request for movie rating: ${showId}. This may be expected if no user is logged in or ID is invalid.`
-        );
-        setUserRating(null);
-        return;
-      }
-
       if (response.status === 401) {
-        // User is not logged in, handle silently
-        setUserRating(null);
+        // User is not logged in, ignore
         return;
       }
 
       if (response.status === 404) {
-        // User hasn't rated this movie yet, handle silently
+        // User hasn't rated this movie yet
         setUserRating(null);
         return;
       }
 
       if (!response.ok) {
-        console.warn(
-          `Server responded with status: ${response.status} ${response.statusText}`
-        );
-        throw new Error(
-          `Server error: ${response.status} ${response.statusText}`
-        );
+        throw new Error('Failed to fetch user rating');
       }
 
       const rating: MovieRatingData = await response.json();
       setUserRating(rating.rating);
     } catch (error) {
-      // More detailed error logging
-      if (error instanceof DOMException && error.name === 'AbortError') {
-        console.error(`Request timeout fetching rating for movie ${showId}`);
-      } else if (error instanceof TypeError) {
-        console.error(
-          `Network error fetching rating for movie ${showId}: Possibly CORS issue or server unavailable`
-        );
-      } else {
-        console.error(`Error fetching user rating for movie ${showId}:`, error);
-      }
-
-      // Always set rating to null when there's an error
+      console.error(`Error fetching user rating for movie ${showId}:`, error);
       setUserRating(null);
     } finally {
       setIsLoadingUserRating(false);
     }
   };
 
-  const handleMovieClick = async (movie: Movie) => {
+  const handleMovieClick = (movie: Movie) => {
     setSelectedMovie(movie);
     setShowOverlay(true);
-    
-    // Reset similar movies to empty array when loading a new movie
-    setSimilarMovies([]);
-    
-    await fetchSimilarMovies(movie.title); // Pass title instead of ID
 
     // Check if the user has previously rated this movie
     if (userMovieRatings.has(movie.showId)) {
@@ -902,7 +845,8 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   useEffect(() => {
     if (movies.length > 0 && isLoadingRatings) {
       fetchMovieRatings();
-      fetchUserRatings(); // Also fetch user's own ratings
+      fetchUserRatings();
+
     }
   }, [movies, isLoadingRatings]);
 
@@ -1244,148 +1188,91 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
                 </div>
               </div>
               <div className="overlay-actions">
-                <button className="overlay-button">Add to Watchlist</button>
-                <button
-                  className="overlay-button"
-                  onClick={() => {
-                    if (userRating && selectedMovie) {
-                      // Submit the rating to our real backend API
-                      fetch('https://localhost:7156/api/movieratings', {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json',
-                        },
-                        credentials: 'include',
-                        body: JSON.stringify({
-                          showId: selectedMovie.showId,
-                          rating: userRating,
-                        }),
-                      })
-                        .then((response) => {
-                          if (response.ok) {
-                            alert(
-                              `Your rating of ${userRating}/5 has been submitted!`
-                            );
+              <button
+  className="overlay-button"
+  onClick={() => {
+    if (!user?.email || !selectedMovie?.showId) {
+      alert("You must be logged in to use the watchlist.");
+      return;
+    }
 
-                            // After submission, refresh all ratings to get the updated averages
-                            fetchMovieRatings();
+    fetch(
+      `https://localhost:7156/api/moviewatchlist/add/${encodeURIComponent(user.email)}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(selectedMovie.showId),
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          alert(`✅ Added "${selectedMovie.title}" to your watchlist!`);
+        } else if (res.status === 409) {
+          alert(`⚠️ "${selectedMovie.title}" is already in your watchlist.`);
+        } else {
+          alert('❌ Failed to add to watchlist.');
+        }
+      })
+      .catch((err) => {
+        console.error('Watchlist error:', err);
+        alert('❌ An error occurred. Please try again.');
+      });
+  }}
+>
+  Add to Watchlist
+</button>
 
-                            // Update our local cache of user ratings
-                            setUserMovieRatings((prev) => {
-                              const newMap = new Map(prev);
-                              newMap.set(selectedMovie.showId, userRating);
-                              return newMap;
-                            });
-                          } else {
-                            // Handle error responses by status code
-                            if (response.status === 401) {
-                              alert('You must be logged in to rate movies.');
-                            } else {
-                              alert(
-                                'Failed to submit rating. Please try again.'
-                              );
-                            }
-                          }
-                        })
-                        .catch((error) => {
-                          console.error('Error submitting rating:', error);
-                          alert('Error submitting rating. Please try again.');
-                        });
-                    } else {
-                      alert('Please select a rating first!');
-                    }
-                  }}
-                >
-                  Submit Rating
-                </button>
+<button
+  className="overlay-button"
+  onClick={() => {
+    if (!userRating || !selectedMovie) {
+      alert('Please select a rating first!');
+      return;
+    }
+
+    fetch('https://localhost:7156/api/movieratings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        showId: selectedMovie.showId,
+        rating: userRating,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert(`Your rating of ${userRating}/5 has been submitted!`);
+
+          // Refresh average ratings
+          fetchMovieRatings();
+
+          // Update local cache of user ratings
+          setUserMovieRatings((prev) => {
+            const newMap = new Map(prev);
+            newMap.set(selectedMovie.showId, userRating);
+            return newMap;
+          });
+        } else if (response.status === 401) {
+          alert('You must be logged in to rate movies.');
+        } else {
+          alert('Failed to submit rating. Please try again.');
+        }
+      })
+      .catch((error) => {
+        console.error('Error submitting rating:', error);
+        alert('Error submitting rating. Please try again.');
+      });
+  }}
+>
+  Submit Rating
+</button>
+
               </div>
-            </div>
-            {/* Add this right before the closing overlay-content div */}
-            {/* Recommended Movies Carousel */}
-            <div className="recommended-movies-section">
-              <h3 className="info-title">Recommended Movies</h3>
-              {isLoadingSimilar ? (
-                <div className="loading">Loading recommendations...</div>
-              ) : similarMovies.length > 0 ? (
-                <div className="recommendations-wrapper">
-                  <button
-                    className="arrow rec-left-arrow"
-                    onClick={() => recommendationsInstanceRef.current?.prev()}
-                  >
-                    <ArrowLeft size={16} />
-                  </button>
-                  <div className="recommendations-container">
-                    <div
-                      ref={recommendationsSliderRef}
-                      className="keen-slider recommendations-slider"
-                    >
-                      {similarMovies.map((movie) => (
-                        <div
-                          key={movie.showId}
-                          className="keen-slider__slide recommendation-slide"
-                        >
-                          <div
-                            className="poster-card recommendation-card"
-                            onClick={() => handleMovieClick(movie)}
-                          >
-                            <div className="poster-image-container">
-                              {posterErrors[movie.showId] ? (
-                                <div className="fallback-wrapper">
-                                  <img
-                                    src={fallbackImage}
-                                    alt={`Fallback for ${movie.title}`}
-                                    className="poster-image"
-                                  />
-                                  <div className="fallback-overlay-title">
-                                    {movie.title}
-                                  </div>
-                                </div>
-                              ) : (
-                                <img
-                                  src={getPosterImageUrl(movie.title)}
-                                  alt={movie.title}
-                                  className="poster-image"
-                                  onLoad={() => console.log(`Poster loaded for ${movie.title}`)}
-                                  onError={(e) => {
-                                    console.error(`Error loading poster for ${movie.title}`);
-                                    // Try one more time with a cache-busting URL
-                                    const img = e.currentTarget;
-                                    if (!img.src.includes('&cachebust=')) {
-                                      console.log(`Retrying poster load for ${movie.title} with cache busting`);
-                                      img.src = `${getPosterImageUrl(movie.title)}&cachebust=${Date.now()}`;
-                                    } else {
-                                      // If already tried with cache busting, mark as error
-                                      setPosterErrors((prev) => ({
-                                        ...prev,
-                                        [movie.showId]: true,
-                                      }));
-                                    }
-                                  }}
-                                />
-                              )}
-                            </div>
-                            <div className="recommendation-info">
-                              <h3 className="recommendation-title">
-                                {movie.title}
-                              </h3>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <button
-                    className="arrow rec-right-arrow"
-                    onClick={() => recommendationsInstanceRef.current?.next()}
-                  >
-                    <ArrowRight size={16} />
-                  </button>
-                </div>
-              ) : (
-                <div className="no-recommendations">
-                  No recommended movies found
-                </div>
-              )}
             </div>
           </div>
         </div>

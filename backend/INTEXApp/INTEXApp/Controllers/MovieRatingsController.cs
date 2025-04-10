@@ -1,4 +1,4 @@
-using INTEXApp.Data;
+﻿using INTEXApp.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,21 +30,13 @@ namespace INTEXApp.Controllers
         public async Task<ActionResult<IEnumerable<MovieRating>>> GetUserRatings()
         {
             if (User.Identity?.IsAuthenticated != true)
-            {
                 return Unauthorized();
-            }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(userId))
-            {
-                return Unauthorized();
-            }
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
 
-            int userIdInt;
-            if (!int.TryParse(userId, out userIdInt))
-            {
+            if (!int.TryParse(userId, out int userIdInt))
                 return BadRequest("Invalid user ID");
-            }
 
             return await _context.MoviesRatings.Where(r => r.UserId == userIdInt).ToListAsync();
         }
@@ -54,30 +46,18 @@ namespace INTEXApp.Controllers
         [HttpGet("user/{showId}")]
         public async Task<ActionResult<MovieRating>> GetUserRatingForMovie(string showId)
         {
-            if (User.Identity?.IsAuthenticated != true)
-            {
-                return Unauthorized();
-            }
+            if (User.Identity?.IsAuthenticated != true) return Unauthorized();
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(userId))
-            {
-                return Unauthorized();
-            }
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
 
-            int userIdInt;
-            if (!int.TryParse(userId, out userIdInt))
-            {
+            if (!int.TryParse(userId, out int userIdInt))
                 return BadRequest("Invalid user ID");
-            }
 
             var rating = await _context.MoviesRatings
                 .FirstOrDefaultAsync(r => r.UserId == userIdInt && r.ShowId == showId);
 
-            if (rating == null)
-            {
-                return NotFound();
-            }
+            if (rating == null) return NotFound();
 
             return rating;
         }
@@ -109,58 +89,45 @@ namespace INTEXApp.Controllers
             return ratingsByMovie;
         }
 
-        // POST: api/movieratings
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<MovieRating>> PostRating(MovieRating rating)
         {
             if (User.Identity?.IsAuthenticated != true)
-            {
                 return Unauthorized();
-            }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(userId))
-            {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            if (string.IsNullOrEmpty(email))
                 return Unauthorized();
-            }
 
-            int userIdInt;
-            if (!int.TryParse(userId, out userIdInt))
-            {
-                return BadRequest("Invalid user ID");
-            }
+            var user = await _context.MoviesUsers.FirstOrDefaultAsync(u => u.Email.ToUpper() == email.ToUpper());
+            if (user == null)
+                return NotFound("User not found in MoviesUsers");
 
-            // Check if the user has already rated this movie
             var existingRating = await _context.MoviesRatings
-                .FirstOrDefaultAsync(r => r.UserId == userIdInt && r.ShowId == rating.ShowId);
+                .FirstOrDefaultAsync(r => r.UserId == user.UserId && r.ShowId == rating.ShowId);
 
             if (existingRating != null)
             {
-                // Update existing rating
                 existingRating.Rating = rating.Rating;
                 await _context.SaveChangesAsync();
                 return Ok(existingRating);
             }
 
-            // Add new rating
-            rating.UserId = userIdInt;
+            rating.UserId = user.UserId;
             _context.MoviesRatings.Add(rating);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetRatingsByMovie), new { showId = rating.ShowId }, rating);
         }
 
+
         [HttpGet("userratings/{email}")]
         public IActionResult GetRatingsByEmail(string email)
         {
             var normalizedEmail = email.ToUpper();
-
             var user = _context.MoviesUsers.FirstOrDefault(u => u.Email.ToUpper() == normalizedEmail);
-            if (user == null)
-            {
-                return NotFound("User not found.");
-            }
+            if (user == null) return NotFound("User not found.");
 
             var ratings = _context.MoviesRatings
                 .Where(r => r.UserId == user.UserId)
@@ -176,6 +143,5 @@ namespace INTEXApp.Controllers
 
             return Ok(ratings);
         }
-
     }
 }

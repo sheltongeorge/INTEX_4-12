@@ -48,6 +48,7 @@ const HomeRedirect = () => {
 function App() {
   return (
     <Router>
+      <AuthorizeView>
       <Routes>
         <Route path="/" element={<HomeRedirect />} />
         <Route path="/recommendations" element={<AuthorizeView><RecommendationsPage /></AuthorizeView>} />
@@ -56,9 +57,15 @@ function App() {
         <Route path="/test" element={<TestPoster />} />
         <Route path="/admin" element={<AdminMoviesPage/>} />
         <Route path="/carousel" element={<MovieCarousel />} />
+<<<<<<< HEAD
+        <Route path="/movies" element={<MoviesPage />} />
+        <Route path="/profile" element={<Profile />} />
+
+=======
         <Route path="/movies" element={<AuthorizeView><MoviesPage /></AuthorizeView>} />
         <Route path="/profile" element={<AuthorizeView><Profile /></AuthorizeView>} />
       </Routes>
+      </AuthorizeView>
     </Router>
   );
 }
