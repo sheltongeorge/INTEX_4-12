@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MovieCarousel } from '../components/MovieCarousel';
 import Header from '../components/header';
+import LazyCarousel from '../components/LazyCarousel';
 
 const MoviesPage: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
@@ -159,40 +160,33 @@ const MoviesPage: React.FC = () => {
           {userName ? `Welcome back, ${userName}!` : 'Welcome to CineNiche!'}
         </h1>
 
-        <h2 className="text-xl font-bold mb-1 text-white">Top Picks For You</h2>
-        <div className="overflow-x-auto overflow-y-hidden hide-scrollbar" style={{ height: 'auto' }}>
+        {/* First carousel loads immediately since it's at the top */}
+        <LazyCarousel title="Top Picks For You" marginTop={false}>
           <MovieCarousel categoryTitle="Top Picks for You" categoryType="personal" />
-        </div>
+        </LazyCarousel>
 
-        <br />
-
-        <h2 className="text-xl font-bold mb-1 text-white">Recently Added</h2>
-        <div className="overflow-x-auto overflow-y-hidden hide-scrollbar" style={{ height: 'auto' }}>
+        {/* Second carousel */}
+        <LazyCarousel title="Recently Added">
           <MovieCarousel categoryTitle="Recently Added" categoryType="recently_added" />
-        </div>
+        </LazyCarousel>
 
-        <br />
-
-        <h2 className="text-xl font-bold mb-1 text-white">Top Reviewed</h2>
-        <div className="overflow-x-auto overflow-y-hidden hide-scrollbar" style={{ height: 'auto' }}>
+        {/* Third carousel */}
+        <LazyCarousel title="Top Reviewed">
           <MovieCarousel categoryTitle="Top Reviewed" categoryType="top_rated" />
-        </div>
+        </LazyCarousel>
 
-        {/* Generate a carousel for each of the top 5 rated movies */}
+        {/* Generate a lazy-loaded carousel for each of the top 5 rated movies */}
         {topRatedMovies.map((movie, index) => (
           recommendationsMap[movie.title] && recommendationsMap[movie.title].length > 0 && (
-            <React.Fragment key={movie.showId}>
-              <br />
-              <h2 className="text-xl font-bold mb-1 text-white">
-                Because you liked "{movie.title}"
-              </h2>
-              <div className="overflow-x-auto overflow-y-hidden hide-scrollbar" style={{ height: 'auto' }}>
-                <MovieCarousel
-                  categoryTitle={`Because you liked ${movie.title}`}
-                  customMovies={recommendationsMap[movie.title]}
-                />
-              </div>
-            </React.Fragment>
+            <LazyCarousel
+              key={movie.showId}
+              title={`Because you liked "${movie.title}"`}
+            >
+              <MovieCarousel
+                categoryTitle={`Because you liked ${movie.title}`}
+                customMovies={recommendationsMap[movie.title]}
+              />
+            </LazyCarousel>
           )
         ))}
       </div>
