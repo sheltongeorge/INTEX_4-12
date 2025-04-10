@@ -25,14 +25,8 @@ function App() {
         <Route path="/test" element={<TestPoster />} />
         <Route path="/admin" element={<AuthorizeView><AdminMoviesPage/></AuthorizeView>} />
         <Route path="/carousel" element={<MovieCarousel />} />
-<<<<<<< HEAD
         <Route path="/movies" element={<MoviesPage />} />
         <Route path="/profile" element={<Profile />} />
-
-=======
-        <Route path="/movies" element={<AuthorizeView><MoviesPage /></AuthorizeView>} />
-        <Route path="/profile" element={    <AuthorizeView><Profile /></AuthorizeView>} />
->>>>>>> b2bb270dfbd9d3320ebeb24f49024ee217d55a18
       </Routes>
       </AuthorizeView>
     </Router>

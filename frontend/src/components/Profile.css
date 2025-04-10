@@ -35,7 +35,7 @@
   .rating-card {
     display: flex;
     flex-direction: column;
-    background-color: #fff;
+    background-color: black;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -76,24 +76,24 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: #fff;
   }
   
   /* Star rating display */
   .stars {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 8px;
+    display: inline-flex;
+    color: #bbb; /* empty star color */
+    font-size: 20px;
   }
   
   .star {
-    font-size: 24px;
-    color: #ccc;
-    margin: 0 2px;
+    margin-right: 2px;
   }
   
   .star.filled {
-    color: #ffd700; /* Gold color for filled stars */
+    color: #f5c518; /* filled star color */
   }
+  
   
   .rating-info p {
     font-size: 16px;
@@ -142,3 +142,61 @@
       font-size: 18px;
     }
   }
+
+  .movie-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: auto;
+  }
+  
+  .overlay-content {
+    background-color: #141414;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 850px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+  
+  .overlay-poster {
+    flex: 0 0 40%; /* Image takes 40% of width */
+  }
+  
+  .overlay-poster img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+  
+  .overlay-details {
+    flex: 1; /* Takes remaining 60% of the width */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #fff;
+  }
+  
+  .close-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+  }
+  

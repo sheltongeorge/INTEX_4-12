@@ -88,16 +88,7 @@ app.UseRouting();
 // Middleware
 app.UseCors("AllowFrontend");
 
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "MoviePosters")),
-    RequestPath = "/MoviePosters",
-    OnPrepareResponse = ctx =>
-    {
-        ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "http://localhost:3003");
-    }
-});
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAuthentication();

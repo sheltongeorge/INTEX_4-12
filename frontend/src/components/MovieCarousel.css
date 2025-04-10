@@ -680,7 +680,6 @@
   font-size: 80px;
 }
 
-<<<<<<< HEAD
 .fallback-wrapper {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -700,22 +699,7 @@
   animation: fadeIn 0.5s ease-in-out both;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-=======
-.similar-movies {
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 8px;
-  margin-top: 20px;
-}
+
 
 .similar-movies .keen-slider {
   height: 200px;
@@ -969,5 +953,4 @@
   display: flex;
   flex-direction: column;
   padding-bottom: 20px;
->>>>>>> b2bb270dfbd9d3320ebeb24f49024ee217d55a18
 }
