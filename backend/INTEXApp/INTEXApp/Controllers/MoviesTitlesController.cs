@@ -15,29 +15,20 @@ namespace INTEXApp.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovieTitle>>> GetAll()
-        {
-            return await _context.MoviesTitles.ToListAsync();
-        }
-
-        
         // GET with pagination and optional title filter
         [HttpGet("AllMovies")]
         public IActionResult GetMovies(int pageSize = 10, int pageNum = 1, [FromQuery] string? titleFilter = null)
         {
             var query = _context.MoviesTitles.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(titleFilter))
+            if (!string.IsNullOrEmpty(titleFilter))
             {
-                var normalizedFilter = titleFilter.Trim().ToLower();
-                query = query.Where(m => m.Title.ToLower().Contains(normalizedFilter));
+                query = query.Where(m => m.Title.Contains(titleFilter));
             }
 
             var totalNumMovies = query.Count();
 
             var movies = query
-                .OrderBy(m => m.Title)
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -50,7 +41,6 @@ namespace INTEXApp.Controllers
 
             return Ok(result);
         }
-
 
         // GET a single movie by ID
         [HttpGet("{id}")]

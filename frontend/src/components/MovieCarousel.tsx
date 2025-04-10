@@ -3,10 +3,15 @@ import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
 import './MovieCarousel.css';
 import { ArrowLeft, ArrowRight, X } from 'lucide-react';
+import fallbackImage from '../assets/Fallback.png'; // adjust path if needed
+
 
 const BLOB_STORAGE_URL = "https://movieposterblob.blob.core.windows.net";
 const BLOB_SAS_TOKEN = "sv=2024-11-04&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-05-15T09:35:14Z&st=2025-04-09T01:35:14Z&spr=https,http&sig=N%2FAK8dhBBarxwU9qBSd0aI0B5iEOqmpnKUJ6Ek1yv0k%3D";
 const CONTAINER_NAME = "movieposters";
+
+
+
 
 // Add this utility function for getting poster URLs
 const getPosterImageUrl = (movieTitle: string): string => {
@@ -75,6 +80,7 @@ export const MovieCarousel = () => {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [showOverlay, setShowOverlay] = useState(false);
   const [userRating, setUserRating] = useState<number | null>(null);
+  const [posterErrors, setPosterErrors] = useState<Record<string, boolean>>({});
   const [movieRatings, setMovieRatings] = useState<
     Map<string, { avg: number; count: number }>
   >(new Map());
@@ -226,28 +232,44 @@ export const MovieCarousel = () => {
   const closeOverlay = () => {
     setShowOverlay(false);
   };
-
+  
   useEffect(() => {
-    // Fetch movies
-    const fetchMovies = async () => {
-      try {
-        const response = await fetch(
-          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesTitles/AllMovies',
-          {
-            credentials: 'include',
-          }
-        );
-        const data = await response.json();
-        console.log('API response:', data);
-        setMovies(data.movies.slice(0, 30));
-        setIsLoadingRatings(true);
-      } catch (err) {
-        console.error('Error loading movies:', err);
-      }
-    };
-
-    fetchMovies();
+    if (instanceRef.current) {
+      instanceRef.current.update(); // Recalculate dimensions
+    }
   }, []);
+
+  const [isSliderReady, setIsSliderReady] = useState(false);
+
+useEffect(() => {
+  // Fetch movies
+  const fetchMovies = async () => {
+    try {
+      const response = await fetch(
+        'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesTitles/AllMovies',
+        {
+          credentials: 'include',
+        }
+      );
+      const data = await response.json();
+        console.log('API response:', data);
+      setMovies(data.movies.slice(0, 30));
+      setIsLoadingRatings(true);
+
+      // Force KeenSlider to recalculate dimensions after movies are set
+      if (instanceRef.current) {
+        instanceRef.current.update();
+      }
+
+      // Mark the slider as ready
+      setIsSliderReady(true);
+    } catch (err) {
+      console.error('Error loading movies:', err);
+    }
+  };
+
+  fetchMovies();
+}, []);
 
   // Fetch ratings after movies are loaded
   useEffect(() => {
@@ -261,61 +283,71 @@ export const MovieCarousel = () => {
       <div
         className={`carousel-wrapper ${showOverlay ? 'overlay-active' : ''}`}
       >
-        <div ref={sliderRef} className="keen-slider">
-          {movies.map((movie) => (
-            <div key={movie.showId} className="keen-slider__slide slide">
-              <div
-                className="poster-card"
-                onClick={() => handleMovieClick(movie)}
-              >
-                <div className="poster-image-container">
+       {isSliderReady ? (
+  <div ref={sliderRef} className="keen-slider">
+    {movies.map((movie) => (
+      <div key={movie.showId} className="keen-slider__slide slide">
+        <div
+          className="poster-card"
+          onClick={() => handleMovieClick(movie)}
+        >
+          <div className="poster-image-container">
+            {posterErrors[movie.showId] ? (
+              <div className="fallback-wrapper">
+                {fallbackImage && (
                   <img
-                    src={getPosterImageUrl(movie.title)}
-                    alt={movie.title}
+                    src={fallbackImage}
+                    alt="Fallback"
                     className="poster-image"
-                    onError={(e) => {
-                      console.error(`Failed to load image for: ${movie.title}`);
-                      // Try without the space encoding as a fallback
-                      e.currentTarget.src = `https://localhost:7156/MoviePosters/${encodeURIComponent(
-                        movie.title
-                      )}.jpg`;
-
-                      // Add a second error handler for the fallback
-                      e.currentTarget.onerror = () => {
-                        console.error(
-                          `Fallback also failed for: ${movie.title}`
-                        );
-                        e.currentTarget.src =
-                          'https://via.placeholder.com/225x338?text=No+Image';
-                        e.currentTarget.onerror = null; // Prevent infinite loops
-                      };
-                    }}
                   />
-                </div>
-                <div className="hover-info">
-                  <h3 className="poster-title">{movie.title}</h3>
-                  <p className="poster-rating">Rating: {movie.rating}</p>
-                  <div className="action-buttons">
-                    <button
-                      className="circular-button"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <span className="button-icon plus-icon"></span>
-                      <span className="button-tooltip">Add to Watchlist</span>
-                    </button>
-                    <button
-                      className="circular-button"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <span className="button-icon more-icon"></span>
-                      <span className="button-tooltip">More Details</span>
-                    </button>
-                  </div>
+                )}
+                <div className="fallback-overlay-title">
+                  {movie.title}
                 </div>
               </div>
+            ) : (
+              <img
+                src={getPosterImageUrl(movie.title)}
+                alt={movie.title}
+                className="poster-image"
+                onError={() =>
+                  setPosterErrors((prev) => ({
+                    ...prev,
+                    [movie.showId]: true,
+                  }))
+                }
+              />
+            )}
+          </div>
+          <div className="hover-info">
+            <h3 className="poster-title">{movie.title}</h3>
+            <p className="poster-rating">Rating: {movie.rating}</p>
+            <div className="action-buttons">
+              <button
+                className="circular-button"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span className="button-icon plus-icon"></span>
+                <span className="button-tooltip">
+                  Add to Watchlist
+                </span>
+              </button>
+              <button
+                className="circular-button"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span className="button-icon more-icon"></span>
+                <span className="button-tooltip">More Details</span>
+              </button>
             </div>
-          ))}
+          </div>
         </div>
+      </div>
+    ))}
+  </div>
+) : (
+  <div className="loading-placeholder">Loading...</div>
+)}
         <button
           className="arrow left-arrow"
           onClick={() => instanceRef.current?.prev()}
@@ -338,29 +370,27 @@ export const MovieCarousel = () => {
               <X size={24} />
             </button>
             <div className="overlay-poster">
-              <img
-                src={getPosterImageUrl(selectedMovie.title)}
-                alt={selectedMovie.title}
-                onError={(e) => {
-                  console.error(
-                    `Failed to load overlay image for: ${selectedMovie.title}`
-                  );
-                  // Try without the space encoding as a fallback
-                  e.currentTarget.src = `https://localhost:7156/MoviePosters/${encodeURIComponent(
-                    selectedMovie.title
-                  )}.jpg`;
-
-                  // Add a second error handler for the fallback
-                  e.currentTarget.onerror = () => {
-                    console.error(
-                      `Overlay fallback also failed for: ${selectedMovie.title}`
-                    );
-                    e.currentTarget.src =
-                      'https://via.placeholder.com/300x450?text=No+Image';
-                    e.currentTarget.onerror = null; // Prevent infinite loops
-                  };
-                }}
-              />
+<div className="poster-image-container">
+  <img
+    src={getPosterImageUrl(selectedMovie.title)}
+    alt={selectedMovie.title}
+    className="poster-image"
+    onError={(e) => {
+      console.error(`Overlay image not found for: ${selectedMovie.title}`);
+      e.currentTarget.onerror = null; // Prevent infinite loop
+      e.currentTarget.src = fallbackImage; // Local fallback
+      
+      // Add overlay title when fallback image is used
+      const container = e.currentTarget.parentElement;
+      if (container) {
+        const overlay = document.createElement('div');
+        overlay.className = 'fallback-overlay-title';
+        overlay.textContent = selectedMovie.title;
+        container.appendChild(overlay);
+      }
+    }}
+  />
+</div>
             </div>
             <div className="overlay-details">
               <h2 className="overlay-title">{selectedMovie.title}</h2>

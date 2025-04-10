@@ -78,7 +78,9 @@ export const fetchMovies = async (
       url.searchParams.set('titleFilter', titleFilter);
     }
 
-    const response = await fetch(url.toString());
+    const response = await fetch(url.toString(), {
+      credentials: 'include',
+    });
     if (!response.ok) throw new Error('Failed to fetch movies');
 
     const data = await response.json();
@@ -105,6 +107,7 @@ export const addMovie = async (
   const response = await fetch(`${API_URL}/AddMovie`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     body: JSON.stringify(body),
   });
 
@@ -124,6 +127,7 @@ export const updateMovie = async (
   const response = await fetch(`${API_URL}/UpdateMovie/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     body: JSON.stringify(body),
   });
 
@@ -138,6 +142,7 @@ export const updateMovie = async (
 export const deleteMovie = async (id: string): Promise<void> => {
   const response = await fetch(`${API_URL}/DeleteMovie/${id}`, {
     method: 'DELETE',
+    credentials: 'include',
   });
 
   if (!response.ok) throw new Error('Failed to delete movie');
