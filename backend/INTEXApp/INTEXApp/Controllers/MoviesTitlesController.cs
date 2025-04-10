@@ -1,6 +1,11 @@
 ﻿using INTEXApp.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace INTEXApp.Controllers
 {
@@ -217,6 +222,49 @@ namespace INTEXApp.Controllers
                 FoundMovies = result,
                 NotFoundTitles = notFound
             });
+        }
+
+        // GET - Get user recommendations based on identity ID
+        [HttpGet("UserRecommendations/{identityId}")]
+        public async Task<ActionResult<IEnumerable<MovieTitle>>> GetUserRecommendations(string identityId,
+            [FromServices] UserManager<IdentityUser> userManager,
+            [FromServices] RecommendationsDbContext recommendationsContext)
+        {
+            try
+            {
+                // Find the user in the ASP.NET Identity database
+                var identityUser = await userManager.FindByIdAsync(identityId);
+                if (identityUser == null)
+                {
+                    return NotFound(new { message = "Identity user not found" });
+                }
+
+                string email = identityUser.Email;
+                
+                // Find the corresponding user ID in the movies_users table using the email
+                var movieUser = await _context.MoviesUsers
+                    .FirstOrDefaultAsync(u => u.Email == email);
+
+                // If no user found with this email, default to user ID 33
+                int userId = movieUser?.UserId ?? 33;
+
+                // Get recommendations for this user from recommendations2 table
+                var recommendations = recommendationsContext.recommendations2
+                    .Where(r => r.user_id == userId)
+                    .ToList();
+
+                // Get the recommended movies by their show_ids
+                var movieIds = recommendations.Select(r => r.show_id).ToList();
+                var recommendedMovies = await _context.MoviesTitles
+                    .Where(m => movieIds.Contains(m.ShowId))
+                    .ToListAsync();
+
+                return Ok(recommendedMovies);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Error retrieving user recommendations: {ex.Message}" });
+            }
         }
     }
 }
