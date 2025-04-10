@@ -715,7 +715,7 @@
 }
 
 
-.fallback-overlay-title {
+/* .fallback-overlay-title {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -728,7 +728,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
+} */
 
 /* Similar movies section */
 .similar-movies {

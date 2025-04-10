@@ -42,20 +42,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MovieWatchlistController.cs",
-              "DocumentMoniker": "C:\\Users\\Jaxon\\OneDrive\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\MovieWatchlistController.cs",
-              "RelativeDocumentMoniker": "INTEXApp\\Controllers\\MovieWatchlistController.cs",
-              "ToolTip": "C:\\Users\\Jaxon\\OneDrive\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\MovieWatchlistController.cs",
-              "RelativeToolTip": "INTEXApp\\Controllers\\MovieWatchlistController.cs",
-              "ViewState": "AgIAADsAAAAAAAAAAAAwwFUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T22:55:30.447Z"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 4,
@@ -67,6 +55,31 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-09T22:50:18.264Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Jaxon\\OneDrive\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Program.cs",
+              "RelativeDocumentMoniker": "INTEXApp\\Program.cs",
+              "ToolTip": "C:\\Users\\Jaxon\\OneDrive\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Program.cs",
+              "RelativeToolTip": "INTEXApp\\Program.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAqwFoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T02:49:59.661Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MovieWatchlistController.cs",
+              "DocumentMoniker": "C:\\Users\\Jaxon\\OneDrive\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\MovieWatchlistController.cs",
+              "RelativeDocumentMoniker": "INTEXApp\\Controllers\\MovieWatchlistController.cs",
+              "ToolTip": "C:\\Users\\Jaxon\\OneDrive\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\MovieWatchlistController.cs",
+              "RelativeToolTip": "INTEXApp\\Controllers\\MovieWatchlistController.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAwwFUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T22:55:30.447Z"
             },
             {
               "$type": "Document",
@@ -103,19 +116,6 @@
               "ViewState": "AgIAAFYAAAAAAAAAAAAQwHMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-09T17:04:54.28Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Jaxon\\OneDrive\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Program.cs",
-              "RelativeDocumentMoniker": "INTEXApp\\Program.cs",
-              "ToolTip": "C:\\Users\\Jaxon\\OneDrive\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Program.cs",
-              "RelativeToolTip": "INTEXApp\\Program.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAqwFoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T02:49:59.661Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",

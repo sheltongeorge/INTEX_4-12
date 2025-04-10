@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, X } from 'lucide-react';
 import fallbackImage from '../assets/Fallback.png'; // adjust path if needed
 import { useContext } from 'react';
 import { UserContext } from './AuthorizeView'; // path might need to adjust
+import MovieOverlay from './MovieOverlay';
 
 
 const BLOB_STORAGE_URL = 'https://movieposterblob.blob.core.windows.net';
@@ -102,6 +103,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   const [similarMovies, setSimilarMovies] = useState<Movie[]>([]);
   const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
   const [isSliderReady, setIsSliderReady] = useState(false);
+
   
   const [movieRatings, setMovieRatings] = useState<
     Map<string, { avg: number; count: number }>
@@ -932,12 +934,16 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
                             <span className="button-tooltip">Add to Watchlist</span>
                           </button>
                           <button
-                            className="circular-button"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <span className="button-icon more-icon"></span>
-                            <span className="button-tooltip">More Details</span>
-                          </button>
+  className="circular-button"
+  onClick={(e) => {
+    e.stopPropagation();
+    handleMovieClick(movie); // Opens the overlay
+  }}
+>
+  <span className="button-icon more-icon"></span>
+  <span className="button-tooltip">More Details</span>
+</button>
+
                         </div>
                       </div>
                     </div>
@@ -961,67 +967,98 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
         ))
       ) : (
         // Fallback to regular movies carousel
-        <div className={`carousel-wrapper ${showOverlay ? 'overlay-active' : ''}`}>
-          {isSliderReady ? (
-            <div ref={sliderRef} className="keen-slider">
-              {movies.map((movie) => (
-                <div key={movie.showId} className="keen-slider__slide slide">
-                  <div
-                    className="poster-card"
-                    onClick={() => handleMovieClick(movie)}
-                  >
-                    <div className="poster-image-container">
-                      {posterErrors[movie.showId] ? (
-                        <div className="fallback-wrapper">
-                          <img
-                            src={fallbackImage}
-                            alt="Fallback"
-                            className="poster-image"
-                          />
-                          <div className="fallback-overlay-title">
-                            {movie.title}
-                          </div>
-                        </div>
-                      ) : (
-                        <img
-                          src={getPosterImageUrl(movie.title)}
-                          alt={movie.title}
-                          className="poster-image"
-                          onError={() =>
-                            setPosterErrors((prev) => ({
-                              ...prev,
-                              [movie.showId]: true,
-                            }))
-                          }
-                        />
-                      )}
-                    </div>
-                    <div className="hover-info">
-                      <h3 className="poster-title">{movie.title}</h3>
-                      <p className="poster-rating">Rating: {movie.rating}</p>
-                      <div className="action-buttons">
-                        <button
-                          className="circular-button"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <span className="button-icon plus-icon"></span>
-                          <span className="button-tooltip">Add to Watchlist</span>
-                        </button>
-                        <button
-                          className="circular-button"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <span className="button-icon more-icon"></span>
-                          <span className="button-tooltip">More Details</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+<div className={`carousel-wrapper ${showOverlay ? 'overlay-active' : ''}`}>
+  {isSliderReady ? (
+    <div ref={sliderRef} className="keen-slider">
+      {movies.map((movie) => (
+        <div key={movie.showId} className="keen-slider__slide slide">
+          <div className="poster-card" onClick={() => handleMovieClick(movie)}>
+            <div className="poster-image-container">
+              {posterErrors[movie.showId] ? (
+                <div className="fallback-wrapper">
+                  <img
+                    src={fallbackImage}
+                    alt="Fallback"
+                    className="poster-image"
+                  />
+                  <div className="fallback-overlay-title">{movie.title}</div>
                 </div>
-              ))}
+              ) : (
+                <img
+                  src={getPosterImageUrl(movie.title)}
+                  alt={movie.title}
+                  className="poster-image"
+                  onError={() =>
+                    setPosterErrors((prev) => ({
+                      ...prev,
+                      [movie.showId]: true,
+                    }))
+                  }
+                />
+              )}
             </div>
-          ) : (
-            <div className="loading-placeholder">Loading...</div>
+            <div className="hover-info">
+              <h3 className="poster-title">{movie.title}</h3>
+              <p className="poster-rating">Rating: {movie.rating}</p>
+              <div className="action-buttons">
+                <button
+                  className="circular-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+
+                    if (!user?.email || !movie?.showId) {
+                      alert("You must be logged in to use the watchlist.");
+                      return;
+                    }
+
+                    fetch(
+                      `https://localhost:7156/api/moviewatchlist/add/${encodeURIComponent(user.email)}`,
+                      {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify(movie.showId),
+                      }
+                    )
+                      .then((res) => {
+                        if (res.ok) {
+                          alert(`✅ Added "${movie.title}" to your watchlist!`);
+                        } else if (res.status === 409) {
+                          alert(`⚠️ "${movie.title}" is already in your watchlist.`);
+                        } else {
+                          alert('❌ Failed to add to watchlist.');
+                        }
+                      })
+                      .catch((err) => {
+                        console.error('Watchlist error:', err);
+                        alert('❌ An error occurred. Please try again.');
+                      });
+                  }}
+                >
+                  <span className="button-icon plus-icon"></span>
+                  <span className="button-tooltip">Add to Watchlist</span>
+                </button>
+                <button
+  className="circular-button"
+  onClick={(e) => {
+    e.stopPropagation();
+    handleMovieClick(movie);
+  }}
+>
+  <span className="button-icon more-icon"></span>
+  <span className="button-tooltip">More Details</span>
+</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <div className="loading-placeholder">Loading...</div>
           )}
           <button
             className="arrow left-arrow"
@@ -1038,209 +1075,9 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
         </div>
       )}
 
-      {/* Keep the overlay outside the blurred area */}
-      {showOverlay && selectedMovie && (
-        <div className="movie-overlay">
-          <div className="overlay-content">
-            <button className="close-overlay" onClick={closeOverlay}>
-              <X size={24} />
-            </button>
-            <div className="overlay-poster">
-              <div className="poster-image-container">
-                <img
-                  src={getPosterImageUrl(selectedMovie.title)}
-                  alt={selectedMovie.title}
-                  className="poster-image"
-                  onError={(e) => {
-                    console.error(
-                      `Overlay image not found for: ${selectedMovie.title}`
-                    );
-                    e.currentTarget.onerror = null; // Prevent infinite loop
-                    e.currentTarget.src = fallbackImage; // Local fallback
-
-                    // Add overlay title when fallback image is used
-                    const container = e.currentTarget.parentElement;
-                    if (container) {
-                      const overlay = document.createElement('div');
-                      overlay.className = 'fallback-overlay-title';
-                      overlay.textContent = selectedMovie.title;
-                      container.appendChild(overlay);
-                    }
-                  }}
-                />
-              </div>
-            </div>
-            <div className="overlay-details">
-              <h2 className="overlay-title">{selectedMovie.title}</h2>
-              <div className="overlay-metadata">
-                {selectedMovie.releaseYear && (
-                  <span className="metadata-item">
-                    {selectedMovie.releaseYear}
-                  </span>
-                )}
-                {selectedMovie.duration && (
-                  <span className="metadata-item">
-                    {selectedMovie.duration}
-                  </span>
-                )}
-                {selectedMovie.rating && (
-                  <span className="metadata-item mpaa-rating">
-                    {selectedMovie.rating}
-                  </span>
-                )}
-                {selectedMovie.type && (
-                  <span className="metadata-item">{selectedMovie.type}</span>
-                )}
-              </div>
-              {/* User ratings */}
-              <div className="user-rating-container">
-                {selectedMovie && movieRatings.has(selectedMovie.showId) ? (
-                  <StarRating
-                    rating={movieRatings.get(selectedMovie.showId)?.avg}
-                    count={movieRatings.get(selectedMovie.showId)?.count}
-                  />
-                ) : (
-                  <div className="no-ratings">No ratings yet</div>
-                )}
-              </div>
-              {selectedMovie.description && (
-                <p className="overlay-description">
-                  {selectedMovie.description}
-                </p>
-              )}
-              {selectedMovie.director && (
-                <div className="overlay-info-section">
-                  <h3 className="info-title">Director</h3>
-                  <p>{selectedMovie.director}</p>
-                </div>
-              )}
-              {selectedMovie.cast && (
-                <div className="overlay-info-section">
-                  <h3 className="info-title">Cast</h3>
-                  <p>{selectedMovie.cast}</p>
-                </div>
-              )}
-              {selectedMovie.country && (
-                <div className="overlay-info-section">
-                  <h3 className="info-title">Country</h3>
-                  <p>{selectedMovie.country}</p>
-                </div>
-              )}{' '}
-              {/*literally just testing stuff*/}
-              {/* User rating input */}
-              <div className="rate-movie-section">
-                <h3 className="info-title">Rate this movie</h3>
-                <div className="rating-input">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <span
-                      key={star}
-                      className={`rate-star ${
-                        (hoverRating || userRating || 0) >= star ? 'active' : ''
-                      }`}
-                      onClick={() => setUserRating(star)}
-                      onMouseEnter={() => setHoverRating(star)}
-                      onMouseLeave={() => setHoverRating(null)}
-                    >
-                      ★
-                    </span>
-                  ))}
-                  {userRating && (
-                    <span className="user-rating-text">
-                      Your rating: {userRating}/5
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="overlay-actions">
-              <button
-  className="overlay-button"
-  onClick={() => {
-    if (!user?.email || !selectedMovie?.showId) {
-      alert("You must be logged in to use the watchlist.");
-      return;
-    }
-
-    fetch(
-      `https://localhost:7156/api/moviewatchlist/add/${encodeURIComponent(user.email)}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(selectedMovie.showId),
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          alert(`✅ Added "${selectedMovie.title}" to your watchlist!`);
-        } else if (res.status === 409) {
-          alert(`⚠️ "${selectedMovie.title}" is already in your watchlist.`);
-        } else {
-          alert('❌ Failed to add to watchlist.');
-        }
-      })
-      .catch((err) => {
-        console.error('Watchlist error:', err);
-        alert('❌ An error occurred. Please try again.');
-      });
-  }}
->
-  Add to Watchlist
-</button>
-
-<button
-  className="overlay-button"
-  onClick={() => {
-    if (!userRating || !selectedMovie) {
-      alert('Please select a rating first!');
-      return;
-    }
-
-    fetch('https://localhost:7156/api/movieratings', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        showId: selectedMovie.showId,
-        rating: userRating,
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          alert(`Your rating of ${userRating}/5 has been submitted!`);
-
-          // Refresh average ratings
-          fetchMovieRatings();
-
-          // Update local cache of user ratings
-          setUserMovieRatings((prev) => {
-            const newMap = new Map(prev);
-            newMap.set(selectedMovie.showId, userRating);
-            return newMap;
-          });
-        } else if (response.status === 401) {
-          alert('You must be logged in to rate movies.');
-        } else {
-          alert('Failed to submit rating. Please try again.');
-        }
-      })
-      .catch((error) => {
-        console.error('Error submitting rating:', error);
-        alert('Error submitting rating. Please try again.');
-      });
-  }}
->
-  Submit Rating
-</button>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+{showOverlay && selectedMovie && (
+  <MovieOverlay movie={selectedMovie} onClose={closeOverlay} />
+)}
     </div>
   );
 };

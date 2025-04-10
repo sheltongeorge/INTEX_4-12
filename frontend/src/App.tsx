@@ -48,7 +48,7 @@ const HomeRedirect = () => {
 function App() {
   return (
     <Router>
-      <AuthorizeView>
+      {/* <AuthorizeView> */}
       <Routes>
         <Route path="/" element={<HomeRedirect />} />
         <Route path="/recommendations" element={<AuthorizeView><RecommendationsPage /></AuthorizeView>} />
@@ -56,11 +56,11 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/test" element={<TestPoster />} />
         <Route path="/admin" element={<AdminMoviesPage/>} />
-        <Route path="/carousel" element={<MovieCarousel />} />
+        <Route path="/carousel" element={<AuthorizeView><MovieCarousel/></AuthorizeView> } />
         <Route path="/movies" element={<MoviesPage />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<AuthorizeView><Profile /></AuthorizeView>} />
       </Routes>
-      </AuthorizeView>
+      {/* </AuthorizeView> */}
     </Router>
   );
 }

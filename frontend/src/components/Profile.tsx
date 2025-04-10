@@ -5,6 +5,8 @@ import fallbackImage from '../assets/Fallback.png';
 import './Profile.css';
 import './MovieCarousel.css';
 import Header from '../components/header';
+import MovieOverlay from '../components/MovieOverlay'; // adjust path if needed
+
 
 const BLOB_STORAGE_URL = 'https://movieposterblob.blob.core.windows.net';
 const BLOB_SAS_TOKEN =
@@ -48,6 +50,7 @@ type WatchlistMovie = {
 const RatingCard = ({ rating, onClick }: { rating: UserRating; onClick: () => void }) => {
   const [isFallback, setIsFallback] = useState(false);
 
+
   return (
     <div className="rating-card" onClick={onClick} style={{ cursor: 'pointer' }}>
       <div className="poster-thumbnail">
@@ -71,23 +74,8 @@ const RatingCard = ({ rating, onClick }: { rating: UserRating; onClick: () => vo
   );
 };
 
-const MovieOverlay = ({ movie, closeOverlay }: { movie: WatchlistMovie | UserRating; closeOverlay: () => void }) => (
-  <div className="movie-overlay">
-    <div className="overlay-content">
-      <button className="close-overlay" onClick={closeOverlay}>
-        <X size={24} />
-      </button>
-      <div className="overlay-poster">
-        <img src={getPosterImageUrl(movie.title)} alt={movie.title} onError={(e) => (e.currentTarget.src = fallbackImage)} />
-      </div>
-      <div className="overlay-details">
-        <h2>{movie.title}</h2>
-        {'rating' in movie && typeof movie.rating === 'number' && movie.rating > 0 && <StarRatingDisplay rating={movie.rating} />}
-        <p>{'description' in movie ? movie.description : 'No description available.'}</p>
-      </div>
-    </div>
-  </div>
-);
+
+
 
 const Profile = () => {
   const user = useContext(UserContext);
@@ -95,6 +83,7 @@ const Profile = () => {
   const [watchlist, setWatchlist] = useState<WatchlistMovie[]>([]);
   const [showOverlay, setShowOverlay] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<WatchlistMovie | UserRating | null>(null);
+    const [userRating, setUserRating] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -117,7 +106,16 @@ const Profile = () => {
       <h1 className="profile-header">Your Ratings</h1>
       <div className="ratings-grid">
         {ratings.map((r, i) => (
-          <RatingCard key={i} rating={r} onClick={() => { setSelectedMovie(r); setShowOverlay(true); }} />
+          <RatingCard
+          key={i}
+          rating={r}
+          onClick={() => {
+            setSelectedMovie(r);
+            setUserRating(r.rating); // preload the existing rating
+            setShowOverlay(true);
+          }}
+        />
+        
         ))}
       </div>
 
@@ -127,12 +125,34 @@ const Profile = () => {
           <RatingCard
             key={i}
             rating={{ ...movie, rating: 0 }}
-            onClick={() => { setSelectedMovie(movie); setShowOverlay(true); }}
+            onClick={() => {
+              setSelectedMovie(movie);
+              setUserRating(null); // reset for unrated watchlist items
+              setShowOverlay(true);
+            }}
+            
           />
         ))}
       </div>
 
-      {showOverlay && selectedMovie && <MovieOverlay movie={selectedMovie} closeOverlay={() => setShowOverlay(false)} />}
+      {showOverlay && selectedMovie && (() => {
+  const normalizedMovie = {
+    showId: selectedMovie.showId,
+    title: selectedMovie.title,
+    rating: typeof selectedMovie.rating === 'string' ? selectedMovie.rating : 'NR',
+    description: 'description' in selectedMovie ? selectedMovie.description ?? '' : '',
+  };
+
+  return (
+    <MovieOverlay
+      movie={normalizedMovie}
+      onClose={() => setShowOverlay(false)}
+      initialRating={userRating}
+    />
+  );
+})()}
+
+
     </div>
     </div>
   );
