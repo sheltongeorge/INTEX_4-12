@@ -155,25 +155,25 @@ const MoviesPage: React.FC = () => {
     <div>
       <Header />
       <div className="overflow-y-auto hide-scrollbar" style={{ height: '100vh', padding: '0 16px' }}>
-        <h1 className="text-2xl font-bold mt-4 mb-6 text-white">
+        <h1 className="text-2xl font-bold mt-4 mb-3 text-white">
           {userName ? `Welcome back, ${userName}!` : 'Welcome to CineNiche!'}
         </h1>
 
-        <h2 className="text-xl font-bold mb-2 text-white">Top Picks For You</h2>
+        <h2 className="text-xl font-bold mb-1 text-white">Top Picks For You</h2>
         <div className="overflow-x-auto overflow-y-hidden hide-scrollbar" style={{ height: 'auto' }}>
           <MovieCarousel categoryTitle="Top Picks for You" categoryType="personal" />
         </div>
 
-        <br /><br />
+        <br />
 
-        <h2 className="text-xl font-bold mb-2 text-white">Recently Added</h2>
+        <h2 className="text-xl font-bold mb-1 text-white">Recently Added</h2>
         <div className="overflow-x-auto overflow-y-hidden hide-scrollbar" style={{ height: 'auto' }}>
           <MovieCarousel categoryTitle="Recently Added" categoryType="recently_added" />
         </div>
 
-        <br /><br />
+        <br />
 
-        <h2 className="text-xl font-bold mb-2 text-white">Top Reviewed</h2>
+        <h2 className="text-xl font-bold mb-1 text-white">Top Reviewed</h2>
         <div className="overflow-x-auto overflow-y-hidden hide-scrollbar" style={{ height: 'auto' }}>
           <MovieCarousel categoryTitle="Top Reviewed" categoryType="top_rated" />
         </div>
@@ -182,8 +182,8 @@ const MoviesPage: React.FC = () => {
         {topRatedMovies.map((movie, index) => (
           recommendationsMap[movie.title] && recommendationsMap[movie.title].length > 0 && (
             <React.Fragment key={movie.showId}>
-              <br /><br />
-              <h2 className="text-xl font-bold mb-2 text-white">
+              <br />
+              <h2 className="text-xl font-bold mb-1 text-white">
                 Because you liked "{movie.title}"
               </h2>
               <div className="overflow-x-auto overflow-y-hidden hide-scrollbar" style={{ height: 'auto' }}>
