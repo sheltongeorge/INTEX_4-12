@@ -1,0 +1,76 @@
+/* Container around the whole results area */
+.search-results-container {
+    padding: 20px 40px;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  
+  /* Responsive grid of movie cards */
+  .search-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 24px;
+    justify-items: center;
+  }
+  
+  /* Individual movie card */
+  .movie-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 200px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .movie-card:hover {
+    transform: scale(1.03);
+  }
+  
+  /* Poster container - maintain 2:3 ratio */
+  .movie-poster-container {
+    position: relative;
+    width: 100%;
+    padding-top: 150%;
+    background-color: #2a2a2a;
+  }
+  
+  .movie-poster-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Fallback overlay text */
+  .poster-fallback-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  /* Movie title below the poster */
+  .movie-title-text {
+    padding: 10px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  

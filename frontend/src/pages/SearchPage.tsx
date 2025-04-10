@@ -6,6 +6,9 @@ import fallbackImage from '../assets/Fallback.png';
 import { MovieTitle } from '../types/MovieTitle';
 import '../components/MovieCarousel.css';
 import MovieOverlay from '../components/MovieOverlay';
+import './SearchPage.css';
+
+
 
 const genres = [
   'Action & Adventure',
@@ -36,7 +39,9 @@ const SearchPage: React.FC = () => {
   const [genre, setGenre] = useState('');
   const [movies, setMovies] = useState<MovieTitle[]>([]);
   const [posterErrors, setPosterErrors] = useState<Record<string, boolean>>({});
-
+  const [selectedMovie, setSelectedMovie] = useState<MovieTitle | null>(null);
+  const [showOverlay, setShowOverlay] = useState(false);
+  
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const genreFromUrl = params.get('genre');
@@ -118,46 +123,68 @@ const SearchPage: React.FC = () => {
         </button>
       </div>
 
-      <div className="p-4">
-        <h2 className="text-lg font-bold mb-4">Search Results</h2>
-        {movies.length === 0 ? (
-          <p>No movies found.</p>
-        ) : (
-          <div className="grid grid-cols-5 gap-6">
-            {movies.map((movie) => (
-              <div key={movie.showId} className="flex flex-col items-center">
-                <div className="relative w-full pb-[150%] bg-gray-800 rounded overflow-hidden">
-                  <img
-                    src={
-                      posterErrors[movie.showId]
-                        ? fallbackImage
-                        : getPosterImageUrl(movie.title)
-                    }
-                    alt={movie.title}
-                    className="absolute top-0 left-0 w-full h-full object-cover"
-                    onError={() =>
-                      setPosterErrors((prev) => ({
-                        ...prev,
-                        [movie.showId]: true,
-                      }))
-                    }
-                  />
-                  {posterErrors[movie.showId] && (
-                    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                      <span className="text-white font-bold text-center px-2 bg-black bg-opacity-60 rounded">
-                        {movie.title}
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <span className="mt-2 text-sm text-center">{movie.title}</span>
-              </div>
-            ))}
+      <div className="search-results-container">
+  <h2 className="text-lg font-bold mb-4">Search Results</h2>
+  {movies.length === 0 ? (
+    <p>No movies found.</p>
+  ) : (
+    <div className="search-grid">
+      {showOverlay && selectedMovie && (
+  <MovieOverlay
+    movie={{
+      showId: selectedMovie.showId,
+      title: selectedMovie.title,
+      rating: selectedMovie.rating ?? 'NR',
+      description: selectedMovie.description ?? '',
+      director: selectedMovie.director,
+      cast: selectedMovie.cast,
+      releaseYear: selectedMovie.releaseYear,
+      duration: selectedMovie.duration,
+      country: selectedMovie.country,
+      type: selectedMovie.type,
+    }}
+    onClose={() => setShowOverlay(false)}
+    initialRating={null}
+  />
+)}
+
+      {movies.map((movie) => (
+        <div
+  key={movie.showId}
+  className="movie-card"
+  onClick={() => {
+    setSelectedMovie(movie);
+    setShowOverlay(true);
+  }}
+>
+
+          <div className="movie-poster-container">
+            <img
+              src={
+                posterErrors[movie.showId]
+                  ? fallbackImage
+                  : getPosterImageUrl(movie.title)
+              }
+              alt={movie.title}
+              onError={() =>
+                setPosterErrors((prev) => ({
+                  ...prev,
+                  [movie.showId]: true,
+                }))
+              }
+            />
+            {posterErrors[movie.showId] && (
+              <div className="poster-fallback-title">{movie.title}</div>
+            )}
           </div>
-        )}
-      </div>
+          <div className="movie-title-text">{movie.title}</div>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
     </div>
   );
-};
+}
 
 export default SearchPage;
