@@ -57,6 +57,15 @@ overflow: auto;
 html, body, #root {
   height: 100%;
   overflow: auto !important;
+
+  scrollbar-width: none;         /* Firefox */
+  -ms-overflow-style: none; 
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+#root::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Edge */
 }
 
 
