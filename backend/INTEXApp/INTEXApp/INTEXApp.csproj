@@ -68,6 +68,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+<ItemGroup>
     <Content Remove="wwwroot\MoviePosters\**\*" />
 </ItemGroup>
 
