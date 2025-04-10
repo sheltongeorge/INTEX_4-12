@@ -40,9 +40,21 @@ html, body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
+overflow: auto;
   /* REMOVE display: flex; and place-items: center */
+}
+
+.overlay-active,
+.no-scroll,
+.lock-scroll {
+  overflow: hidden;
+  height: 100vh;
+  position: fixed;
+}
+
+html, body, #root {
+  height: 100%;
+  overflow: auto !important;
 }
 
 

@@ -9,6 +9,8 @@ namespace INTEXApp.Data
         public DbSet<MovieTitle> MoviesTitles { get; set; }
         public DbSet<MovieUser> MoviesUsers { get; set; }
         public DbSet<MovieRating> MoviesRatings { get; set; }
+        public DbSet<MovieWatchlist> MovieWatchlist { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -61,6 +63,10 @@ namespace INTEXApp.Data
                 entity.Property(e => e.TVComedies).HasColumnName("TV Comedies");
                 entity.Property(e => e.TVDramas).HasColumnName("TV Dramas");
             });
+
+            modelBuilder.Entity<MovieWatchlist>()
+    .HasKey(w => new { w.UserId, w.ShowId });
+
 
             // MovieUser mapping
             modelBuilder.Entity<MovieUser>(entity =>

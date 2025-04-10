@@ -16,6 +16,7 @@ function App() {
   return (
 
     <Router>
+      <AuthorizeView>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/recommendations" element={<RecommendationsPage />} />
@@ -25,9 +26,10 @@ function App() {
         <Route path="/admin" element={<AdminMoviesPage/>} />
         <Route path="/carousel" element={<MovieCarousel />} />
         <Route path="/movies" element={<MoviesPage />} />
-        <Route path="/profile" element={    <AuthorizeView><Profile /></AuthorizeView>} />
+        <Route path="/profile" element={<Profile />} />
 
       </Routes>
+      </AuthorizeView>
     </Router>
   );
 }

@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 export interface User {
   email: string;
   roles: string[];
+  userId: number;
 }
 
 export const UserContext = createContext<User | null>(null);
@@ -11,7 +12,7 @@ export const UserContext = createContext<User | null>(null);
 function AuthorizeView(props: { children: React.ReactNode }) {
   const [authorized, setAuthorized] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const [user, setUser] = useState<User>({ email: '', roles: [] });
+  const [user, setUser] = useState<User>({ email: '', roles: [], userId: 0 });
 
   useEffect(() => {
     async function fetchWithRetry(url: string, options: any) {
@@ -26,7 +27,7 @@ function AuthorizeView(props: { children: React.ReactNode }) {
         const data = await response.json();
 
         if (data.email) {
-          setUser({ email: data.email, roles: data.roles || [] });
+          setUser({ email: data.email, roles: data.roles || [], userId: data.userId });
           setAuthorized(true);
         } else {
           throw new Error('Invalid user session');

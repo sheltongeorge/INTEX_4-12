@@ -4,6 +4,9 @@ import 'keen-slider/keen-slider.min.css';
 import './MovieCarousel.css';
 import { ArrowLeft, ArrowRight, X } from 'lucide-react';
 import fallbackImage from '../assets/Fallback.png'; // adjust path if needed
+import { useContext } from 'react';
+import { UserContext } from './AuthorizeView'; // path might need to adjust
+
 
 const BLOB_STORAGE_URL = 'https://movieposterblob.blob.core.windows.net';
 const BLOB_SAS_TOKEN =
@@ -17,6 +20,8 @@ const getPosterImageUrl = (movieTitle: string): string => {
 
   return `${BLOB_STORAGE_URL}/${CONTAINER_NAME}/${blobPath}?${BLOB_SAS_TOKEN}`;
 };
+
+
 
 type Movie = {
   showId: string;
@@ -78,6 +83,9 @@ export const MovieCarousel = () => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [userRating, setUserRating] = useState<number | null>(null);
   const [posterErrors, setPosterErrors] = useState<Record<string, boolean>>({});
+  const user = useContext(UserContext);
+  console.log("🚨 UserContext in Carousel:", user);
+
   const [movieRatings, setMovieRatings] = useState<
     Map<string, { avg: number; count: number }>
   >(new Map());
@@ -89,7 +97,9 @@ export const MovieCarousel = () => {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
-    slides: { perView: 5, spacing: 16 },
+    slides: { perView: 6, spacing: 10 },
+    drag: true,
+    rubberband: true,
     breakpoints: {
       '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
       '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
@@ -180,6 +190,8 @@ export const MovieCarousel = () => {
     }
   };
 
+  
+
   // Fetch a single user rating for a specific movie
   const fetchUserRatingForMovie = async (showId: string) => {
     setIsLoadingUserRating(true);
@@ -246,7 +258,7 @@ export const MovieCarousel = () => {
     const fetchMovies = async () => {
       try {
         const response = await fetch(
-          'https://localhost:7156/api/moviestitles/allmovies',
+          'https://localhost:7156/api/moviestitles',
           {
             credentials: 'include',
           }
@@ -274,7 +286,8 @@ export const MovieCarousel = () => {
   useEffect(() => {
     if (movies.length > 0 && isLoadingRatings) {
       fetchMovieRatings();
-      fetchUserRatings(); // Also fetch user's own ratings
+      fetchUserRatings();
+
     }
   }, [movies, isLoadingRatings]);
   return (
@@ -322,20 +335,59 @@ export const MovieCarousel = () => {
                     <h3 className="poster-title">{movie.title}</h3>
                     <p className="poster-rating">Rating: {movie.rating}</p>
                     <div className="action-buttons">
-                      <button
+                      {/* <button
                         className="circular-button"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <span className="button-icon plus-icon"></span>
                         <span className="button-tooltip">Add to Watchlist</span>
-                      </button>
+                      </button> */}
                       <button
-                        className="circular-button"
-                        onClick={(e) => e.stopPropagation()}
-                      >
+
+  className="circular-button"
+  onClick={(e) => {
+    e.stopPropagation();
+
+    if (!user?.email) {
+      alert("You must be logged in to use the watchlist.");
+      return;
+    }
+
+    fetch(
+      `https://localhost:7156/api/moviewatchlist/add/${encodeURIComponent(user.email)}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(movie.showId),
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          alert(`✅ Added "${movie.title}" to your watchlist!`);
+        } else if (res.status === 409) {
+          alert(`⚠️ "${movie.title}" is already in your watchlist.`);
+        } else {
+          alert('❌ Failed to add to watchlist.');
+        }
+      })
+      .catch((err) => {
+        console.error('Watchlist error:', err);
+        alert('❌ An error occurred. Please try again.');
+      });
+  }}
+>
+  <span className="button-icon plus-icon"></span>
+  <span className="button-tooltip">Add to Watchlist</span>
+</button>
+
+
+
                         <span className="button-icon more-icon"></span>
                         <span className="button-tooltip">More Details</span>
-                      </button>
+                      
                     </div>
                   </div>
                 </div>
@@ -473,60 +525,90 @@ export const MovieCarousel = () => {
                 </div>
               </div>
               <div className="overlay-actions">
-                <button className="overlay-button">Add to Watchlist</button>
-                <button
-                  className="overlay-button"
-                  onClick={() => {
-                    if (userRating && selectedMovie) {
-                      // Submit the rating to our real backend API
-                      fetch('https://localhost:7156/api/movieratings', {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json',
-                        },
-                        credentials: 'include',
-                        body: JSON.stringify({
-                          showId: selectedMovie.showId,
-                          rating: userRating,
-                        }),
-                      })
-                        .then((response) => {
-                          if (response.ok) {
-                            alert(
-                              `Your rating of ${userRating}/5 has been submitted!`
-                            );
+              <button
+  className="overlay-button"
+  onClick={() => {
+    if (!user?.email || !selectedMovie?.showId) {
+      alert("You must be logged in to use the watchlist.");
+      return;
+    }
 
-                            // After submission, refresh all ratings to get the updated averages
-                            fetchMovieRatings();
+    fetch(
+      `https://localhost:7156/api/moviewatchlist/add/${encodeURIComponent(user.email)}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(selectedMovie.showId),
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          alert(`✅ Added "${selectedMovie.title}" to your watchlist!`);
+        } else if (res.status === 409) {
+          alert(`⚠️ "${selectedMovie.title}" is already in your watchlist.`);
+        } else {
+          alert('❌ Failed to add to watchlist.');
+        }
+      })
+      .catch((err) => {
+        console.error('Watchlist error:', err);
+        alert('❌ An error occurred. Please try again.');
+      });
+  }}
+>
+  Add to Watchlist
+</button>
 
-                            // Update our local cache of user ratings
-                            setUserMovieRatings((prev) => {
-                              const newMap = new Map(prev);
-                              newMap.set(selectedMovie.showId, userRating);
-                              return newMap;
-                            });
-                          } else {
-                            // Handle error responses by status code
-                            if (response.status === 401) {
-                              alert('You must be logged in to rate movies.');
-                            } else {
-                              alert(
-                                'Failed to submit rating. Please try again.'
-                              );
-                            }
-                          }
-                        })
-                        .catch((error) => {
-                          console.error('Error submitting rating:', error);
-                          alert('Error submitting rating. Please try again.');
-                        });
-                    } else {
-                      alert('Please select a rating first!');
-                    }
-                  }}
-                >
-                  Submit Rating
-                </button>
+<button
+  className="overlay-button"
+  onClick={() => {
+    if (!userRating || !selectedMovie) {
+      alert('Please select a rating first!');
+      return;
+    }
+
+    fetch('https://localhost:7156/api/movieratings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        showId: selectedMovie.showId,
+        rating: userRating,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert(`Your rating of ${userRating}/5 has been submitted!`);
+
+          // Refresh average ratings
+          fetchMovieRatings();
+
+          // Update local cache of user ratings
+          setUserMovieRatings((prev) => {
+            const newMap = new Map(prev);
+            newMap.set(selectedMovie.showId, userRating);
+            return newMap;
+          });
+        } else if (response.status === 401) {
+          alert('You must be logged in to rate movies.');
+        } else {
+          alert('Failed to submit rating. Please try again.');
+        }
+      })
+      .catch((error) => {
+        console.error('Error submitting rating:', error);
+        alert('Error submitting rating. Please try again.');
+      });
+  }}
+>
+  Submit Rating
+</button>
+
               </div>
             </div>
           </div>
