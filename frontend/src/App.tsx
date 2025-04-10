@@ -22,7 +22,7 @@ function App() {
         <Route path="/admin" element={<AdminMoviesPage/>} />
         <Route path="/carousel" element={<MovieCarousel />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage/>} />
-
+        
       </Routes>
     </Router>
   );
