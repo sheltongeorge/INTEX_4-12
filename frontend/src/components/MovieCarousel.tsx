@@ -39,16 +39,6 @@ type Movie = {
   recommendationPosition?: number; // Position in recommendation list
 };
 
-// Type for Recommendation2Data data from backend
-type Recommendation2Data = {
-  id: number;
-  user_id: number;
-  category: string;
-  position: number;
-  show_id: string;
-  title: string;
-  recommendationPosition?: number; // Position in recommendation list
-};
 
 // Type for Recommendation2Data data from backend
 type Recommendation2Data = {
@@ -100,12 +90,6 @@ const StarRating = ({ rating, count }: { rating?: number; count?: number }) => {
   );
 };
 
-export interface MovieCarouselProps {
-  categoryTitle?: string;
-  categoryType?: string;
-}
-
-export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProps) => {
 export interface MovieCarouselProps {
   categoryTitle?: string;
   categoryType?: string;
@@ -215,12 +199,9 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   const fetchUserRatings = async () => {
     // Create controller for timeout
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
     
     try {
-      // Add timeout to the fetch request using AbortController
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
       const response = await fetch(
         'https://localhost:7156/api/movieratings/user',
@@ -230,28 +211,8 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
           headers: {
             Accept: 'application/json',
           },
-          signal: controller.signal,
-          headers: {
-            Accept: 'application/json',
-          },
         }
       );
-
-      // Clear the timeout since we got a response
-      clearTimeout(timeoutId);
-
-      // Handle specific HTTP status codes
-      if (response.status === 400) {
-        console.warn(
-          'Server returned 400 Bad Request for user ratings. This may be expected if no user is logged in.'
-        );
-        return; // Exit silently without showing an error to the user
-      }
-
-      if (response.status === 401) {
-        // User is not logged in, so we don't show any error
-        return;
-      }
 
       // Clear the timeout since we got a response
       clearTimeout(timeoutId);
@@ -276,12 +237,6 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
         throw new Error(
           `Server error: ${response.status} ${response.statusText}`
         );
-        console.warn(
-          `Server responded with status: ${response.status} ${response.statusText}`
-        );
-        throw new Error(
-          `Server error: ${response.status} ${response.statusText}`
-        );
       }
 
       const ratings: MovieRatingData[] = await response.json();
@@ -293,17 +248,6 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
 
       setUserMovieRatings(userRatingsMap);
     } catch (error) {
-      // More detailed error logging
-      if (error instanceof DOMException && error.name === 'AbortError') {
-        console.error('Request timeout fetching user ratings');
-      } else if (error instanceof TypeError) {
-        console.error(
-          'Network error fetching user ratings: Possibly CORS issue or server unavailable'
-        );
-      } else {
-        console.error('Error fetching user ratings:', error);
-      }
-      // Don't update state in case of error - keep existing ratings if any
       // More detailed error logging
       if (error instanceof DOMException && error.name === 'AbortError') {
         console.error('Request timeout fetching user ratings');
@@ -336,7 +280,12 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
           if (userData && userData.id) {
             userIdForRecommendations = userData.id;
             setUserId(userData.id);
+            console.log('Successfully authenticated user with ID:', userData.id);
+          } else {
+            console.warn('User authenticated but no ID found in response:', userData);
           }
+        } else {
+          console.warn(`Authentication failed with status: ${userResponse.status}`);
         }
       } catch (userError) {
         console.error('Error fetching user data:', userError);
@@ -346,6 +295,8 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
       const recommendationsUrl = userIdForRecommendations
         ? `https://localhost:7156/api/Recommendations/UserRecommendations/${userIdForRecommendations}`
         : 'https://localhost:7156/api/Recommendations/AllRecommendations2';
+      
+      console.log('User ID for recommendations:', userIdForRecommendations, 'Using URL:', recommendationsUrl);
       
       // Fetch recommendations with the user ID if available
       const response = await fetch(
@@ -916,55 +867,36 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
     }
     
     // Also fetch movies based on category type
-    // Fetch recommendations but only for the personal type carousel
-    // This ensures the hook is always called in the same order
-    const shouldFetchRecommendations = categoryType === 'personal';
-    if (shouldFetchRecommendations) {
-      fetchRecommendationCategories();
-    }
-    
-    // Also fetch movies based on category type
     const fetchMovies = async () => {
       try {
         let endpoint = 'https://localhost:7156/api/moviestitles';
         
         // If we have a user ID and category type, use a more specific endpoint
         if (userId && categoryType) {
+          console.log(`Using user-specific endpoint for user ID: ${userId} and category: ${categoryType}`);
           switch(categoryType) {
             case 'personal':
               endpoint = `https://localhost:7156/api/MoviesTitles/UserRecommendations/${userId}`;
+              console.log(`Using personal recommendations endpoint for user ${userId}`);
               break;
             case 'trending':
               endpoint = 'https://localhost:7156/api/MoviesTitles/Trending';
+              console.log('Using trending recommendations endpoint');
               break;
             case 'similar':
               endpoint = `https://localhost:7156/api/MoviesTitles/UserSimilar/${userId}`;
+              console.log(`Using similar recommendations endpoint for user ${userId}`);
               break;
             default:
-              // Use default endpoint
+              console.log(`Using default endpoint for category type: ${categoryType}`);
               break;
           }
-        }
-        
-        console.log(`Fetching movies from ${endpoint} for category: ${categoryTitle || 'default'}`);
-        
-        let endpoint = 'https://localhost:7156/api/moviestitles';
-        
-        // If we have a user ID and category type, use a more specific endpoint
-        if (userId && categoryType) {
-          switch(categoryType) {
-            case 'personal':
-              endpoint = `https://localhost:7156/api/MoviesTitles/UserRecommendations/${userId}`;
-              break;
-            case 'trending':
-              endpoint = 'https://localhost:7156/api/MoviesTitles/Trending';
-              break;
-            case 'similar':
-              endpoint = `https://localhost:7156/api/MoviesTitles/UserSimilar/${userId}`;
-              break;
-            default:
-              // Use default endpoint
-              break;
+        } else {
+          if (!userId) {
+            console.warn('No user ID available for personalized recommendations');
+          }
+          if (!categoryType) {
+            console.log('No category type specified, using default endpoint');
           }
         }
         
@@ -972,13 +904,11 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
         
         const response = await fetch(
           endpoint,
-          endpoint,
           {
             credentials: 'include',
           }
         );
         const data = await response.json();
-        setMovies(Array.isArray(data) ? data.slice(0, 30) : []);
         setMovies(Array.isArray(data) ? data.slice(0, 30) : []);
         setIsLoadingRatings(true);
 
@@ -995,7 +925,6 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
     };
 
     fetchMovies();
-  }, [categoryType, userId]);
   }, [categoryType, userId]);
 
   // Fetch ratings after movies are loaded
