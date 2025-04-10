@@ -240,21 +240,46 @@ export const MovieCarousel = () => {
     setIsLoadingSimilar(true);
     console.log(`Fetching recommendations for movie: "${movieTitle}"`);
     try {
-      const response = await fetch(
-        'https://localhost:7156/api/Recommendations/AllRecommendations1',
-        {
-          credentials: 'include',
+      // First try to get all recommendations
+      let allRecommendations = [];
+      try {
+        const response = await fetch(
+          'https://localhost:7156/api/Recommendations/AllRecommendations1',
+          {
+            credentials: 'include',
+            // Add a timeout to prevent long waiting times if server is down
+            signal: AbortSignal.timeout(3000) // 3 second timeout
+          }
+        );
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch similar movies');
         }
-      );
-      if (!response.ok) {
-        throw new Error('Failed to fetch similar movies');
-      }
 
-      const allRecommendations = await response.json();
-      console.log(
-        'API response received, recommendations count:',
-        allRecommendations.length
-      );
+        allRecommendations = await response.json();
+        console.log(
+          'API response received, recommendations count:',
+          allRecommendations.length
+        );
+      } catch (apiError) {
+        console.error("API connection error:", apiError);
+        console.log("Using mock recommendations data instead");
+        
+        // Provide mock recommendation data when API is not available
+        allRecommendations = [
+          {
+            if_you_liked: movieTitle,
+            recommendation1: "The Shawshank Redemption",
+            recommendation2: "The Godfather",
+            recommendation3: "Pulp Fiction",
+            recommendation4: "The Dark Knight",
+            recommendation5: "Fight Club",
+            recommendation6: "Forrest Gump",
+            recommendation7: "Inception",
+            recommendation8: "The Matrix"
+          }
+        ];
+      }
 
       // Log all titles in database for debugging
       console.log('Movie database contains:', movies.length, 'movies');
@@ -331,161 +356,140 @@ export const MovieCarousel = () => {
 
         console.log('Recommended titles found:', recommendedTitles);
 
-        // Create a normalized map for better title matching
-        const movieMap = new Map<string, Movie>();
-        
-        // Add each movie to the map with different normalized versions of the title
-        movies.forEach((movie) => {
-          if (!movie.title) return;
+        // Use the backend endpoint to find movies by titles
+        try {
+          // Filter out empty titles
+          const validTitles = recommendedTitles.filter(t => t && t.trim() !== '');
           
-          const title = movie.title.toLowerCase().trim();
-          
-          // Original title
-          movieMap.set(title, movie);
-          
-          // Title without articles
-          const noArticles = title.replace(/^(the|a|an) /, '');
-          if (noArticles !== title) {
-            movieMap.set(noArticles, movie);
+          if (validTitles.length === 0) {
+            console.warn("No valid recommendation titles to search for");
+            throw new Error("No valid recommendation titles");
           }
           
-          // Title without punctuation
-          const noPunct = title.replace(/[^\w\s]/g, '').trim();
-          if (noPunct !== title) {
-            movieMap.set(noPunct, movie);
-          }
-        });
-        
-        // Match recommendations to movies in our database
-        const recommendedMovies: Movie[] = [];
-        const matchedIds = new Set<string>(); // Avoid duplicates
-        
-        recommendedTitles.forEach((title) => {
-          // Skip empty titles
-          if (!title || title.trim() === '') return;
+          console.log("Sending titles to backend for matching:", validTitles);
           
-          // Normalize the title for matching
-          const normalizedTitle = title.toLowerCase().trim();
+          // Use the new FindByTitles endpoint we created
+          const titlesResponse = await fetch(
+            'https://localhost:7156/api/MoviesTitles/FindByTitles',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              credentials: 'include',
+              body: JSON.stringify(validTitles)
+            }
+          );
           
-          // Try direct lookup with normalized variants
-          let match = movieMap.get(normalizedTitle);
-          
-          // Try without articles if no match
-          if (!match) {
-            const noArticles = normalizedTitle.replace(/^(the|a|an) /, '');
-            match = movieMap.get(noArticles);
+          if (!titlesResponse.ok) {
+            throw new Error(`Server returned ${titlesResponse.status}: ${titlesResponse.statusText}`);
           }
           
-          // Try without punctuation if still no match
-          if (!match) {
-            const noPunct = normalizedTitle.replace(/[^\w\s]/g, '').trim();
-            match = movieMap.get(noPunct);
+          const matchResult = await titlesResponse.json();
+          console.log("Backend title matching results:", matchResult);
+          
+          // Get the matched movies from the backend response
+          const foundMovies: Movie[] = matchResult.foundMovies || [];
+          const notFoundTitles = matchResult.notFoundTitles || [];
+          
+          if (notFoundTitles.length > 0) {
+            console.warn("Some titles couldn't be matched:", notFoundTitles.join(", "));
           }
           
-          // If still no match, try to find the movie with most word overlap
-          if (!match) {
-            const words = normalizedTitle.split(/\s+/);
-            // Start with no best match
-            let bestScore = 0;
+          if (foundMovies.length === 0) {
+            console.warn("No movies matched by the backend, falling back to client-side matching");
+            throw new Error("No movies matched by backend");
+          }
+          
+          // Log the matched movies
+          console.log(`Backend found ${foundMovies.length} matching movies for recommendations`);
+          
+          // Reset poster errors for all recommended movies
+          const resetErrorsObj: Record<string, boolean> = {};
+          foundMovies.forEach((movie) => {
+            resetErrorsObj[movie.showId] = false;
+            console.log(`Recommended movie from backend: ${movie.title}, ID: ${movie.showId}`);
+          });
+          
+          // Update the posterErrors state with all reset values at once
+          setPosterErrors((prev) => ({
+            ...prev,
+            ...resetErrorsObj
+          }));
+          
+          // Set the similar movies state to display these movies
+          setSimilarMovies(foundMovies);
+          
+        } catch (matchError) {
+          console.error("Error matching with backend:", matchError);
+          console.log("Falling back to client-side matching");
+          
+          // Fallback to client-side matching
+          const movieMap = new Map<string, Movie>();
+          
+          // Simple mapping of titles to movies for fallback
+          movies.forEach(movie => {
+            if (movie.title) {
+              movieMap.set(movie.title.toLowerCase().trim(), movie);
+            }
+          });
+          
+          // Simple matching algorithm for fallback
+          const matchedMovies: Movie[] = [];
+          const matchedIds = new Set<string>();
+          
+          for (const title of recommendedTitles) {
+            if (!title || title.trim() === '') continue;
             
-            // Find the movie with the most word matches
-            for (const movie of movies) {
-              if (!movie.title) continue;
-              
-              const movieWords = movie.title.toLowerCase().split(/\s+/);
-              let score = 0;
-              
-              // Count matching words
-              for (const word of words) {
-                if (word.length > 2 && movieWords.includes(word)) {
-                  score++;
-                }
-              }
-              
-              // Also check if one title contains the other
-              if (normalizedTitle.includes(movie.title.toLowerCase()) ||
-                  movie.title.toLowerCase().includes(normalizedTitle)) {
-                score += 2;
-              }
-              
-              // If this movie has a better score than our previous best
-              if (score > bestScore) {
-                bestScore = score;
-                match = movie; // Set as our match directly
-              }
+            const normalizedTitle = title.toLowerCase().trim();
+            
+            // Try exact match
+            let foundMovie = movieMap.get(normalizedTitle);
+            
+            // If no exact match, try partial matching
+            if (!foundMovie) {
+              foundMovie = movies.find(m => 
+                m.title && (
+                  m.title.toLowerCase().includes(normalizedTitle) || 
+                  normalizedTitle.includes(m.title.toLowerCase())
+                )
+              );
             }
             
-            // Log the match if found through fuzzy matching
-            if (bestScore > 0 && match) {
-              console.log(`Found fuzzy match for "${title}": ${match.title} (score: ${bestScore})`);
+            if (foundMovie && !matchedIds.has(foundMovie.showId)) {
+              matchedMovies.push(foundMovie);
+              matchedIds.add(foundMovie.showId);
+              console.log(`Matched movie in fallback: ${foundMovie.title}`);
             }
           }
           
-          // Add the match if found and not already added
-          if (match && !matchedIds.has(match.showId)) {
-            recommendedMovies.push(match);
-            matchedIds.add(match.showId);
-            console.log(`Added recommendation: ${match.title}`);
-          }
-        });
-        
-        console.log(`Found ${recommendedMovies.length} matching movies for recommendations`);
-
-        // Reset poster errors for all recommended movies
-        const resetErrorsObj: Record<string, boolean> = {};
-        recommendedMovies.forEach((movie) => {
-          resetErrorsObj[movie.showId] = false;
-        });
-        
-        // Update the posterErrors state with all reset values at once
-        setPosterErrors((prev) => ({
-          ...prev,
-          ...resetErrorsObj
-        }));
-
-        // Only use fallback if no recommended movies were found
-        if (recommendedMovies.length === 0) {
-          console.warn('No recommended movies found, using fallback random movies');
+          console.log(`Fallback matching found ${matchedMovies.length} movies`);
           
-          // Use random movies as fallback, excluding the current movie
-          const availableMovies = movies.filter(m => m.showId !== selectedMovie?.showId);
-          const shuffled = availableMovies.sort(() => 0.5 - Math.random());
-          const randomMovies = shuffled.slice(0, 8);
-          
-          // Also reset poster errors for random movies
-          const randomErrorsReset: Record<string, boolean> = {};
-          randomMovies.forEach(movie => {
-            randomErrorsReset[movie.showId] = false;
+          // Reset poster errors for matched movies
+          const resetErrorsObj: Record<string, boolean> = {};
+          matchedMovies.forEach(movie => {
+            resetErrorsObj[movie.showId] = false;
           });
           
           setPosterErrors(prev => ({
             ...prev,
-            ...randomErrorsReset
+            ...resetErrorsObj
           }));
           
-          // Use these instead
-          setSimilarMovies(randomMovies);
-        } else {
-          // Use the matched recommendations
-          setSimilarMovies(recommendedMovies);
+          setSimilarMovies(matchedMovies);
         }
-
-        // Force update the slider after a short delay
-        setTimeout(() => {
-          if (recommendationsInstanceRef.current) {
-            console.log('Updating recommendations slider');
-            recommendationsInstanceRef.current.update();
-          }
-        }, 100);
+        
       } else {
         console.log(`No recommendation object found for "${movieTitle}"`);
         
-        // Fallback for when no recommendation object is found
+        // If no recommendations found, just show some random movies as fallback
         const availableMovies = movies.filter(m => m.showId !== selectedMovie?.showId);
         const shuffled = availableMovies.sort(() => 0.5 - Math.random());
         const randomMovies = shuffled.slice(0, 8);
         
-        // Reset poster errors for fallback movies
+        console.log("Using random movies as recommendations fallback");
+        
+        // Reset poster errors for random movies
         const resetErrorsObj: Record<string, boolean> = {};
         randomMovies.forEach(movie => {
           resetErrorsObj[movie.showId] = false;
@@ -497,17 +501,37 @@ export const MovieCarousel = () => {
         }));
         
         setSimilarMovies(randomMovies);
-        
-        setTimeout(() => {
-          if (recommendationsInstanceRef.current) {
-            console.log('Updating recommendations slider with random movies');
-            recommendationsInstanceRef.current.update();
-          }
-        }, 100);
       }
+      
+      // Force update the slider after a short delay
+      setTimeout(() => {
+        if (recommendationsInstanceRef.current) {
+          console.log('Updating recommendations slider');
+          recommendationsInstanceRef.current.update();
+        }
+      }, 100);
+      
     } catch (error) {
       console.error('Error fetching similar movies:', error);
-      setSimilarMovies([]);
+      
+      // Final fallback - if everything fails, just show some random movies
+      console.log("Using random movies as ultimate fallback");
+      const availableMovies = movies.filter(m => m.showId !== selectedMovie?.showId);
+      const shuffled = availableMovies.sort(() => 0.5 - Math.random());
+      const randomMovies = shuffled.slice(0, 8);
+      
+      // Reset poster errors for random movies
+      const resetErrorsObj: Record<string, boolean> = {};
+      randomMovies.forEach(movie => {
+        resetErrorsObj[movie.showId] = false;
+      });
+      
+      setPosterErrors(prev => ({
+        ...prev,
+        ...resetErrorsObj
+      }));
+      
+      setSimilarMovies(randomMovies);
     } finally {
       setIsLoadingSimilar(false);
     }
