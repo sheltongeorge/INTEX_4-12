@@ -99,8 +99,10 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   const [userRating, setUserRating] = useState<number | null>(null);
   const [posterErrors, setPosterErrors] = useState<Record<string, boolean>>({});
   const user = useContext(UserContext);
-  console.log("🚨 UserContext in Carousel:", user);
-
+  const [similarMovies, setSimilarMovies] = useState<Movie[]>([]);
+  const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
+  const [isSliderReady, setIsSliderReady] = useState(false);
+  
   const [movieRatings, setMovieRatings] = useState<
     Map<string, { avg: number; count: number }>
   >(new Map());
@@ -113,11 +115,23 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   const [recommendationCategories, setRecommendationCategories] = useState<Record<string, Movie[]>>({});
   const [isLoadingRecommendations, setIsLoadingRecommendations] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
+  
+  // Main carousel slider
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
     slides: { perView: 6, spacing: 10 },
     drag: true,
     rubberband: true,
+    breakpoints: {
+      '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
+      '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
+    },
+  });
+  
+  // Recommendations slider for similar movies
+  const [recommendationsSliderRef, recommendationsInstanceRef] = useKeenSlider<HTMLDivElement>({
+    loop: true,
+    slides: { perView: 5, spacing: 16 },
     breakpoints: {
       '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
       '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
@@ -179,6 +193,10 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
 
   // Fetch the current user's ratings
   const fetchUserRatings = async () => {
+    // Create controller for timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    
     try {
       const response = await fetch(
         'https://localhost:7156/api/movieratings/user',
@@ -419,7 +437,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
     }
   };
   
-  //similar movies
+  // Similar movies
   const fetchSimilarMovies = async (movieTitle: string) => {
     setIsLoadingSimilar(true);
     console.log(`Fetching recommendations for movie: "${movieTitle}"`);
@@ -780,7 +798,16 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
     }
   }, []);
 
-  const [isSliderReady, setIsSliderReady] = useState(false);
+  // Add this effect to update the recommendations slider when similar movies change
+  useEffect(() => {
+    if (recommendationsInstanceRef.current && similarMovies.length > 0) {
+      // Small timeout to ensure DOM is ready
+      setTimeout(() => {
+        recommendationsInstanceRef.current?.update();
+        console.log("Recommendations slider updated with", similarMovies.length, "movies");
+      }, 100);
+    }
+  }, [similarMovies]);
 
   // Always call hooks in the same order - don't conditionally call hooks
   useEffect(() => {
@@ -846,63 +873,8 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
     if (movies.length > 0 && isLoadingRatings) {
       fetchMovieRatings();
       fetchUserRatings();
-
     }
   }, [movies, isLoadingRatings]);
-
-  // Add this effect to update the recommendations slider when similar movies change
-  useEffect(() => {
-    if (recommendationsInstanceRef.current && similarMovies.length > 0) {
-      // Small timeout to ensure DOM is ready
-      setTimeout(() => {
-        recommendationsInstanceRef.current?.update();
-        console.log("Recommendations slider updated with", similarMovies.length, "movies");
-      }, 100);
-    }
-  }, [similarMovies, recommendationsInstanceRef]);
-
-  // Pre-define refs for all possible categories to maintain consistent Hook order
-  // This ensures we don't have a variable number of hook calls between renders
-  const topPicksSliderRef = useKeenSlider({
-    loop: true,
-    slides: { perView: 5, spacing: 16 },
-    breakpoints: {
-      '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
-      '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
-    },
-  })[0];
-  
-  const trendingSliderRef = useKeenSlider({
-    loop: true,
-    slides: { perView: 5, spacing: 16 },
-    breakpoints: {
-      '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
-      '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
-    },
-  })[0];
-  
-  const becauseYouWatchedSliderRef = useKeenSlider({
-    loop: true,
-    slides: { perView: 5, spacing: 16 },
-    breakpoints: {
-      '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
-      '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
-    },
-  })[0];
-  
-  // Map category names to our pre-defined refs with an index signature for TypeScript
-  const categorySliderRefs: { [key: string]: any } = {
-    'Top Picks for You': topPicksSliderRef,
-    'Popular This Week': trendingSliderRef,
-    'Because You Watched': becauseYouWatchedSliderRef,
-    // Default fallback for any other categories
-    'default': sliderRef
-  };
-  
-  // Helper function to safely get ref for a category
-  const getRefForCategory = (category: string) => {
-    return categorySliderRefs[category] || sliderRef;
-  };
 
   return (
     <div className="carousel-container">
@@ -915,7 +887,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
           <div key={category} className="category-carousel-container">
             <h2 className="category-title">{category}</h2>
             <div className={`carousel-wrapper ${showOverlay ? 'overlay-active' : ''}`}>
-              <div ref={getRefForCategory(category)} className="keen-slider">
+              <div className="keen-slider" ref={sliderRef}>
                 {categoryMovies.map((movie) => (
                   <div key={movie.showId} className="keen-slider__slide slide">
                     <div
@@ -974,21 +946,13 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
               </div>
               <button
                 className="arrow left-arrow"
-                onClick={() => {
-                  // Get the instance associated with this category's ref
-                  const ref = getRefForCategory(category);
-                  if (ref?.current) ref.current.prev();
-                }}
+                onClick={() => instanceRef.current?.prev()}
               >
                 <ArrowLeft size={20} />
               </button>
               <button
                 className="arrow right-arrow"
-                onClick={() => {
-                  // Get the instance associated with this category's ref
-                  const ref = getRefForCategory(category);
-                  if (ref?.current) ref.current.next();
-                }}
+                onClick={() => instanceRef.current?.next()}
               >
                 <ArrowRight size={20} />
               </button>

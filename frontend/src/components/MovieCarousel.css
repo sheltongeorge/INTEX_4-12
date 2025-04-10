@@ -35,20 +35,18 @@
 .keen-slider__slide {
   overflow: visible !important; /* Allow content to overflow */
   z-index: 1;
-  transition: z-index 0s 0.1s; /* Delay z-index change */
-
+  transition: transform 0.3s ease, z-index 0s 0.1s; /* Smooth transform, delayed z-index */
+  position: relative;
 }
-
-
 
 .keen-slider__slide:hover {
   z-index: 10; /* Higher than other slides when hovered */
-  transition: z-index 0s; /* Immediate z-index change on hover */
+  transition: transform 0.3s ease, z-index 0s; /* Immediate z-index change on hover */
 }
 
 /* Slide styling */
 .slide {
-  padding: 20px 2px 90px 2px; /* Extra padding at bottom to create hover area */
+  padding: 20px 2px 60px 2px; /* Reduced bottom padding to avoid excess space */
   transform-origin: center center;
   transition: all 0.3s ease;
   position: relative;
@@ -69,8 +67,9 @@
 
 /* Hover effects - Apply to .poster-card directly */
 .slide:hover .poster-card {
-  transform: scale(1.2);
+  transform: scale(1.15); /* Slightly smaller scale to prevent overflow issues */
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 20; /* Ensure it's above other elements when hovered */
 }
 
 /* Poster image styling */
@@ -121,7 +120,7 @@
 }
 
 .slide:hover::after {
-  height: 170%; /* Extend the hover area to include the info panel */
+  height: 150%; /* Slightly reduced hover extension area */
 }
 
 .poster-title {
@@ -232,7 +231,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 30;
+  z-index: 40; /* Higher z-index to stay above slides */
   transition: all 0.2s ease;
 }
 
@@ -245,11 +244,13 @@
 }
 
 .left-arrow {
-  left: -20px;
+  left: -18px;
+  z-index: 40; /* Ensure arrows are above slides even when hovered */
 }
 
 .right-arrow {
-  right: -20px;
+  right: -18px;
+  z-index: 40; /* Ensure arrows are above slides even when hovered */
 }
 
 /* Media queries for responsive design */
@@ -265,10 +266,12 @@
 
   .left-arrow {
     left: -15px;
+    z-index: 40;
   }
 
   .right-arrow {
     right: -15px;
+    z-index: 40;
   }
 
   .slide:hover .poster-card {
@@ -504,55 +507,52 @@
 
 .rate-star:hover,
 .rate-star.active {
-  color: #f5c518; /* IMDB yellow */
+  color: #f5c518;
 }
 
 .user-rating-text {
-  margin-left: 15px;
-  font-size: 16px;
-  color: #ddd;
-}
-
-/* Info sections for director, cast, etc. */
-.overlay-info-section {
-  margin-bottom: 20px;
-}
-
-.info-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #ddd;
-  margin-bottom: 5px;
-}
-
-.overlay-info-section p {
+  margin-left: 10px;
   font-size: 14px;
-  line-height: 1.5;
-  color: #aaa;
-  margin: 0;
+  color: #ddd;
 }
 
 .overlay-description {
   font-size: 16px;
   line-height: 1.6;
-  margin-bottom: 30px;
-  color: #aaa;
+  margin-bottom: 20px;
+  color: #ddd;
+}
+
+.overlay-info-section {
+  margin-bottom: 15px;
+}
+
+.info-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 5px;
+  color: #ddd;
+}
+
+.no-ratings {
+  font-size: 14px;
+  color: #888;
 }
 
 .overlay-actions {
-  margin-top: auto;
   display: flex;
   gap: 15px;
+  margin-top: 20px;
 }
 
 .overlay-button {
-  padding: 10px 20px;
   background-color: #e50914;
   color: white;
   border: none;
+  padding: 10px 20px;
   border-radius: 4px;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -561,170 +561,41 @@
   background-color: #f40612;
 }
 
-/* Media Queries for Overlay */
-@media (max-width: 768px) {
-  .overlay-content {
-    flex-direction: column;
-    width: 90%;
-  }
-
-  .overlay-poster {
-    flex: 0 0 auto;
-    height: 300px;
-  }
-
-  .overlay-poster img {
-    height: 100%;
-    width: auto;
-  }
-
-  .overlay-details {
-    flex: 1;
-  }
-
-  .overlay-title {
-    font-size: 24px;
-  }
-
-  .rate-star {
-    font-size: 26px;
-  }
-
-  .star {
-    font-size: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .overlay-content {
-    width: 95%;
-  }
-
-  .overlay-poster {
-    height: 250px;
-  }
-
-  .overlay-details {
-    padding: 20px;
-  }
-
-  .overlay-title {
-    font-size: 20px;
-  }
-
-  .rate-star {
-    font-size: 22px;
-  }
-
-  .user-rating-text {
-    font-size: 14px;
-  }
-
-  .overlay-description {
-    font-size: 14px;
-  }
-
-  .overlay-button {
-    padding: 8px 16px;
-    font-size: 14px;
-  }
-}
-/* .fallback-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.fallback-wrapper .poster-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.fallback-overlay-title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 1rem;
-  font-weight: bold;
-  text-align: center;
-  text-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
-} */
-.fallback-wrapper {
-  position: relative;
-  width: 100%;
-  padding-top: 150%; /* Creates 2:3 aspect ratio */
-  overflow: hidden;
-  border-radius: 8px; /* optional, for rounded corners like posters */
-}
-.poster-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.fallback-overlay-title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: white;
-  font-weight: bold;
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 70%;
-  padding: 0px 0px;
-  border-radius: 4px;
-}
-
-.selected-movie-overlay-title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: white;
-  font-weight: bold;
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 70%;
-  padding: 0px 0px;
-  border-radius: 4px;
-  font-size: 80px;
-}
-
-<<<<<<< HEAD
+/* Fallback wrapper styling */
 .fallback-wrapper {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .slide:hover .fallback-wrapper {
-  transform: scale(1.2);
+  transform: scale(1.15);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .poster-image,
 .fallback-wrapper img {
   border-radius: 8px;
-}
-
-.poster-image,
-.fallback-wrapper img {
   animation: fadeIn 0.5s ease-in-out both;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-=======
+.fallback-overlay-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Similar movies section */
 .similar-movies {
   padding: 20px;
   background: rgba(0, 0, 0, 0.8);
@@ -784,8 +655,7 @@
   padding: 1rem;
 }
 
-/* Add these styles to your MovieCarousel.css file */
-
+/* Recommended movies section */
 .recommended-movies-section {
   margin-top: 2rem;
   width: 100%;
@@ -795,194 +665,15 @@
 .recommendations-container {
   position: relative;
   margin-top: 1rem;
-  height: 200px;
 }
 
-.recommendations-slider {
-  height: 100%;
-}
-
-.recommendation-card {
-  height: 180px;
-  transition: transform 0.3s ease;
-}
-
-.recommendation-card:hover {
-  transform: scale(1.05);
-}
-
-.recommendation-card .poster-image-container {
-  height: 140px;
-}
-
-.recommendation-card .hover-info {
-  padding: 0.5rem;
-}
-
-.recommendation-card .poster-title {
-  font-size: 0.9rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Add this to ensure recommendations are visible in the overlay */
-.overlay-content .recommended-movies-section {
-  position: relative;
-  z-index: 10;
-  margin-top: 2rem;
-  clear: both;
-}
-
-.no-recommendations {
-  padding: 1rem;
+/* Loading placeholder */
+.loading-placeholder {
+  width: 100%;
+  padding: 40px;
   text-align: center;
-  color: #888;
-}
-
-/* Add these styles to ensure the recommendations carousel is visible */
-
-/* Recommended movies section styling */
-.recommended-movies-section {
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  clear: both;
-  width: 100%;
-  position: relative;
-  z-index: 50;
-}
-
-.recommendations-wrapper {
-  display: flex;
-  align-items: center;
-  position: relative;
-  height: 220px;
-  margin: 15px 0;
-}
-
-.recommendations-container {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  position: relative;
-}
-
-.recommendations-slider {
-  height: 100%;
-}
-
-.recommendation-slide {
-  height: 200px;
-  padding: 5px;
-}
-
-.recommendation-card {
-  height: 100%;
-  width: 100%;
-  transition: transform 0.2s ease;
-  cursor: pointer;
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-
-.recommendation-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-}
-
-.recommendation-card .poster-image-container {
-   position: relative;
-   width: 100%;
-   height: 0;
-   padding-bottom: 150%; /* 2:3 aspect ratio for movie posters */
-   overflow: hidden;
-   border-radius: 4px;
-}
-
-.recommendation-card .poster-image {
-   position: absolute;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   object-fit: cover;
-}
-
-.recommendation-info {
-  padding: 8px;
-  background: rgba(0, 0, 0, 0.7);
-  min-height: 40px;
-  display: flex;
-  align-items: center;
-}
-
-.recommendation-title {
-  font-size: 12px;
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: white;
-  width: 100%;
-  text-align: center;
-}
-
-.rec-left-arrow,
-.rec-right-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.6);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.rec-left-arrow {
-  left: -15px;
-}
-
-.rec-right-arrow {
-  right: -15px;
-}
-
-.rec-left-arrow:hover,
-.rec-right-arrow:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-.loading,
-.no-recommendations {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 150px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
-  color: #ccc;
-  font-size: 14px;
-}
-
-/* Adjustments for the main overlay content */
-.movie-overlay {
-  overflow-y: auto;
-  max-height: 100vh;
-}
-
-.overlay-content {
-  max-height: calc(100vh - 40px);
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 20px;
->>>>>>> b2bb270dfbd9d3320ebeb24f49024ee217d55a18
+  color: #777;
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
 }
