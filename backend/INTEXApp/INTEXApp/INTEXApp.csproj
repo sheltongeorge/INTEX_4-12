@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="recommendations.sqlite" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="recommendations.sqlite">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -37,15 +33,6 @@
     <Folder Include="wwwroot\MoviePosters\" />
   </ItemGroup> -->
 
-  
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-  
-  <ItemGroup>
-  <Content Remove="wwwroot\MoviePosters\**\*" />
-</ItemGroup>
-
   <ItemGroup>
     <None Update="Identity.sqlite">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -59,6 +46,10 @@
     <None Update="Movies.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\MoviePosters\" />
   </ItemGroup>
 
 

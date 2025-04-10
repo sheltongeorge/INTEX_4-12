@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
-using NewsRecommenderApp.Data;
+using INTEXApp.Data;
 using System.Security.Claims;
 using INTEXApp.Services;
 
