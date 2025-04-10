@@ -4,6 +4,12 @@
   "Documents": [
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\thebi\\desktop\\testfolderclone\\intex_4-12\\backend\\intexapp\\intexapp\\controllers\\movieratingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+=======
+<<<<<<< HEAD
+>>>>>>> 7de601ad797b55104cee7e88023a390f1812fe71
       "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\jaxon\\onedrive\\documents\\intex_4-12\\backend\\intexapp\\intexapp\\controllers\\movieratingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\movieratingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -63,13 +69,16 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\controllers\\movieratingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+>>>>>>> 727c969a9581b39921fb3d5d4aabc577444a9a4e
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\movieratingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\controllers\\moviestitlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\thebi\\desktop\\testfolderclone\\intex_4-12\\backend\\intexapp\\intexapp\\controllers\\moviestitlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\moviestitlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+<<<<<<< HEAD
+=======
       "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
 =======
       "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\thebi\\desktop\\testfolderclone\\intex_4-12\\backend\\intexapp\\intexapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -83,6 +92,7 @@
 >>>>>>> b2bb270dfbd9d3320ebeb24f49024ee217d55a18
     },
     {
+>>>>>>> 727c969a9581b39921fb3d5d4aabc577444a9a4e
       "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\thebi\\desktop\\testfolderclone\\intex_4-12\\backend\\intexapp\\intexapp\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -91,12 +101,16 @@
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\thebi\\desktop\\testfolderclone\\intex_4-12\\backend\\intexapp\\intexapp\\controllers\\moviestitlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\moviestitlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\thebi\\desktop\\testfolderclone\\intex_4-12\\backend\\intexapp\\intexapp\\controllers\\recommendationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\recommendationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\thebi\\desktop\\testfolderclone\\intex_4-12\\backend\\intexapp\\intexapp\\controllers\\movieratingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\movieratingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\thebi\\desktop\\testfolderclone\\intex_4-12\\backend\\intexapp\\intexapp\\recommendations.sqbpro||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\recommendations.sqbpro||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\thebi\\desktop\\testfolderclone\\intex_4-12\\backend\\intexapp\\intexapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\thebi\\desktop\\testfolderclone\\intex_4-12\\backend\\intexapp\\intexapp\\movietitle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -108,6 +122,11 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+>>>>>>> 7de601ad797b55104cee7e88023a390f1812fe71
       "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\jaxon\\onedrive\\documents\\intex_4-12\\backend\\intexapp\\intexapp\\controllers\\moviestitlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\moviestitlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -119,6 +138,7 @@
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+>>>>>>> 727c969a9581b39921fb3d5d4aabc577444a9a4e
       "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\thebi\\desktop\\testfolderclone\\intex_4-12\\backend\\intexapp\\intexapp\\data\\recommendation2class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\data\\recommendation2class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -152,6 +172,7 @@
         {
           "DockedWidth": 200,
 <<<<<<< HEAD
+<<<<<<< HEAD
           "SelectedChildIndex": 3,
 =======
 <<<<<<< HEAD
@@ -160,8 +181,13 @@
           "SelectedChildIndex": 4,
 >>>>>>> d4c85cac38ffdc56ebecac343ab6f4cf5693d376
 >>>>>>> ffd7423e18a023c8d883e3bbea81d9e276bf564a
+=======
+          "SelectedChildIndex": 6,
+>>>>>>> 7de601ad797b55104cee7e88023a390f1812fe71
           "Children": [
             {
+<<<<<<< HEAD
+=======
               "$type": "Document",
 <<<<<<< HEAD
               "DocumentIndex": 1,
@@ -208,11 +234,15 @@
               "EditorCaption": ""
             },
             {
+>>>>>>> 727c969a9581b39921fb3d5d4aabc577444a9a4e
               "$type": "Bookmark",
               "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 4,
+=======
 <<<<<<< HEAD
 =======
               "DocumentIndex": 1,
@@ -332,12 +362,13 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+>>>>>>> 727c969a9581b39921fb3d5d4aabc577444a9a4e
               "Title": "RecommendationsController.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\RecommendationsController.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Controllers\\RecommendationsController.cs",
               "ToolTip": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\RecommendationsController.cs",
               "RelativeToolTip": "INTEXApp\\Controllers\\RecommendationsController.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-09T22:53:39.074Z",
               "EditorCaption": ""
@@ -345,9 +376,13 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 1,
+=======
               "DocumentIndex": 3,
 <<<<<<< HEAD
 =======
+>>>>>>> 727c969a9581b39921fb3d5d4aabc577444a9a4e
               "Title": "MoviesTitlesController.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\MoviesTitlesController.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Controllers\\MoviesTitlesController.cs",
@@ -355,23 +390,77 @@
               "RelativeToolTip": "INTEXApp\\Controllers\\MoviesTitlesController.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAYwCkAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T21:18:25.828Z"
+              "WhenOpened": "2025-04-09T21:18:25.828Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Program.cs",
+              "RelativeDocumentMoniker": "INTEXApp\\Program.cs",
+              "ToolTip": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Program.cs",
+              "RelativeToolTip": "INTEXApp\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAABWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T21:18:25.817Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "RoleController.cs",
+              "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\RoleController.cs",
+              "RelativeDocumentMoniker": "INTEXApp\\Controllers\\RoleController.cs",
+              "ToolTip": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\RoleController.cs",
+              "RelativeToolTip": "INTEXApp\\Controllers\\RoleController.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAA1wBYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T23:10:40.986Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "WeatherForecastController.cs",
+              "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\WeatherForecastController.cs",
+              "RelativeDocumentMoniker": "INTEXApp\\Controllers\\WeatherForecastController.cs",
+              "ToolTip": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\WeatherForecastController.cs",
+              "RelativeToolTip": "INTEXApp\\Controllers\\WeatherForecastController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T01:24:51.062Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "MovieRatingsController.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\MovieRatingsController.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Controllers\\MovieRatingsController.cs",
               "ToolTip": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\MovieRatingsController.cs",
               "RelativeToolTip": "INTEXApp\\Controllers\\MovieRatingsController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAALQAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T21:18:25.804Z"
+              "WhenOpened": "2025-04-09T21:18:25.804Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "recommendations.sqbpro",
+              "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\recommendations.sqbpro",
+              "RelativeDocumentMoniker": "INTEXApp\\recommendations.sqbpro",
+              "ToolTip": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\recommendations.sqbpro",
+              "RelativeToolTip": "INTEXApp\\recommendations.sqbpro",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-04-10T02:37:31.742Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "MovieTitle.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\MovieTitle.cs",
               "RelativeDocumentMoniker": "INTEXApp\\MovieTitle.cs",
@@ -383,23 +472,7 @@
             },
             {
               "$type": "Document",
-<<<<<<< HEAD
-              "DocumentIndex": 7,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Program.cs",
-              "RelativeDocumentMoniker": "INTEXApp\\Program.cs",
-              "ToolTip": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Program.cs",
-              "RelativeToolTip": "INTEXApp\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAIwAgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T21:18:25.817Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-=======
-              "DocumentIndex": 12,
->>>>>>> ffd7423e18a023c8d883e3bbea81d9e276bf564a
+              "DocumentIndex": 8,
               "Title": "MovieUser.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\MovieUser.cs",
               "RelativeDocumentMoniker": "INTEXApp\\MovieUser.cs",
@@ -411,45 +484,19 @@
             },
             {
               "$type": "Document",
-<<<<<<< HEAD
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "MovieUser.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Data\\MovieUser.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Data\\MovieUser.cs",
               "ToolTip": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Data\\MovieUser.cs",
               "RelativeToolTip": "INTEXApp\\Data\\MovieUser.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAA==",
-=======
-<<<<<<< HEAD
-              "DocumentIndex": 11,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Program.cs",
-              "RelativeDocumentMoniker": "INTEXApp\\Program.cs",
-              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Program.cs",
-              "RelativeToolTip": "INTEXApp\\Program.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAAAEQAAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T21:18:25.817Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-=======
->>>>>>> d4c85cac38ffdc56ebecac343ab6f4cf5693d376
-              "DocumentIndex": 10,
-              "Title": "MoviesTitlesController.cs",
-              "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\MoviesTitlesController.cs",
-              "RelativeDocumentMoniker": "INTEXApp\\Controllers\\MoviesTitlesController.cs",
-              "ToolTip": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Controllers\\MoviesTitlesController.cs",
-              "RelativeToolTip": "INTEXApp\\Controllers\\MoviesTitlesController.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAYwCkAAAAeAAAAAAAAAA==",
->>>>>>> ffd7423e18a023c8d883e3bbea81d9e276bf564a
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-09T22:37:42.367Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "recommendation2class.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Data\\recommendation2class.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Data\\recommendation2class.cs",
@@ -461,7 +508,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "NoOpEmailSender.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Data\\NoOpEmailSender.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Data\\NoOpEmailSender.cs",
@@ -473,7 +520,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "RecommendationsDbContext.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Data\\RecommendationsDbContext.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Data\\RecommendationsDbContext.cs",
@@ -485,7 +532,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "recommendation1class.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Data\\recommendation1class.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Data\\recommendation1class.cs",
@@ -497,8 +544,15 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 14,
+=======
               "DocumentIndex": 13,
 >>>>>>> b2bb270dfbd9d3320ebeb24f49024ee217d55a18
+<<<<<<< HEAD
+=======
+>>>>>>> 727c969a9581b39921fb3d5d4aabc577444a9a4e
+>>>>>>> 7de601ad797b55104cee7e88023a390f1812fe71
               "Title": "MoviesDbContext.cs",
               "DocumentMoniker": "C:\\Users\\thebi\\Desktop\\testfolderclone\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Data\\MoviesDbContext.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Data\\MoviesDbContext.cs",
