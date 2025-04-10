@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
+import './HeaderSearch.css';
+
 
 const genres = [
   'Action & Adventure',
@@ -40,13 +42,13 @@ const HeaderSearch: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-900 text-white px-4 py-2 flex items-center justify-between flex-wrap gap-2 shadow">
-      <div className="flex flex-wrap gap-2">
+    <div className="header-search-bar">
+      <div className="genre-scroll-container">
         {genres.map((genre) => (
           <button
             key={genre}
             onClick={() => handleGenreClick(genre)}
-            className="text-sm px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded-full"
+            className="genre-button"
           >
             {genre}
           </button>
@@ -54,13 +56,12 @@ const HeaderSearch: React.FC = () => {
       </div>
       <button
         onClick={handleSearchClick}
-        className="ml-auto text-white hover:text-gray-300 text-lg"
+        className="search-icon-button"
         aria-label="Search"
       >
         <FaSearch />
       </button>
     </div>
   );
-};
-
+}  
 export default HeaderSearch;
