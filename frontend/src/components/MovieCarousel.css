@@ -2,8 +2,8 @@
 .carousel-container {
   position: relative;
   width: 100%;
-  padding: 30px 0;
-  margin: 30px 0;
+  padding: 30px 0 60px 0; /* Increased bottom padding */
+  margin: 30px 0 50px 0; /* Increased bottom margin */
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -11,7 +11,7 @@
 
 /* Category carousels */
 .category-carousel-container {
-  margin-bottom: 20px;
+  margin-bottom: 50px; /* Increased from 20px to allow more space */
 }
 
 .category-title {
@@ -23,8 +23,10 @@
 
 .carousel-wrapper {
   position: relative;
-  margin: 0 40px;
+  margin: 0 40px 40px 40px; /* Added bottom margin */
   overflow: visible !important; /* Important to allow overflow */
+  min-height: 300px; /* Ensure minimum height for the carousel wrapper */
+  z-index: 1; /* Base z-index for stacking context */
 }
 
 /* Override keen-slider constraints */
@@ -34,7 +36,7 @@
 
 .keen-slider__slide {
   overflow: visible !important; /* Allow content to overflow */
-  z-index: 1;
+  z-index: 5;
   transition: transform 0.3s ease, z-index 0s 0.1s; /* Smooth transform, delayed z-index */
   position: relative;
 }
@@ -46,10 +48,11 @@
 
 /* Slide styling */
 .slide {
-  padding: 20px 2px 60px 2px; /* Reduced bottom padding to avoid excess space */
+  padding: 20px 2px 100px 2px; /* Increased bottom padding to provide more space for hover content */
   transform-origin: center center;
   transition: all 0.3s ease;
   position: relative;
+  margin-bottom: 30px; /* Additional margin to ensure space for hover info */
 }
 
 /* Poster card styling */
@@ -69,7 +72,7 @@
 .slide:hover .poster-card {
   transform: scale(1.15); /* Slightly smaller scale to prevent overflow issues */
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-  z-index: 20; /* Ensure it's above other elements when hovered */
+  z-index: 90; /* Further increased to ensure it's above all other content */
 }
 
 /* Poster image styling */
@@ -106,6 +109,9 @@
   top: calc(100% + 8px); /* Position it below the card with a small gap */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   pointer-events: none;
+  z-index: 99; /* Using higher z-index to ensure it appears above everything */
+  max-height: none; /* Ensure it's not constrained by height */
+  overflow: visible; /* Allow content to overflow if needed */
 }
 
 /* Create continuous hover area */
@@ -120,7 +126,7 @@
 }
 
 .slide:hover::after {
-  height: 150%; /* Slightly reduced hover extension area */
+  height: 200%; /* Increased hover extension area */
 }
 
 .poster-title {
@@ -144,6 +150,8 @@
   justify-content: center;
   gap: 16px;
   margin-top: 10px;
+  position: relative;
+  z-index: 100; /* Higher z-index for buttons */
 }
 
 /* Circular button styling */
@@ -151,7 +159,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.3); /* Slightly brighter for better visibility */
   border: none;
   display: flex;
   align-items: center;
@@ -159,10 +167,13 @@
   cursor: pointer;
   position: relative;
   transition: background-color 0.2s ease;
+  z-index: 100; /* Ensure buttons are above everything */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Add shadow for visibility */
 }
 
 .circular-button:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.5); /* Brighter hover state */
+  transform: scale(1.1); /* Slightly enlarge on hover */
 }
 
 /* Button icons */
@@ -177,7 +188,8 @@
   bottom: -30px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 101; /* Above buttons */
   color: white;
   padding: 4px 8px;
   border-radius: 4px;
@@ -214,6 +226,8 @@
 .slide:hover .hover-info {
   opacity: 1;
   pointer-events: auto;
+  z-index: 95; /* Even higher z-index when visible */
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
 /* Navigation arrows styling */
@@ -346,10 +360,11 @@
   max-width: 1200px;
   background-color: #1a1a1a;
   border-radius: 8px;
-  overflow: hidden;
+  overflow: visible; /* Changed from hidden to visible to allow elements to extend outside */
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   position: relative;
   max-height: 85vh;
+  z-index: 10; /* Base z-index for overlay content */
 }
 
 .close-overlay {
@@ -886,11 +901,13 @@
   transform: scale(1.08); /* Slightly increased scale effect */
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6); /* Enhanced shadow */
   cursor: pointer;
+  z-index: 95; /* Match z-index hierarchy with main carousel */
 }
 
 /* Remove pointer cursor from the card itself */
 .recommendation-card {
   cursor: default;
+  z-index: 5; /* Base z-index */
 }
 
 .recommendation-card .poster-image-container {
@@ -1010,6 +1027,7 @@
   max-height: calc(100vh - 40px);
   overflow-y: auto;
   display: flex;
+  position: relative; /* Establish stacking context */
   flex-direction: column;
   padding-bottom: 20px;
   color: #777;

@@ -944,7 +944,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
         // Map through each category and render a carousel
         Object.entries(recommendationCategories).map(([category, categoryMovies]) => (
           <div key={category} className="category-carousel-container">
-            <h2 className="category-title">{category}</h2>
+            <h2 className="category-title"></h2>
             <div className={`carousel-wrapper ${showOverlay ? 'overlay-active' : ''}`}>
               <div className="keen-slider" ref={sliderRef}>
                 {categoryMovies.map((movie) => (
