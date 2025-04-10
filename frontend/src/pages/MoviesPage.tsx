@@ -55,22 +55,18 @@ const MoviesPage: React.FC = () => {
         <br />
         <br />
         
-        {/* Load additional carousels only after a short delay to prevent overwhelming the server */}
-        {userId && (
-          <>
-            <h2 className="text-xl font-bold mb-2 text-white">Popular This Week</h2>
-            <div className="overflow-x-auto overflow-y-hidden hide-scrollbar" style={{ height: 'auto' }}>
-              <MovieCarousel categoryTitle="Popular This Week" categoryType="trending" />
-            </div>
-            <br />
-            <br />
-            
-            <h2 className="text-xl font-bold mb-2 text-white">Because You Watched</h2>
-            <div className="overflow-x-auto overflow-y-hidden hide-scrollbar" style={{ height: 'auto' }}>
-              <MovieCarousel categoryTitle="Because You Watched" categoryType="similar" />
-            </div>
-          </>
-        )}
+        {/* Always show Recently Added and Top Reviewed sections */}
+        <h2 className="text-xl font-bold mb-2 text-white">Recently Added</h2>
+        <div className="overflow-x-auto overflow-y-hidden hide-scrollbar" style={{ height: 'auto' }}>
+          <MovieCarousel categoryTitle="Recently Added" categoryType="recently_added" />
+        </div>
+        <br />
+        <br />
+        
+        <h2 className="text-xl font-bold mb-2 text-white">Top Reviewed</h2>
+        <div className="overflow-x-auto overflow-y-hidden hide-scrollbar" style={{ height: 'auto' }}>
+          <MovieCarousel categoryTitle="Top Reviewed" categoryType="top_rated" />
+        </div>
       </div>
     </div>
   );

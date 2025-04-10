@@ -133,7 +133,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   });
   
   // Recommendations slider for similar movies
-  const [recommendationsSliderRef, recommendationsInstanceRef] = useKeenSlider<HTMLDivElement>({
+  const [_, recommendationsInstanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
     slides: { perView: 5, spacing: 16 },
     breakpoints: {
@@ -887,6 +887,14 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
               endpoint = `https://localhost:7156/api/MoviesTitles/UserSimilar/${userId}`;
               console.log(`Using similar recommendations endpoint for user ${userId}`);
               break;
+            case 'recently_added':
+              endpoint = 'https://localhost:7156/api/MoviesTitles/AllMovies?pageSize=30&pageNum=1';
+              console.log('Using recently added movies endpoint');
+              break;
+            case 'top_rated':
+              endpoint = 'https://localhost:7156/api/MoviesTitles/AllMovies?pageSize=30&pageNum=1';
+              console.log('Using top rated movies endpoint');
+              break;
             default:
               console.log(`Using default endpoint for category type: ${categoryType}`);
               break;
@@ -908,8 +916,81 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
             credentials: 'include',
           }
         );
-        const data = await response.json();
-        setMovies(Array.isArray(data) ? data.slice(0, 30) : []);
+        
+        let data = await response.json();
+        let processedMovies = [];
+        
+        // Handle specific category types with custom processing
+        if (categoryType === 'recently_added') {
+          // For "Recently Added", we need to process the response which includes 'Movies' property
+          let movies = Array.isArray(data) ? data : (data.Movies || []);
+          
+          // Sort by release year (descending - newest first)
+          movies.sort((a: Movie, b: Movie) => {
+            const yearA = a.releaseYear || 0;
+            const yearB = b.releaseYear || 0;
+            return yearB - yearA; // Newest first
+          });
+          
+          console.log('Recently added movies sorted by release year:',
+            movies.slice(0, 5).map((m: Movie) => `${m.title} (${m.releaseYear})`));
+          
+          processedMovies = movies.slice(0, 30); // Take top 30
+        }
+        else if (categoryType === 'top_rated') {
+          // For "Top Rated", we need to get movies and combine with ratings
+          let movies = Array.isArray(data) ? data : (data.Movies || []);
+          
+          try {
+            // Fetch all ratings averages
+            const ratingsResponse = await fetch(
+              'https://localhost:7156/api/movieratings/averages',
+              { credentials: 'include' }
+            );
+            
+            if (ratingsResponse.ok) {
+              const ratingsData = await ratingsResponse.json();
+              
+              // Map movies with their average ratings
+              const moviesWithRatings = movies.map((movie: Movie) => {
+                const ratingInfo = ratingsData[movie.showId];
+                return {
+                  ...movie,
+                  averageRating: ratingInfo ? ratingInfo.avg : 0,
+                  ratingCount: ratingInfo ? ratingInfo.count : 0
+                };
+              });
+              
+              // Filter out unrated movies (optional - remove this if you want to include unrated movies)
+              const ratedMovies = moviesWithRatings.filter((m: Movie & {averageRating: number}) => m.averageRating > 0);
+              
+              // Sort by average rating (highest first)
+              ratedMovies.sort((a: Movie & {averageRating: number}, b: Movie & {averageRating: number}) =>
+                b.averageRating - a.averageRating
+              );
+              
+              console.log('Top rated movies:',
+                ratedMovies.slice(0, 5).map((m: Movie & {averageRating: number}) =>
+                  `${m.title} (${m.averageRating.toFixed(1)})`
+                )
+              );
+              
+              processedMovies = ratedMovies.slice(0, 30); // Take top 30
+            } else {
+              console.error('Failed to fetch movie ratings');
+              processedMovies = movies.slice(0, 30);
+            }
+          } catch (error) {
+            console.error('Error fetching ratings:', error);
+            processedMovies = movies.slice(0, 30);
+          }
+        }
+        else {
+          // For all other categories, use the default approach
+          processedMovies = Array.isArray(data) ? data.slice(0, 30) : [];
+        }
+        
+        setMovies(processedMovies);
         setIsLoadingRatings(true);
 
         // Force KeenSlider to recalculate dimensions after movies are set
