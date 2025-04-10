@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MovieCarousel } from '../components/MovieCarousel';
 import Header from '../components/header';
 import LazyCarousel from '../components/LazyCarousel';
+import HeaderSearch from '../components/HeaderSearch';
 
 const MoviesPage: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
@@ -155,6 +156,7 @@ const MoviesPage: React.FC = () => {
   return (
     <div>
       <Header />
+      <HeaderSearch />
       <div className="overflow-y-auto hide-scrollbar" style={{ height: '100vh', padding: '0 16px' }}>
         <h1 className="text-2xl font-bold mt-4 mb-3 text-white">
           {userName ? `Welcome back, ${userName}!` : 'Welcome to CineNiche!'}

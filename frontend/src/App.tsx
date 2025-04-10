@@ -11,6 +11,7 @@ import MoviesPage from './pages/MoviesPage';
 import Profile from './components/Profile';
 import AuthorizeView from './components/AuthorizeView';
 import HomeRedirect from './HomeRedirect';
+import SearchPage from './pages/SearchPage';
 
 // Component to handle authentication-based redirects
 
@@ -20,6 +21,7 @@ function App() {
     <Router>
       {/* <AuthorizeView> */}
       <Routes>
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/" element={<HomeRedirect />} />
         <Route path="/recommendations" element={<AuthorizeView><RecommendationsPage /></AuthorizeView>} />
         <Route path="/login" element={<LoginPage />} />
