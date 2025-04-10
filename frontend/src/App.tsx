@@ -8,6 +8,7 @@ import AdminMoviesPage from './pages/AdminMoviesPage';
 import { TestPoster } from "./components/TestPoster";
 import { MovieCarousel } from "./components/MovieCarousel";
 import HomePage from './pages/HomePage';
+import PrivacyPolicyPage from './pages/PrivacyPolicy';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/test" element={<TestPoster />} />
         <Route path="/admin" element={<AdminMoviesPage/>} />
         <Route path="/carousel" element={<MovieCarousel />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage/>} />
 
       </Routes>
     </Router>

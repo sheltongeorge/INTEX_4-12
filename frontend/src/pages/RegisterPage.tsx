@@ -61,7 +61,8 @@ function Register() {
           }
         );
 
-        if (!moviesUserResponse.ok) throw new Error('Failed to add user to movie database.');
+        if (!moviesUserResponse.ok)
+          throw new Error('Failed to add user to movie database.');
 
         setError('Successful registration. Please log in.');
       } catch (err) {
@@ -73,7 +74,9 @@ function Register() {
 
   return (
     <div className="container">
-      <div className={`card border-0 shadow rounded-3 ${showAnimation ? 'card-animate' : ''}`}>
+      <div
+        className={`card border-0 shadow rounded-3 ${showAnimation ? 'card-animate' : ''}`}
+      >
         <div className="card-body p-4 p-sm-5">
           <div className="text-center mb-4 position-relative">
             <div style={{ position: 'relative', display: 'inline-block' }}>
@@ -90,7 +93,9 @@ function Register() {
               />
             </div>
           </div>
-          <h5 className="card-title text-center mb-5 fw-light fs-5">Register</h5>
+          <h5 className="card-title text-center mb-5 fw-light fs-5">
+            Register
+          </h5>
           <form onSubmit={handleSubmit}>
             <div className="form-floating mb-3">
               <input
@@ -138,12 +143,18 @@ function Register() {
             </div>
 
             <div className="d-grid mb-2">
-              <button className="btn btn-login custom-login-btn text-uppercase fw-bold" type="submit">
+              <button
+                className="btn btn-login custom-login-btn text-uppercase fw-bold"
+                type="submit"
+              >
                 Register
               </button>
             </div>
             <div className="d-grid mb-2">
-              <button className="btn btn-login custom-login-btn text-uppercase fw-bold" onClick={handleLoginClick}>
+              <button
+                className="btn btn-login custom-login-btn text-uppercase fw-bold"
+                onClick={handleLoginClick}
+              >
                 Go to Login
               </button>
             </div>
