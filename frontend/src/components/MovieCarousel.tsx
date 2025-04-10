@@ -1133,7 +1133,12 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
       )}
 
 {showOverlay && selectedMovie && (
-  <MovieOverlay movie={selectedMovie} onClose={closeOverlay} />
+  <MovieOverlay
+    movie={selectedMovie}
+    onClose={closeOverlay}
+    initialRating={userMovieRatings.get(selectedMovie.showId) || null}
+    setMovie={setSelectedMovie}
+  />
 )}
     </div>
   );

@@ -33,9 +33,10 @@ type OverlayProps = {
     movie: Movie;
     onClose: () => void;
     initialRating?: number | null;
+    setMovie?: (movie: Movie) => void;
   };
 
-const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating }) => {
+const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, setMovie }) => {
   const user = useContext(UserContext);
   const [userRating, setUserRating] = useState<number | null>(initialRating ?? null);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
@@ -263,6 +264,43 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating })
     
     return foundMovies;
   };
+  
+  // Handler for when a recommended movie is clicked
+  const handleRecommendedMovieClick = async (recommendedMovie: Movie) => {
+    console.log('Switching to movie:', recommendedMovie.title);
+    
+    // Reset user interaction states
+    setUserRating(null);
+    setHoverRating(null);
+    
+    // If setMovie prop is provided, use it to update the movie in parent component
+    if (setMovie) {
+      // This updates the movie in the parent component (MovieCarousel)
+      setMovie(recommendedMovie);
+    }
+    
+    // Get more details for the selected movie if needed
+    try {
+      const response = await fetch(
+        `https://localhost:7156/api/MoviesTitles/${recommendedMovie.showId}`,
+        {
+          credentials: 'include',
+          signal: AbortSignal.timeout(3000)
+        }
+      );
+      
+      if (response.ok) {
+        const fullMovieData = await response.json();
+        // We might get more complete data from the API than what we have in the carousel
+        console.log('Got full movie data:', fullMovieData);
+      }
+    } catch (err) {
+      console.error('Error fetching full movie details:', err);
+    }
+    
+    // Immediately fetch similar movies for the newly selected movie
+    fetchSimilarMovies(recommendedMovie.title);
+  };
 
   // Effect to fetch similar movies when movie changes
   useEffect(() => {
@@ -363,6 +401,7 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating })
                                 src={posterErrors[movie.showId] ? fallbackImage : getPosterImageUrl(movie.title)}
                                 alt={movie.title}
                                 className="poster-image"
+                                onClick={() => handleRecommendedMovieClick(movie)}
                                 onError={() =>
                                   setPosterErrors((prev) => ({
                                     ...prev,
@@ -371,7 +410,7 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating })
                                 }
                               />
                             </div>
-                            <div className="recommendation-info">
+                            <div className="recommendation-info" onClick={() => handleRecommendedMovieClick(movie)}>
                               <div className="recommendation-title">{movie.title}</div>
                             </div>
                           </div>
