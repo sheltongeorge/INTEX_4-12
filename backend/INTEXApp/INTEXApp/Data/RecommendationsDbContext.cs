@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using INTEXApp.Data;
+using Microsoft.EntityFrameworkCore;
 
-namespace NewsRecommenderApp.Data
+namespace INTEXApp.Data
 {
     public class RecommendationsDbContext : DbContext
     {
         public RecommendationsDbContext(DbContextOptions<RecommendationsDbContext> options) : base(options) { }
 
-        public DbSet<Recommendation> Recommendations { get; set; }
+        public DbSet<recommendation1class> recommendations1 { get; set; }
+        public DbSet<recommendation2class> recommendations2 { get; set; }
     }
 }

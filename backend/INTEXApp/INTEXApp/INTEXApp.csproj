@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="recommendations.sqlite" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="recommendations.sqlite">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -33,7 +29,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
-
+<!-- 
   <ItemGroup>
     <Folder Include="wwwroot\MoviePosters\" />
   </ItemGroup>
@@ -56,6 +52,7 @@
     <Folder Include="wwwroot\MoviePosters\" />
   
   </ItemGroup>
+  </ItemGroup> -->
 
   <ItemGroup>
     <None Update="Identity.sqlite">
@@ -73,6 +70,12 @@
   </ItemGroup>
     <Content Remove="wwwroot\MoviePosters\**\*" />
 </ItemGroup>
+
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\MoviePosters\" />
+  </ItemGroup>
 
 
 </Project>

@@ -16,7 +16,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-html, body {
+html,
+body {
   height: auto;
   min-height: 100vh;
   overflow-y: auto;
@@ -36,13 +37,26 @@ a:hover {
   color: #535bf2;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
+overflow: auto;
   /* REMOVE display: flex; and place-items: center */
+}
+
+.overlay-active,
+.no-scroll,
+.lock-scroll {
+  overflow: hidden;
+  height: 100vh;
+  position: fixed;
+}
+
+html, body, #root {
+  height: 100%;
+  overflow: auto !important;
 }
 
 
@@ -92,7 +106,10 @@ button:focus-visible {
 .hide-scrollbar::-webkit-scrollbar {
   height: 0; /* Webkit browsers */
 }
-html, body, #root {
+
+html,
+body,
+#root {
   height: 100%;
   overflow: auto !important;
 }
