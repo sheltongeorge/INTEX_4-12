@@ -340,7 +340,7 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
     <div className="movie-overlay">
       <div className="overlay-content">
         <button className="close-overlay" onClick={onClose}>
-          <X size={24} />
+          ✕
         </button>
         <div className="overlay-poster">
           <img
