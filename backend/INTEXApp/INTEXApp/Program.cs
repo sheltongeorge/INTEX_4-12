@@ -120,13 +120,14 @@ app.MapGet("/pingauth", (ClaimsPrincipal user) =>
         return Results.Unauthorized();
     }
 
+    var id = user.FindFirstValue(ClaimTypes.NameIdentifier);
     var email = user.FindFirstValue(ClaimTypes.Email) ?? "unknown@example.com";
     var roles = user.FindAll(ClaimTypes.Role).Select(r => r.Value).ToList();
     var userIdStr = user.FindFirstValue(ClaimTypes.NameIdentifier);
     int.TryParse(userIdStr, out int userId);
 
 
-    return Results.Json(new { email = email, roles = roles, userId = userId });
+    return Results.Json(new { id = id, email = email, roles = roles });
 }).RequireAuthorization();
 
 
