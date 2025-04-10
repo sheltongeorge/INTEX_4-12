@@ -35,6 +35,10 @@
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\data\\moviesdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\intexapp.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\intexapp.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\controllers\\movieratingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\movieratingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -58,8 +62,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "INTEXApp",
+              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\INTEXApp.csproj",
+              "RelativeDocumentMoniker": "INTEXApp\\INTEXApp.csproj",
+              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\INTEXApp.csproj",
+              "RelativeToolTip": "INTEXApp\\INTEXApp.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-09T22:31:24.797Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
@@ -85,7 +102,7 @@
               "RelativeDocumentMoniker": "INTEXApp\\Controllers\\RecommendationsController.cs",
               "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\RecommendationsController.cs",
               "RelativeToolTip": "INTEXApp\\Controllers\\RecommendationsController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAIwB8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-09T22:53:39.074Z",
               "EditorCaption": ""
@@ -157,7 +174,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "MovieRatingsController.cs",
               "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\MovieRatingsController.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Controllers\\MovieRatingsController.cs",
@@ -183,7 +200,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "MovieUser.cs",
               "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\MovieUser.cs",
               "RelativeDocumentMoniker": "INTEXApp\\MovieUser.cs",
@@ -195,7 +212,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Program.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Program.cs",
@@ -208,7 +225,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "MoviesTitlesController.cs",
               "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\MoviesTitlesController.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Controllers\\MoviesTitlesController.cs",
