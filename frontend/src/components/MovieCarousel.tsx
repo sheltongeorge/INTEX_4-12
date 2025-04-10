@@ -93,9 +93,10 @@ const StarRating = ({ rating, count }: { rating?: number; count?: number }) => {
 export interface MovieCarouselProps {
   categoryTitle?: string;
   categoryType?: string;
+  customMovies?: Movie[]; 
 }
 
-export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProps) => {
+export const MovieCarousel = ({ categoryTitle, categoryType, customMovies  }: MovieCarouselProps) => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [showOverlay, setShowOverlay] = useState(false);
@@ -848,6 +849,8 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
 
   // Add this effect to update the recommendations slider when similar movies change
   useEffect(() => {
+
+    
     if (recommendationsInstanceRef.current && similarMovies.length > 0) {
       // Small timeout to ensure DOM is ready
       setTimeout(() => {
@@ -861,6 +864,14 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   useEffect(() => {
     // Fetch recommendations but only for the personal type carousel
     // This ensures the hook is always called in the same order
+    if (customMovies && customMovies.length > 0) {
+      console.log("✅ Using customMovies prop:", customMovies.map(m => m.title));
+      setMovies(customMovies);
+      setIsLoadingRatings(true);
+      setIsSliderReady(true);
+      return; // ⛔ Exit early, avoid backend fetch
+    }
+    
     const shouldFetchRecommendations = categoryType === 'personal';
     if (shouldFetchRecommendations) {
       fetchRecommendationCategories();
@@ -1005,8 +1016,10 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
       }
     };
 
+
+
     fetchMovies();
-  }, [categoryType, userId]);
+  }, [categoryType, userId, customMovies]);
 
   // Fetch ratings after movies are loaded
   useEffect(() => {
