@@ -1,6 +1,6 @@
 import React from 'react';
 import { MovieCarousel } from '../components/MovieCarousel';
-import Header from '../components/header';
+import Header from '../components/Header';
 
 
 const MoviesPage: React.FC = () => {

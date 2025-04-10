@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { UserContext } from './AuthorizeView';
 import './Profile.css'; // Create this for styling
 

@@ -9,7 +9,6 @@ import AuthorizeView, {
   UserContext,
 } from '../components/AuthorizeView';
 import Logout from '../components/Logout';
-import { Navigate } from 'react-router-dom';
 
 const AdminMoviesPageContent = () => {
   const user = useContext(UserContext);

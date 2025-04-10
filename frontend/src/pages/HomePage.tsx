@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import './HomePage.css';
-import Header from '../components/header';
+import Header from '../components/Header';
 
 function HomePage() {
   const navigate = useNavigate();
