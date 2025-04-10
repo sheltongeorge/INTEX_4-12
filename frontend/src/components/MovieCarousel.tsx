@@ -23,6 +23,7 @@ const getPosterImageUrl = (movieTitle: string): string => {
 };
 
 // Type definition for Movie
+// Type definition for Movie
 type Movie = {
   showId: string;
   title: string;
@@ -35,6 +36,17 @@ type Movie = {
   country?: string;
   type?: string;
   averageRating?: number; // Average user rating (1-5)
+  recommendationPosition?: number; // Position in recommendation list
+};
+
+// Type for Recommendation2Data data from backend
+type Recommendation2Data = {
+  id: number;
+  user_id: number;
+  category: string;
+  position: number;
+  show_id: string;
+  title: string;
   recommendationPosition?: number; // Position in recommendation list
 };
 
@@ -88,6 +100,12 @@ const StarRating = ({ rating, count }: { rating?: number; count?: number }) => {
   );
 };
 
+export interface MovieCarouselProps {
+  categoryTitle?: string;
+  categoryType?: string;
+}
+
+export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProps) => {
 export interface MovieCarouselProps {
   categoryTitle?: string;
   categoryType?: string;
@@ -898,6 +916,14 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
     }
     
     // Also fetch movies based on category type
+    // Fetch recommendations but only for the personal type carousel
+    // This ensures the hook is always called in the same order
+    const shouldFetchRecommendations = categoryType === 'personal';
+    if (shouldFetchRecommendations) {
+      fetchRecommendationCategories();
+    }
+    
+    // Also fetch movies based on category type
     const fetchMovies = async () => {
       try {
         let endpoint = 'https://localhost:7156/api/moviestitles';
@@ -922,13 +948,37 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
         
         console.log(`Fetching movies from ${endpoint} for category: ${categoryTitle || 'default'}`);
         
+        let endpoint = 'https://localhost:7156/api/moviestitles';
+        
+        // If we have a user ID and category type, use a more specific endpoint
+        if (userId && categoryType) {
+          switch(categoryType) {
+            case 'personal':
+              endpoint = `https://localhost:7156/api/MoviesTitles/UserRecommendations/${userId}`;
+              break;
+            case 'trending':
+              endpoint = 'https://localhost:7156/api/MoviesTitles/Trending';
+              break;
+            case 'similar':
+              endpoint = `https://localhost:7156/api/MoviesTitles/UserSimilar/${userId}`;
+              break;
+            default:
+              // Use default endpoint
+              break;
+          }
+        }
+        
+        console.log(`Fetching movies from ${endpoint} for category: ${categoryTitle || 'default'}`);
+        
         const response = await fetch(
+          endpoint,
           endpoint,
           {
             credentials: 'include',
           }
         );
         const data = await response.json();
+        setMovies(Array.isArray(data) ? data.slice(0, 30) : []);
         setMovies(Array.isArray(data) ? data.slice(0, 30) : []);
         setIsLoadingRatings(true);
 
@@ -945,6 +995,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
     };
 
     fetchMovies();
+  }, [categoryType, userId]);
   }, [categoryType, userId]);
 
   // Fetch ratings after movies are loaded

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MovieCarousel } from '../components/MovieCarousel';
 import Header from '../components/header';
-import HeaderSearch from '../components/HeaderSearch';
 import { UserContext } from '../components/AuthorizeView';
 
 const MoviesPage: React.FC = () => {
@@ -43,8 +42,7 @@ const MoviesPage: React.FC = () => {
   return (
     <div>
       <Header/>
-          <HeaderSearch/>
-<div className="overflow-y-auto hide-scrollbar" style={{ height: '100vh', padding: '0 16px' }}>
+      <div className="overflow-y-auto hide-scrollbar" style={{ height: '100vh', padding: '0 16px' }}>
         <h1 className="text-2xl font-bold mt-4 mb-6 text-white">
           {userName ? `Welcome back, ${userName}!` : 'Welcome to CineNiche!'}
         </h1>
