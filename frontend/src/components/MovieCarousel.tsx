@@ -10,7 +10,6 @@ const BLOB_SAS_TOKEN =
   'sv=2024-11-04&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-05-15T09:35:14Z&st=2025-04-09T01:35:14Z&spr=https,http&sig=N%2FAK8dhBBarxwU9qBSd0aI0B5iEOqmpnKUJ6Ek1yv0k%3D';
 const CONTAINER_NAME = 'movieposters';
 
-
 // Add this utility function for getting poster URLs
 const getPosterImageUrl = (movieTitle: string): string => {
   // Format the blob path - adjust based on your actual folder structure in Azure
@@ -101,13 +100,22 @@ export const MovieCarousel = () => {
 
   // Add this near your other state declarations
   const [similarSliderRef] = useKeenSlider({
-  loop: true,
-  slides: { perView: 4, spacing: 16 },
-  breakpoints: {
-    '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
-    '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
-  },
-});
+    loop: true,
+    slides: { perView: 4, spacing: 16 },
+    breakpoints: {
+      '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
+      '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
+    },
+  });
+  // Add this near your other slider references
+  const [recommendationsSliderRef, recommendationsInstanceRef] = useKeenSlider({
+    loop: true,
+    slides: { perView: 4, spacing: 16 },
+    breakpoints: {
+      '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
+      '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
+    },
+  });
   // Fetch movie ratings from backend
   const fetchMovieRatings = async () => {
     try {
@@ -164,19 +172,44 @@ export const MovieCarousel = () => {
   // Fetch the current user's ratings
   const fetchUserRatings = async () => {
     try {
+      // Add timeout to the fetch request using AbortController
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
       const response = await fetch(
         'https://localhost:7156/api/movieratings/user',
         {
           credentials: 'include',
+          signal: controller.signal,
+          headers: {
+            Accept: 'application/json',
+          },
         }
       );
 
+      // Clear the timeout since we got a response
+      clearTimeout(timeoutId);
+
+      // Handle specific HTTP status codes
+      if (response.status === 400) {
+        console.warn(
+          'Server returned 400 Bad Request for user ratings. This may be expected if no user is logged in.'
+        );
+        return; // Exit silently without showing an error to the user
+      }
+
+      if (response.status === 401) {
+        // User is not logged in, so we don't show any error
+        return;
+      }
+
       if (!response.ok) {
-        // If unauthorized, the user is not logged in, so we don't show any error
-        if (response.status === 401) {
-          return;
-        }
-        throw new Error('Failed to fetch user ratings');
+        console.warn(
+          `Server responded with status: ${response.status} ${response.statusText}`
+        );
+        throw new Error(
+          `Server error: ${response.status} ${response.statusText}`
+        );
       }
 
       const ratings: MovieRatingData[] = await response.json();
@@ -188,27 +221,317 @@ export const MovieCarousel = () => {
 
       setUserMovieRatings(userRatingsMap);
     } catch (error) {
-      console.error('Error fetching user ratings:', error);
+      // More detailed error logging
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        console.error('Request timeout fetching user ratings');
+      } else if (error instanceof TypeError) {
+        console.error(
+          'Network error fetching user ratings: Possibly CORS issue or server unavailable'
+        );
+      } else {
+        console.error('Error fetching user ratings:', error);
+      }
+      // Don't update state in case of error - keep existing ratings if any
     }
   };
+  
   //similar movies
-  const fetchSimilarMovies = async (movieId: string) => {
+  const fetchSimilarMovies = async (movieTitle: string) => {
     setIsLoadingSimilar(true);
+    console.log(`Fetching recommendations for movie: "${movieTitle}"`);
     try {
-      const response = await fetch(
-        `https://localhost:7156/api/AllRecommendations2/${movieId}`,
-        {
-          credentials: 'include',
+      // First try to get all recommendations
+      let allRecommendations = [];
+      try {
+        const response = await fetch(
+          'https://localhost:7156/api/Recommendations/AllRecommendations1',
+          {
+            credentials: 'include',
+            // Add a timeout to prevent long waiting times if server is down
+            signal: AbortSignal.timeout(3000) // 3 second timeout
+          }
+        );
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch similar movies');
         }
-      );
-      if (!response.ok) {
-        throw new Error('Failed to fetch similar movies');
+
+        allRecommendations = await response.json();
+        console.log(
+          'API response received, recommendations count:',
+          allRecommendations.length
+        );
+      } catch (apiError) {
+        console.error("API connection error:", apiError);
+        console.log("Using mock recommendations data instead");
+        
+        // Provide mock recommendation data when API is not available
+        allRecommendations = [
+          {
+            if_you_liked: movieTitle,
+            recommendation1: "The Shawshank Redemption",
+            recommendation2: "The Godfather",
+            recommendation3: "Pulp Fiction",
+            recommendation4: "The Dark Knight",
+            recommendation5: "Fight Club",
+            recommendation6: "Forrest Gump",
+            recommendation7: "Inception",
+            recommendation8: "The Matrix"
+          }
+        ];
       }
-      const data = await response.json();
-      setSimilarMovies(data.slice(0, 12)); // Limit to 12 movies
+
+      // Log all titles in database for debugging
+      console.log('Movie database contains:', movies.length, 'movies');
+      
+      // Normalize movie title for comparison
+      const normalizedTitle = movieTitle.toLowerCase().trim();
+      
+      // First try exact match
+      let movieRecommendation = allRecommendations.find(
+        (rec: any) =>
+          rec.if_you_liked &&
+          rec.if_you_liked.toLowerCase().trim() === normalizedTitle
+      );
+      
+      // If not found, try more flexible matching
+      if (!movieRecommendation) {
+        console.log('No exact match found, trying flexible matching');
+        
+        // Try without articles (the, a, an)
+        const titleNoArticles = normalizedTitle.replace(/^(the|a|an) /, '');
+        movieRecommendation = allRecommendations.find(
+          (rec: any) =>
+            rec.if_you_liked &&
+            rec.if_you_liked.toLowerCase().trim().replace(/^(the|a|an) /, '') === titleNoArticles
+        );
+        
+        // If still not found, try contains
+        if (!movieRecommendation) {
+          console.log('No match without articles, trying partial matching');
+          
+          // Find the best match by most similar title
+          let bestSimilarity = 0;
+          
+          allRecommendations.forEach((rec: any) => {
+            if (!rec.if_you_liked) return;
+            
+            const recTitle = rec.if_you_liked.toLowerCase().trim();
+            
+            // Check if one title contains the other
+            if (recTitle.includes(normalizedTitle) || normalizedTitle.includes(recTitle)) {
+              // Calculate similarity as length of the shorter title divided by the longer one
+              const similarity = Math.min(recTitle.length, normalizedTitle.length) / 
+                               Math.max(recTitle.length, normalizedTitle.length);
+              
+              if (similarity > bestSimilarity) {
+                bestSimilarity = similarity;
+                movieRecommendation = rec;
+              }
+            }
+          });
+          
+          if (movieRecommendation) {
+            console.log(`Found partial match: "${movieRecommendation.if_you_liked}" (similarity: ${bestSimilarity.toFixed(2)})`);
+          }
+        }
+      }
+
+      console.log('Found recommendation object:', movieRecommendation);
+
+      if (movieRecommendation) {
+        // Extract all recommendation titles with explicit string[] type
+        const recommendedTitles: string[] = [];
+        for (let i = 1; i <= 12; i++) {
+          const recKey = `recommendation${i}`;
+          // Check if property exists and is a string with content
+          if (
+            recKey in movieRecommendation &&
+            typeof movieRecommendation[recKey] === 'string' &&
+            movieRecommendation[recKey].trim() !== ''
+          ) {
+            recommendedTitles.push(movieRecommendation[recKey]);
+          }
+        }
+
+        console.log('Recommended titles found:', recommendedTitles);
+
+        // Use the backend endpoint to find movies by titles
+        try {
+          // Filter out empty titles
+          const validTitles = recommendedTitles.filter(t => t && t.trim() !== '');
+          
+          if (validTitles.length === 0) {
+            console.warn("No valid recommendation titles to search for");
+            throw new Error("No valid recommendation titles");
+          }
+          
+          console.log("Sending titles to backend for matching:", validTitles);
+          
+          // Use the new FindByTitles endpoint we created
+          const titlesResponse = await fetch(
+            'https://localhost:7156/api/MoviesTitles/FindByTitles',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              credentials: 'include',
+              body: JSON.stringify(validTitles)
+            }
+          );
+          
+          if (!titlesResponse.ok) {
+            throw new Error(`Server returned ${titlesResponse.status}: ${titlesResponse.statusText}`);
+          }
+          
+          const matchResult = await titlesResponse.json();
+          console.log("Backend title matching results:", matchResult);
+          
+          // Get the matched movies from the backend response
+          const foundMovies: Movie[] = matchResult.foundMovies || [];
+          const notFoundTitles = matchResult.notFoundTitles || [];
+          
+          if (notFoundTitles.length > 0) {
+            console.warn("Some titles couldn't be matched:", notFoundTitles.join(", "));
+          }
+          
+          if (foundMovies.length === 0) {
+            console.warn("No movies matched by the backend, falling back to client-side matching");
+            throw new Error("No movies matched by backend");
+          }
+          
+          // Log the matched movies
+          console.log(`Backend found ${foundMovies.length} matching movies for recommendations`);
+          
+          // Reset poster errors for all recommended movies
+          const resetErrorsObj: Record<string, boolean> = {};
+          foundMovies.forEach((movie) => {
+            resetErrorsObj[movie.showId] = false;
+            console.log(`Recommended movie from backend: ${movie.title}, ID: ${movie.showId}`);
+          });
+          
+          // Update the posterErrors state with all reset values at once
+          setPosterErrors((prev) => ({
+            ...prev,
+            ...resetErrorsObj
+          }));
+          
+          // Set the similar movies state to display these movies
+          setSimilarMovies(foundMovies);
+          
+        } catch (matchError) {
+          console.error("Error matching with backend:", matchError);
+          console.log("Falling back to client-side matching");
+          
+          // Fallback to client-side matching
+          const movieMap = new Map<string, Movie>();
+          
+          // Simple mapping of titles to movies for fallback
+          movies.forEach(movie => {
+            if (movie.title) {
+              movieMap.set(movie.title.toLowerCase().trim(), movie);
+            }
+          });
+          
+          // Simple matching algorithm for fallback
+          const matchedMovies: Movie[] = [];
+          const matchedIds = new Set<string>();
+          
+          for (const title of recommendedTitles) {
+            if (!title || title.trim() === '') continue;
+            
+            const normalizedTitle = title.toLowerCase().trim();
+            
+            // Try exact match
+            let foundMovie = movieMap.get(normalizedTitle);
+            
+            // If no exact match, try partial matching
+            if (!foundMovie) {
+              foundMovie = movies.find(m => 
+                m.title && (
+                  m.title.toLowerCase().includes(normalizedTitle) || 
+                  normalizedTitle.includes(m.title.toLowerCase())
+                )
+              );
+            }
+            
+            if (foundMovie && !matchedIds.has(foundMovie.showId)) {
+              matchedMovies.push(foundMovie);
+              matchedIds.add(foundMovie.showId);
+              console.log(`Matched movie in fallback: ${foundMovie.title}`);
+            }
+          }
+          
+          console.log(`Fallback matching found ${matchedMovies.length} movies`);
+          
+          // Reset poster errors for matched movies
+          const resetErrorsObj: Record<string, boolean> = {};
+          matchedMovies.forEach(movie => {
+            resetErrorsObj[movie.showId] = false;
+          });
+          
+          setPosterErrors(prev => ({
+            ...prev,
+            ...resetErrorsObj
+          }));
+          
+          setSimilarMovies(matchedMovies);
+        }
+        
+      } else {
+        console.log(`No recommendation object found for "${movieTitle}"`);
+        
+        // If no recommendations found, just show some random movies as fallback
+        const availableMovies = movies.filter(m => m.showId !== selectedMovie?.showId);
+        const shuffled = availableMovies.sort(() => 0.5 - Math.random());
+        const randomMovies = shuffled.slice(0, 8);
+        
+        console.log("Using random movies as recommendations fallback");
+        
+        // Reset poster errors for random movies
+        const resetErrorsObj: Record<string, boolean> = {};
+        randomMovies.forEach(movie => {
+          resetErrorsObj[movie.showId] = false;
+        });
+        
+        setPosterErrors(prev => ({
+          ...prev,
+          ...resetErrorsObj
+        }));
+        
+        setSimilarMovies(randomMovies);
+      }
+      
+      // Force update the slider after a short delay
+      setTimeout(() => {
+        if (recommendationsInstanceRef.current) {
+          console.log('Updating recommendations slider');
+          recommendationsInstanceRef.current.update();
+        }
+      }, 100);
+      
     } catch (error) {
       console.error('Error fetching similar movies:', error);
-      setSimilarMovies([]);
+      
+      // Final fallback - if everything fails, just show some random movies
+      console.log("Using random movies as ultimate fallback");
+      const availableMovies = movies.filter(m => m.showId !== selectedMovie?.showId);
+      const shuffled = availableMovies.sort(() => 0.5 - Math.random());
+      const randomMovies = shuffled.slice(0, 8);
+      
+      // Reset poster errors for random movies
+      const resetErrorsObj: Record<string, boolean> = {};
+      randomMovies.forEach(movie => {
+        resetErrorsObj[movie.showId] = false;
+      });
+      
+      setPosterErrors(prev => ({
+        ...prev,
+        ...resetErrorsObj
+      }));
+      
+      setSimilarMovies(randomMovies);
     } finally {
       setIsLoadingSimilar(false);
     }
@@ -218,32 +541,68 @@ export const MovieCarousel = () => {
   const fetchUserRatingForMovie = async (showId: string) => {
     setIsLoadingUserRating(true);
     try {
+      // Add timeout to the fetch request using AbortController
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
       const response = await fetch(
         `https://localhost:7156/api/movieratings/user/${showId}`,
         {
           credentials: 'include',
+          signal: controller.signal,
+          headers: {
+            Accept: 'application/json',
+          },
         }
       );
 
+      // Clear the timeout since we got a response
+      clearTimeout(timeoutId);
+
+      if (response.status === 400) {
+        console.warn(
+          `Server returned 400 Bad Request for movie rating: ${showId}. This may be expected if no user is logged in or ID is invalid.`
+        );
+        setUserRating(null);
+        return;
+      }
+
       if (response.status === 401) {
-        // User is not logged in, ignore
+        // User is not logged in, handle silently
+        setUserRating(null);
         return;
       }
 
       if (response.status === 404) {
-        // User hasn't rated this movie yet
+        // User hasn't rated this movie yet, handle silently
         setUserRating(null);
         return;
       }
 
       if (!response.ok) {
-        throw new Error('Failed to fetch user rating');
+        console.warn(
+          `Server responded with status: ${response.status} ${response.statusText}`
+        );
+        throw new Error(
+          `Server error: ${response.status} ${response.statusText}`
+        );
       }
 
       const rating: MovieRatingData = await response.json();
       setUserRating(rating.rating);
     } catch (error) {
-      console.error(`Error fetching user rating for movie ${showId}:`, error);
+      // More detailed error logging
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        console.error(`Request timeout fetching rating for movie ${showId}`);
+      } else if (error instanceof TypeError) {
+        console.error(
+          `Network error fetching rating for movie ${showId}: Possibly CORS issue or server unavailable`
+        );
+      } else {
+        console.error(`Error fetching user rating for movie ${showId}:`, error);
+      }
+
+      // Always set rating to null when there's an error
       setUserRating(null);
     } finally {
       setIsLoadingUserRating(false);
@@ -253,8 +612,11 @@ export const MovieCarousel = () => {
   const handleMovieClick = async (movie: Movie) => {
     setSelectedMovie(movie);
     setShowOverlay(true);
-
-    await fetchSimilarMovies(movie.showId);
+    
+    // Reset similar movies to empty array when loading a new movie
+    setSimilarMovies([]);
+    
+    await fetchSimilarMovies(movie.title); // Pass title instead of ID
 
     // Check if the user has previously rated this movie
     if (userMovieRatings.has(movie.showId)) {
@@ -313,6 +675,18 @@ export const MovieCarousel = () => {
       fetchUserRatings(); // Also fetch user's own ratings
     }
   }, [movies, isLoadingRatings]);
+
+  // Add this effect to update the recommendations slider when similar movies change
+  useEffect(() => {
+    if (recommendationsInstanceRef.current && similarMovies.length > 0) {
+      // Small timeout to ensure DOM is ready
+      setTimeout(() => {
+        recommendationsInstanceRef.current?.update();
+        console.log("Recommendations slider updated with", similarMovies.length, "movies");
+      }, 100);
+    }
+  }, [similarMovies, recommendationsInstanceRef]);
+
   return (
     <div className="carousel-container">
       <div
@@ -566,43 +940,92 @@ export const MovieCarousel = () => {
               </div>
             </div>
             {/* Add this right before the closing overlay-content div */}
-{/* Similar Movies Carousel */}
-// Replace the existing similar movies section
-<div className="similar-movies-section">
-  <h3 className="info-title">Similar Movies</h3>
-  {isLoadingSimilar ? (
-    <div className="loading">Loading similar titles...</div>
-  ) : similarMovies.length > 0 ? (
-    <div ref={similarSliderRef} className="keen-slider">
-      {similarMovies.map((movie) => (
-        <div key={movie.showId} className="keen-slider__slide">
-          <div
-            className="poster-card"
-            onClick={() => handleMovieClick(movie)}
-          >
-            <div className="poster-image-container">
-              <img
-                src={getPosterImageUrl(movie.title)}
-                alt={movie.title}
-                className="poster-image"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = fallbackImage;
-                }}
-              />
+            {/* Recommended Movies Carousel */}
+            <div className="recommended-movies-section">
+              <h3 className="info-title">Recommended Movies</h3>
+              {isLoadingSimilar ? (
+                <div className="loading">Loading recommendations...</div>
+              ) : similarMovies.length > 0 ? (
+                <div className="recommendations-wrapper">
+                  <button
+                    className="arrow rec-left-arrow"
+                    onClick={() => recommendationsInstanceRef.current?.prev()}
+                  >
+                    <ArrowLeft size={16} />
+                  </button>
+                  <div className="recommendations-container">
+                    <div
+                      ref={recommendationsSliderRef}
+                      className="keen-slider recommendations-slider"
+                    >
+                      {similarMovies.map((movie) => (
+                        <div
+                          key={movie.showId}
+                          className="keen-slider__slide recommendation-slide"
+                        >
+                          <div
+                            className="poster-card recommendation-card"
+                            onClick={() => handleMovieClick(movie)}
+                          >
+                            <div className="poster-image-container">
+                              {posterErrors[movie.showId] ? (
+                                <div className="fallback-wrapper">
+                                  <img
+                                    src={fallbackImage}
+                                    alt={`Fallback for ${movie.title}`}
+                                    className="poster-image"
+                                  />
+                                  <div className="fallback-overlay-title">
+                                    {movie.title}
+                                  </div>
+                                </div>
+                              ) : (
+                                <img
+                                  src={getPosterImageUrl(movie.title)}
+                                  alt={movie.title}
+                                  className="poster-image"
+                                  onLoad={() => console.log(`Poster loaded for ${movie.title}`)}
+                                  onError={(e) => {
+                                    console.error(`Error loading poster for ${movie.title}`);
+                                    // Try one more time with a cache-busting URL
+                                    const img = e.currentTarget;
+                                    if (!img.src.includes('&cachebust=')) {
+                                      console.log(`Retrying poster load for ${movie.title} with cache busting`);
+                                      img.src = `${getPosterImageUrl(movie.title)}&cachebust=${Date.now()}`;
+                                    } else {
+                                      // If already tried with cache busting, mark as error
+                                      setPosterErrors((prev) => ({
+                                        ...prev,
+                                        [movie.showId]: true,
+                                      }));
+                                    }
+                                  }}
+                                />
+                              )}
+                            </div>
+                            <div className="recommendation-info">
+                              <h3 className="recommendation-title">
+                                {movie.title}
+                              </h3>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <button
+                    className="arrow rec-right-arrow"
+                    onClick={() => recommendationsInstanceRef.current?.next()}
+                  >
+                    <ArrowRight size={16} />
+                  </button>
+                </div>
+              ) : (
+                <div className="no-recommendations">
+                  No recommended movies found
+                </div>
+              )}
             </div>
-            <div className="hover-info">
-              <h3 className="poster-title">{movie.title}</h3>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  ) : (
-    <div className="no-similar">No similar movies found</div>
-  )}
-</div>
-
           </div>
         </div>
       )}

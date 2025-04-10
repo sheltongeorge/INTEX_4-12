@@ -12,6 +12,7 @@ import MoviesPage from './pages/MoviesPage';
 import Profile from './components/Profile';
 import AuthorizeView from './components/AuthorizeView';
 import HomeRedirect from './HomeRedirect';
+import SearchPage from './pages/SearchPage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/carousel" element={<MovieCarousel />} />
         <Route path="/movies" element={<AuthorizeView><MoviesPage /></AuthorizeView>} />
         <Route path="/profile" element={    <AuthorizeView><Profile /></AuthorizeView>} />
+        <Route path="/search" element={<SearchPage />} />
       </Routes>
     </Router>
   );
