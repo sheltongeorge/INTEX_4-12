@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
+    "axios": "^1.8.4",
     "bootstrap": "^5.3.5",
     "classnames": "^2.5.1",
     "keen-slider": "^6.8.6",
@@ -18,11 +19,13 @@
     "papaparse": "^5.5.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
     "react-router-dom": "^7.5.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@tailwindcss/postcss": "^4.1.3",
+    "@types/axios": "^0.9.36",
     "@types/papaparse": "^5.3.15",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",

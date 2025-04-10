@@ -200,6 +200,10 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
     const timeoutId = setTimeout(() => controller.abort(), 5000);
     
     try {
+      // Add timeout to the fetch request using AbortController
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
       const response = await fetch(
         'https://localhost:7156/api/movieratings/user',
         {
@@ -208,8 +212,28 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
           headers: {
             Accept: 'application/json',
           },
+          signal: controller.signal,
+          headers: {
+            Accept: 'application/json',
+          },
         }
       );
+
+      // Clear the timeout since we got a response
+      clearTimeout(timeoutId);
+
+      // Handle specific HTTP status codes
+      if (response.status === 400) {
+        console.warn(
+          'Server returned 400 Bad Request for user ratings. This may be expected if no user is logged in.'
+        );
+        return; // Exit silently without showing an error to the user
+      }
+
+      if (response.status === 401) {
+        // User is not logged in, so we don't show any error
+        return;
+      }
 
       // Clear the timeout since we got a response
       clearTimeout(timeoutId);
@@ -234,6 +258,12 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
         throw new Error(
           `Server error: ${response.status} ${response.statusText}`
         );
+        console.warn(
+          `Server responded with status: ${response.status} ${response.statusText}`
+        );
+        throw new Error(
+          `Server error: ${response.status} ${response.statusText}`
+        );
       }
 
       const ratings: MovieRatingData[] = await response.json();
@@ -245,6 +275,17 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
 
       setUserMovieRatings(userRatingsMap);
     } catch (error) {
+      // More detailed error logging
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        console.error('Request timeout fetching user ratings');
+      } else if (error instanceof TypeError) {
+        console.error(
+          'Network error fetching user ratings: Possibly CORS issue or server unavailable'
+        );
+      } else {
+        console.error('Error fetching user ratings:', error);
+      }
+      // Don't update state in case of error - keep existing ratings if any
       // More detailed error logging
       if (error instanceof DOMException && error.name === 'AbortError') {
         console.error('Request timeout fetching user ratings');
@@ -745,32 +786,68 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   const fetchUserRatingForMovie = async (showId: string) => {
     setIsLoadingUserRating(true);
     try {
+      // Add timeout to the fetch request using AbortController
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
       const response = await fetch(
         `https://localhost:7156/api/movieratings/user/${showId}`,
         {
           credentials: 'include',
+          signal: controller.signal,
+          headers: {
+            Accept: 'application/json',
+          },
         }
       );
 
+      // Clear the timeout since we got a response
+      clearTimeout(timeoutId);
+
+      if (response.status === 400) {
+        console.warn(
+          `Server returned 400 Bad Request for movie rating: ${showId}. This may be expected if no user is logged in or ID is invalid.`
+        );
+        setUserRating(null);
+        return;
+      }
+
       if (response.status === 401) {
-        // User is not logged in, ignore
+        // User is not logged in, handle silently
+        setUserRating(null);
         return;
       }
 
       if (response.status === 404) {
-        // User hasn't rated this movie yet
+        // User hasn't rated this movie yet, handle silently
         setUserRating(null);
         return;
       }
 
       if (!response.ok) {
-        throw new Error('Failed to fetch user rating');
+        console.warn(
+          `Server responded with status: ${response.status} ${response.statusText}`
+        );
+        throw new Error(
+          `Server error: ${response.status} ${response.statusText}`
+        );
       }
 
       const rating: MovieRatingData = await response.json();
       setUserRating(rating.rating);
     } catch (error) {
-      console.error(`Error fetching user rating for movie ${showId}:`, error);
+      // More detailed error logging
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        console.error(`Request timeout fetching rating for movie ${showId}`);
+      } else if (error instanceof TypeError) {
+        console.error(
+          `Network error fetching rating for movie ${showId}: Possibly CORS issue or server unavailable`
+        );
+      } else {
+        console.error(`Error fetching user rating for movie ${showId}:`, error);
+      }
+
+      // Always set rating to null when there's an error
       setUserRating(null);
     } finally {
       setIsLoadingUserRating(false);

@@ -1,5 +1,6 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "WorkspaceRootPath": "C:\\Users\\Jaxon\\OneDrive\\Documents\\INTEX_4-12\\backend\\INTEXApp\\",
   "Documents": [
     {
@@ -33,6 +34,17 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Jaxon\\OneDrive\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Data\\Recommendation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:INTEXApp\\Data\\Recommendation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+=======
+  "WorkspaceRootPath": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\controllers\\moviescategoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\controllers\\moviescategoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|c:\\users\\shelt\\desktop\\winter 2025\\intex2025\\intex_4-12\\recommenderapp\\backend\\intexapp\\intexapp\\data\\moviesdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7830A8B-30FB-4E3C-BCD4-073A28A32641}|INTEXApp\\INTEXApp.csproj|solutionrelative:intexapp\\data\\moviesdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+>>>>>>> devShelton2
     }
   ],
   "DocumentGroupContainers": [
@@ -42,6 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< HEAD
           "SelectedChildIndex": 1,
           "Children": [
             {
@@ -55,10 +68,31 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-09T22:50:18.264Z"
+=======
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MoviesDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Data\\MoviesDbContext.cs",
+              "RelativeDocumentMoniker": "INTEXApp\\Data\\MoviesDbContext.cs",
+              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Data\\MoviesDbContext.cs",
+              "RelativeToolTip": "INTEXApp\\Data\\MoviesDbContext.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAIAwwDMAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T02:21:18.54Z",
+              "EditorCaption": ""
+>>>>>>> devShelton2
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+<<<<<<< HEAD
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Jaxon\\OneDrive\\Documents\\INTEX_4-12\\backend\\INTEXApp\\INTEXApp\\Program.cs",
               "RelativeDocumentMoniker": "INTEXApp\\Program.cs",
@@ -140,6 +174,17 @@
               "ViewState": "AgIAADAAAAAAAAAAAAAmwEMAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-09T20:15:22.274Z"
+=======
+              "Title": "MoviesCategoriesController.cs",
+              "DocumentMoniker": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\MoviesCategoriesController.cs",
+              "RelativeDocumentMoniker": "INTEXApp\\Controllers\\MoviesCategoriesController.cs",
+              "ToolTip": "C:\\Users\\shelt\\Desktop\\Winter 2025\\INTEX2025\\INTEX_4-12\\RecommenderApp\\backend\\INTEXApp\\INTEXApp\\Controllers\\MoviesCategoriesController.cs",
+              "RelativeToolTip": "INTEXApp\\Controllers\\MoviesCategoriesController.cs",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAwwEkAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T02:19:33.023Z",
+              "EditorCaption": ""
+>>>>>>> devShelton2
             }
           ]
         }
