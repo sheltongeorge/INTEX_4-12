@@ -1,6 +1,6 @@
 import PrivacyPolicy from "../components/gdpr-policy";
 import { useNavigate } from 'react-router-dom';
-import './gdpr-policy.css';
+import '../components/gdpr-policy.css';
 
 function PrivacyPolicyPage() {
   const navigate = useNavigate();
