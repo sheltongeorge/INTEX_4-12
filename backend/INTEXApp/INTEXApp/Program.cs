@@ -59,12 +59,6 @@ builder.Services.AddCors(options =>
 });
 
 // Add after your other service configurations
-builder.Services.AddLogging(logging =>
-{
-    logging.AddConsole();
-    logging.AddDebug();
-    logging.AddAzureWebAppDiagnostics();
-});
 
 
 var app = builder.Build();
@@ -126,29 +120,6 @@ app.MapGet("/pingauth", (ClaimsPrincipal user) =>
     return Results.Json(new { email = email });
 }).RequireAuthorization();
 
-app.UseExceptionHandler(appError =>
-{
-    appError.Run(async context =>
-    {
-        context.Response.StatusCode = 500;
-        context.Response.ContentType = "application/json";
-        
-        var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-        if (contextFeature != null)
-        {
-            var logger = app.Services.GetRequiredService<ILogger<Program>>();
-            logger.LogError(contextFeature.Error, "Unhandled exception");
-            
-            await context.Response.WriteAsJsonAsync(new 
-            {
-                StatusCode = context.Response.StatusCode,
-                Message = "Internal Server Error",
-                Detail = app.Environment.IsDevelopment() ? 
-                    contextFeature.Error.ToString() : "An error occurred."
-            });
-        }
-    });
-});
 
 
 app.Run();
