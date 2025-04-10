@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NewsRecommenderApp.Data;
+using INTEXApp.Data;
 
-namespace NewsRecommenderApp.Controllers
+namespace INTEXApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -17,11 +17,19 @@ namespace NewsRecommenderApp.Controllers
             _RecommendationsContext = temp;
         }
 
-        [HttpGet("AllRecommendations")]
-        public IEnumerable<Recommendation> GetRecommendations()
+        [HttpGet("AllRecommendations1")]
+        public IEnumerable<recommendation1class> GetRecommendations1()
         {
-            return _RecommendationsContext.Recommendations.ToList();
+            return _RecommendationsContext.recommendations1.ToList();
         }
+
+        [HttpGet("AllRecommendations2")]
+        public IEnumerable<recommendation2class> GetRecommendations2()
+        {
+            return _RecommendationsContext.recommendations2.ToList();
+
+        }
+
 
     }
 }

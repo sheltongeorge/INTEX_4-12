@@ -1,4 +1,4 @@
-namespace NewsRecommenderApp
+namespace INTEXApp
 {
     public class WeatherForecast
     {
