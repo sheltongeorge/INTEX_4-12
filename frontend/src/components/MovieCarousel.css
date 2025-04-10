@@ -823,12 +823,19 @@
   z-index: 50;
 }
 
+.carousel-only-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
 .recommendations-wrapper {
   display: flex;
   align-items: center;
   position: relative;
   height: 220px;
   margin: 15px 0;
+  max-width: 100%;
 }
 
 .recommendations-container {
