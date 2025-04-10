@@ -57,3 +57,5 @@ obj/
 *.projects.v9.bin
 *.strings.v9.bin
 DocumentLayout*.json
+.vs/
+backend/INTEXApp/.vs/
