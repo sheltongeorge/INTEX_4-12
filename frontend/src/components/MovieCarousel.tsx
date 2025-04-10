@@ -10,6 +10,7 @@ const BLOB_SAS_TOKEN =
   'sv=2024-11-04&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-05-15T09:35:14Z&st=2025-04-09T01:35:14Z&spr=https,http&sig=N%2FAK8dhBBarxwU9qBSd0aI0B5iEOqmpnKUJ6Ek1yv0k%3D';
 const CONTAINER_NAME = 'movieposters';
 
+
 // Add this utility function for getting poster URLs
 const getPosterImageUrl = (movieTitle: string): string => {
   // Format the blob path - adjust based on your actual folder structure in Azure
@@ -86,6 +87,8 @@ export const MovieCarousel = () => {
   );
   const [isLoadingRatings, setIsLoadingRatings] = useState(false);
   const [isLoadingUserRating, setIsLoadingUserRating] = useState(false);
+  const [similarMovies, setSimilarMovies] = useState<Movie[]>([]);
+  const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
@@ -96,6 +99,15 @@ export const MovieCarousel = () => {
     },
   });
 
+  // Add this near your other state declarations
+  const [similarSliderRef] = useKeenSlider({
+  loop: true,
+  slides: { perView: 4, spacing: 16 },
+  breakpoints: {
+    '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
+    '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
+  },
+});
   // Fetch movie ratings from backend
   const fetchMovieRatings = async () => {
     try {
@@ -179,6 +191,28 @@ export const MovieCarousel = () => {
       console.error('Error fetching user ratings:', error);
     }
   };
+  //similar movies
+  const fetchSimilarMovies = async (movieId: string) => {
+    setIsLoadingSimilar(true);
+    try {
+      const response = await fetch(
+        `https://localhost:7156/api/AllRecommendations2/${movieId}`,
+        {
+          credentials: 'include',
+        }
+      );
+      if (!response.ok) {
+        throw new Error('Failed to fetch similar movies');
+      }
+      const data = await response.json();
+      setSimilarMovies(data.slice(0, 12)); // Limit to 12 movies
+    } catch (error) {
+      console.error('Error fetching similar movies:', error);
+      setSimilarMovies([]);
+    } finally {
+      setIsLoadingSimilar(false);
+    }
+  };
 
   // Fetch a single user rating for a specific movie
   const fetchUserRatingForMovie = async (showId: string) => {
@@ -216,9 +250,11 @@ export const MovieCarousel = () => {
     }
   };
 
-  const handleMovieClick = (movie: Movie) => {
+  const handleMovieClick = async (movie: Movie) => {
     setSelectedMovie(movie);
     setShowOverlay(true);
+
+    await fetchSimilarMovies(movie.showId);
 
     // Check if the user has previously rated this movie
     if (userMovieRatings.has(movie.showId)) {
@@ -529,6 +565,44 @@ export const MovieCarousel = () => {
                 </button>
               </div>
             </div>
+            {/* Add this right before the closing overlay-content div */}
+{/* Similar Movies Carousel */}
+// Replace the existing similar movies section
+<div className="similar-movies-section">
+  <h3 className="info-title">Similar Movies</h3>
+  {isLoadingSimilar ? (
+    <div className="loading">Loading similar titles...</div>
+  ) : similarMovies.length > 0 ? (
+    <div ref={similarSliderRef} className="keen-slider">
+      {similarMovies.map((movie) => (
+        <div key={movie.showId} className="keen-slider__slide">
+          <div
+            className="poster-card"
+            onClick={() => handleMovieClick(movie)}
+          >
+            <div className="poster-image-container">
+              <img
+                src={getPosterImageUrl(movie.title)}
+                alt={movie.title}
+                className="poster-image"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = fallbackImage;
+                }}
+              />
+            </div>
+            <div className="hover-info">
+              <h3 className="poster-title">{movie.title}</h3>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <div className="no-similar">No similar movies found</div>
+  )}
+</div>
+
           </div>
         </div>
       )}
