@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MovieCarousel } from '../components/MovieCarousel';
-import Header from '../components/header';
-import { UserContext } from '../components/AuthorizeView';
+import Header from '../components/Header';
 
 const MoviesPage: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
@@ -11,10 +10,13 @@ const MoviesPage: React.FC = () => {
     // Fetch user data to personalize the welcome message and get userId
     const getUserData = async () => {
       try {
-        const response = await fetch('https://localhost:7156/pingauth', {
-          method: 'GET',
-          credentials: 'include',
-        });
+        const response = await fetch(
+          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/pingauth',
+          {
+            method: 'GET',
+            credentials: 'include',
+          }
+        );
         
         if (response.ok) {
           const userData = await response.json();

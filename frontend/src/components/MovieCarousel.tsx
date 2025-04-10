@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
 import './MovieCarousel.css';
-import { ArrowLeft, ArrowRight, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import fallbackImage from '../assets/Fallback.png'; // adjust path if needed
 import { useContext } from 'react';
 import { UserContext } from './AuthorizeView'; // path might need to adjust
@@ -58,37 +58,37 @@ type MovieRatingData = {
 };
 
 // Star rating component
-const StarRating = ({ rating, count }: { rating?: number; count?: number }) => {
-  // Default to 0 if no rating provided
-  const starRating = rating || 0;
-  // Create an array of 5 stars
-  const stars = Array.from({ length: 5 }, (_, i) => {
-    // For full and half stars
-    if (i < Math.floor(starRating)) return 'full';
-    if (i < Math.ceil(starRating) && !Number.isInteger(starRating))
-      return 'half';
-    return 'empty';
-  });
+// const StarRating = ({ rating, count }: { rating?: number; count?: number }) => {
+//   // Default to 0 if no rating provided
+//   const starRating = rating || 0;
+//   // Create an array of 5 stars
+//   const stars = Array.from({ length: 5 }, (_, i) => {
+//     // For full and half stars
+//     if (i < Math.floor(starRating)) return 'full';
+//     if (i < Math.ceil(starRating) && !Number.isInteger(starRating))
+//       return 'half';
+//     return 'empty';
+//   });
 
-  return (
-    <div className="star-rating">
-      {stars.map((type, index) => (
-        <span key={index} className={`star ${type}`}></span>
-      ))}
-      {starRating > 0 && (
-        <span className="rating-value">
-          ({starRating.toFixed(1)})
-          {count !== undefined && (
-            <span className="rating-count">
-              {' '}
-              from {count} {count === 1 ? 'rating' : 'ratings'}
-            </span>
-          )}
-        </span>
-      )}
-    </div>
-  );
-};
+//   return (
+//     <div className="star-rating">
+//       {stars.map((type, index) => (
+//         <span key={index} className={`star ${type}`}></span>
+//       ))}
+//       {starRating > 0 && (
+//         <span className="rating-value">
+//           ({starRating.toFixed(1)})
+//           {count !== undefined && (
+//             <span className="rating-count">
+//               {' '}
+//               from {count} {count === 1 ? 'rating' : 'ratings'}
+//             </span>
+//           )}
+//         </span>
+//       )}
+//     </div>
+//   );
+// };
 
 export interface MovieCarouselProps {
   categoryTitle?: string;
@@ -99,22 +99,22 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   const [movies, setMovies] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [showOverlay, setShowOverlay] = useState(false);
-  const [userRating, setUserRating] = useState<number | null>(null);
+  // const [userRating, setUserRating] = useState<number | null>(null);
   const [posterErrors, setPosterErrors] = useState<Record<string, boolean>>({});
   const user = useContext(UserContext);
-  const [similarMovies, setSimilarMovies] = useState<Movie[]>([]);
-  const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
+  const [similarMovies] = useState<Movie[]>([]);//removed setSimilarMovies as it was not used
+  // const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
   const [isSliderReady, setIsSliderReady] = useState(false);
 
   
-  const [movieRatings, setMovieRatings] = useState<
-    Map<string, { avg: number; count: number }>
-  >(new Map());
+  // const [movieRatings, setMovieRatings] = useState<
+  //   Map<string, { avg: number; count: number }>
+  // >(new Map());
   const [userMovieRatings, setUserMovieRatings] = useState<Map<string, number>>(
     new Map()
   );
   const [isLoadingRatings, setIsLoadingRatings] = useState(false);
-  const [hoverRating, setHoverRating] = useState<number | null>(null);
+  // const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [recommendationCategories, setRecommendationCategories] = useState<Record<string, Movie[]>>({});
   const [isLoadingRecommendations, setIsLoadingRecommendations] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
@@ -132,7 +132,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   });
   
   // Recommendations slider for similar movies
-  const [recommendationsSliderRef, recommendationsInstanceRef] = useKeenSlider<HTMLDivElement>({
+  const [_, recommendationsInstanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
     slides: { perView: 5, spacing: 16 },
     breakpoints: {
@@ -166,7 +166,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
         ratingMap.set(showId, typedData);
       });
 
-      setMovieRatings(ratingMap);
+      // setMovieRatings(ratingMap);
     } catch (error) {
       console.error('Error fetching movie ratings:', error);
       // Only use mock data if we can't get real data
@@ -187,7 +187,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
             count: randomCount,
           });
         });
-        setMovieRatings(mockRatingsMap);
+        // setMovieRatings(mockRatingsMap);
       }
     } finally {
       setIsLoadingRatings(false);
@@ -269,10 +269,13 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
       let userIdForRecommendations = null;
       
       try {
-        const userResponse = await fetch('https://localhost:7156/pingauth', {
-          method: 'GET',
-          credentials: 'include',
-        });
+        const userResponse = await fetch(
+          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/pingauth',
+          {
+            method: 'GET',
+            credentials: 'include',
+          }
+        );
         
         if (userResponse.ok) {
           const userData = await userResponse.json();
@@ -292,8 +295,8 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
       
       // Use user ID for recommendations if available
       const recommendationsUrl = userIdForRecommendations
-        ? `https://localhost:7156/api/Recommendations/UserRecommendations/${userIdForRecommendations}`
-        : 'https://localhost:7156/api/Recommendations/AllRecommendations2';
+        ? `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/Recommendations/UserRecommendations/${userIdForRecommendations}`
+        : 'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/Recommendations/AllRecommendations2';
       
       console.log('User ID for recommendations:', userIdForRecommendations, 'Using URL:', recommendationsUrl);
       
@@ -339,7 +342,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
       const categorizedMovies: Record<string, Movie[]> = {};
       
       for (const [category, recommendations] of Object.entries(recommendationsByCategory)) {
-        const moviesInCategory: Movie[] = [];
+        // const moviesInCategory: Movie[] = [];
         
         // Sort by position (lower position values should appear first)
         recommendations.sort((a, b) => a.position - b.position);
@@ -393,7 +396,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
           try {
             // Fetch with a timeout to prevent hanging
             const movieResponse = await fetchWithTimeout(
-              `https://localhost:7156/api/MoviesTitles/${rec.show_id}`,
+              `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesTitles/${rec.show_id}`,
               { credentials: 'include' },
               5000 // 5 second timeout
             );
@@ -449,306 +452,306 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   };
   
   // Similar movies
-  const fetchSimilarMovies = async (movieTitle: string) => {
-    setIsLoadingSimilar(true);
-    console.log(`Fetching recommendations for movie: "${movieTitle}"`);
-    try {
-      // First try to get all recommendations
-      let allRecommendations = [];
-      try {
-        const response = await fetch(
-          'https://localhost:7156/api/Recommendations/AllRecommendations1',
-          {
-            credentials: 'include',
-            // Add a timeout to prevent long waiting times if server is down
-            signal: AbortSignal.timeout(3000) // 3 second timeout
-          }
-        );
+  // const fetchSimilarMovies = async (movieTitle: string) => {
+  //   setIsLoadingSimilar(true);
+  //   console.log(`Fetching recommendations for movie: "${movieTitle}"`);
+  //   try {
+  //     // First try to get all recommendations
+  //     let allRecommendations = [];
+  //     try {
+  //       const response = await fetch(
+  //         'https://localhost:7156/api/Recommendations/AllRecommendations1',
+  //         {
+  //           credentials: 'include',
+  //           // Add a timeout to prevent long waiting times if server is down
+  //           signal: AbortSignal.timeout(3000) // 3 second timeout
+  //         }
+  //       );
         
-        if (!response.ok) {
-          throw new Error('Failed to fetch similar movies');
-        }
+  //       if (!response.ok) {
+  //         throw new Error('Failed to fetch similar movies');
+  //       }
 
-        allRecommendations = await response.json();
-        console.log(
-          'API response received, recommendations count:',
-          allRecommendations.length
-        );
-      } catch (apiError) {
-        console.error("API connection error:", apiError);
-        console.log("Using mock recommendations data instead");
+  //       allRecommendations = await response.json();
+  //       console.log(
+  //         'API response received, recommendations count:',
+  //         allRecommendations.length
+  //       );
+  //     } catch (apiError) {
+  //       console.error("API connection error:", apiError);
+  //       console.log("Using mock recommendations data instead");
         
-        // Provide mock recommendation data when API is not available
-        allRecommendations = [
-          {
-            if_you_liked: movieTitle,
-            recommendation1: "The Shawshank Redemption",
-            recommendation2: "The Godfather",
-            recommendation3: "Pulp Fiction",
-            recommendation4: "The Dark Knight",
-            recommendation5: "Fight Club",
-            recommendation6: "Forrest Gump",
-            recommendation7: "Inception",
-            recommendation8: "The Matrix"
-          }
-        ];
-      }
+  //       // Provide mock recommendation data when API is not available
+  //       allRecommendations = [
+  //         {
+  //           if_you_liked: movieTitle,
+  //           recommendation1: "The Shawshank Redemption",
+  //           recommendation2: "The Godfather",
+  //           recommendation3: "Pulp Fiction",
+  //           recommendation4: "The Dark Knight",
+  //           recommendation5: "Fight Club",
+  //           recommendation6: "Forrest Gump",
+  //           recommendation7: "Inception",
+  //           recommendation8: "The Matrix"
+  //         }
+  //       ];
+  //     }
 
-      // Log all titles in database for debugging
-      console.log('Movie database contains:', movies.length, 'movies');
+  //     // Log all titles in database for debugging
+  //     console.log('Movie database contains:', movies.length, 'movies');
       
-      // Normalize movie title for comparison
-      const normalizedTitle = movieTitle.toLowerCase().trim();
+  //     // Normalize movie title for comparison
+  //     const normalizedTitle = movieTitle.toLowerCase().trim();
       
-      // First try exact match
-      let movieRecommendation = allRecommendations.find(
-        (rec: any) =>
-          rec.if_you_liked &&
-          rec.if_you_liked.toLowerCase().trim() === normalizedTitle
-      );
+  //     // First try exact match
+  //     let movieRecommendation = allRecommendations.find(
+  //       (rec: any) =>
+  //         rec.if_you_liked &&
+  //         rec.if_you_liked.toLowerCase().trim() === normalizedTitle
+  //     );
       
-      // If not found, try more flexible matching
-      if (!movieRecommendation) {
-        console.log('No exact match found, trying flexible matching');
+  //     // If not found, try more flexible matching
+  //     if (!movieRecommendation) {
+  //       console.log('No exact match found, trying flexible matching');
         
-        // Try without articles (the, a, an)
-        const titleNoArticles = normalizedTitle.replace(/^(the|a|an) /, '');
-        movieRecommendation = allRecommendations.find(
-          (rec: any) =>
-            rec.if_you_liked &&
-            rec.if_you_liked.toLowerCase().trim().replace(/^(the|a|an) /, '') === titleNoArticles
-        );
+  //       // Try without articles (the, a, an)
+  //       const titleNoArticles = normalizedTitle.replace(/^(the|a|an) /, '');
+  //       movieRecommendation = allRecommendations.find(
+  //         (rec: any) =>
+  //           rec.if_you_liked &&
+  //           rec.if_you_liked.toLowerCase().trim().replace(/^(the|a|an) /, '') === titleNoArticles
+  //       );
         
-        // If still not found, try contains
-        if (!movieRecommendation) {
-          console.log('No match without articles, trying partial matching');
+  //       // If still not found, try contains
+  //       if (!movieRecommendation) {
+  //         console.log('No match without articles, trying partial matching');
           
-          // Find the best match by most similar title
-          let bestSimilarity = 0;
+  //         // Find the best match by most similar title
+  //         let bestSimilarity = 0;
           
-          allRecommendations.forEach((rec: any) => {
-            if (!rec.if_you_liked) return;
+  //         allRecommendations.forEach((rec: any) => {
+  //           if (!rec.if_you_liked) return;
             
-            const recTitle = rec.if_you_liked.toLowerCase().trim();
+  //           const recTitle = rec.if_you_liked.toLowerCase().trim();
             
-            // Check if one title contains the other
-            if (recTitle.includes(normalizedTitle) || normalizedTitle.includes(recTitle)) {
-              // Calculate similarity as length of the shorter title divided by the longer one
-              const similarity = Math.min(recTitle.length, normalizedTitle.length) / 
-                               Math.max(recTitle.length, normalizedTitle.length);
+  //           // Check if one title contains the other
+  //           if (recTitle.includes(normalizedTitle) || normalizedTitle.includes(recTitle)) {
+  //             // Calculate similarity as length of the shorter title divided by the longer one
+  //             const similarity = Math.min(recTitle.length, normalizedTitle.length) / 
+  //                              Math.max(recTitle.length, normalizedTitle.length);
               
-              if (similarity > bestSimilarity) {
-                bestSimilarity = similarity;
-                movieRecommendation = rec;
-              }
-            }
-          });
+  //             if (similarity > bestSimilarity) {
+  //               bestSimilarity = similarity;
+  //               movieRecommendation = rec;
+  //             }
+  //           }
+  //         });
           
-          if (movieRecommendation) {
-            console.log(`Found partial match: "${movieRecommendation.if_you_liked}" (similarity: ${bestSimilarity.toFixed(2)})`);
-          }
-        }
-      }
+  //         if (movieRecommendation) {
+  //           console.log(`Found partial match: "${movieRecommendation.if_you_liked}" (similarity: ${bestSimilarity.toFixed(2)})`);
+  //         }
+  //       }
+  //     }
 
-      console.log('Found recommendation object:', movieRecommendation);
+  //     console.log('Found recommendation object:', movieRecommendation);
 
-      if (movieRecommendation) {
-        // Extract all recommendation titles with explicit string[] type
-        const recommendedTitles: string[] = [];
-        for (let i = 1; i <= 12; i++) {
-          const recKey = `recommendation${i}`;
-          // Check if property exists and is a string with content
-          if (
-            recKey in movieRecommendation &&
-            typeof movieRecommendation[recKey] === 'string' &&
-            movieRecommendation[recKey].trim() !== ''
-          ) {
-            recommendedTitles.push(movieRecommendation[recKey]);
-          }
-        }
+  //     if (movieRecommendation) {
+  //       // Extract all recommendation titles with explicit string[] type
+  //       const recommendedTitles: string[] = [];
+  //       for (let i = 1; i <= 12; i++) {
+  //         const recKey = `recommendation${i}`;
+  //         // Check if property exists and is a string with content
+  //         if (
+  //           recKey in movieRecommendation &&
+  //           typeof movieRecommendation[recKey] === 'string' &&
+  //           movieRecommendation[recKey].trim() !== ''
+  //         ) {
+  //           recommendedTitles.push(movieRecommendation[recKey]);
+  //         }
+  //       }
 
-        console.log('Recommended titles found:', recommendedTitles);
+  //       console.log('Recommended titles found:', recommendedTitles);
 
-        // Use the backend endpoint to find movies by titles
-        try {
-          // Filter out empty titles
-          const validTitles = recommendedTitles.filter(t => t && t.trim() !== '');
+  //       // Use the backend endpoint to find movies by titles
+  //       try {
+  //         // Filter out empty titles
+  //         const validTitles = recommendedTitles.filter(t => t && t.trim() !== '');
           
-          if (validTitles.length === 0) {
-            console.warn("No valid recommendation titles to search for");
-            throw new Error("No valid recommendation titles");
-          }
+  //         if (validTitles.length === 0) {
+  //           console.warn("No valid recommendation titles to search for");
+  //           throw new Error("No valid recommendation titles");
+  //         }
           
-          console.log("Sending titles to backend for matching:", validTitles);
+  //         console.log("Sending titles to backend for matching:", validTitles);
           
-          // Use the new FindByTitles endpoint we created
-          const titlesResponse = await fetch(
-            'https://localhost:7156/api/MoviesTitles/FindByTitles',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              credentials: 'include',
-              body: JSON.stringify(validTitles)
-            }
-          );
+  //         // Use the new FindByTitles endpoint we created
+  //         const titlesResponse = await fetch(
+  //           'https://localhost:7156/api/MoviesTitles/FindByTitles',
+  //           {
+  //             method: 'POST',
+  //             headers: {
+  //               'Content-Type': 'application/json',
+  //             },
+  //             credentials: 'include',
+  //             body: JSON.stringify(validTitles)
+  //           }
+  //         );
           
-          if (!titlesResponse.ok) {
-            throw new Error(`Server returned ${titlesResponse.status}: ${titlesResponse.statusText}`);
-          }
+  //         if (!titlesResponse.ok) {
+  //           throw new Error(`Server returned ${titlesResponse.status}: ${titlesResponse.statusText}`);
+  //         }
           
-          const matchResult = await titlesResponse.json();
-          console.log("Backend title matching results:", matchResult);
+  //         const matchResult = await titlesResponse.json();
+  //         console.log("Backend title matching results:", matchResult);
           
-          // Get the matched movies from the backend response
-          const foundMovies: Movie[] = matchResult.foundMovies || [];
-          const notFoundTitles = matchResult.notFoundTitles || [];
+  //         // Get the matched movies from the backend response
+  //         const foundMovies: Movie[] = matchResult.foundMovies || [];
+  //         const notFoundTitles = matchResult.notFoundTitles || [];
           
-          if (notFoundTitles.length > 0) {
-            console.warn("Some titles couldn't be matched:", notFoundTitles.join(", "));
-          }
+  //         if (notFoundTitles.length > 0) {
+  //           console.warn("Some titles couldn't be matched:", notFoundTitles.join(", "));
+  //         }
           
-          if (foundMovies.length === 0) {
-            console.warn("No movies matched by the backend, falling back to client-side matching");
-            throw new Error("No movies matched by backend");
-          }
+  //         if (foundMovies.length === 0) {
+  //           console.warn("No movies matched by the backend, falling back to client-side matching");
+  //           throw new Error("No movies matched by backend");
+  //         }
           
-          // Log the matched movies
-          console.log(`Backend found ${foundMovies.length} matching movies for recommendations`);
+  //         // Log the matched movies
+  //         console.log(`Backend found ${foundMovies.length} matching movies for recommendations`);
           
-          // Reset poster errors for all recommended movies
-          const resetErrorsObj: Record<string, boolean> = {};
-          foundMovies.forEach((movie) => {
-            resetErrorsObj[movie.showId] = false;
-            console.log(`Recommended movie from backend: ${movie.title}, ID: ${movie.showId}`);
-          });
+  //         // Reset poster errors for all recommended movies
+  //         const resetErrorsObj: Record<string, boolean> = {};
+  //         foundMovies.forEach((movie) => {
+  //           resetErrorsObj[movie.showId] = false;
+  //           console.log(`Recommended movie from backend: ${movie.title}, ID: ${movie.showId}`);
+  //         });
           
-          // Update the posterErrors state with all reset values at once
-          setPosterErrors((prev) => ({
-            ...prev,
-            ...resetErrorsObj
-          }));
+  //         // Update the posterErrors state with all reset values at once
+  //         setPosterErrors((prev) => ({
+  //           ...prev,
+  //           ...resetErrorsObj
+  //         }));
           
-          // Set the similar movies state to display these movies
-          setSimilarMovies(foundMovies);
+  //         // Set the similar movies state to display these movies
+  //         setSimilarMovies(foundMovies);
           
-        } catch (matchError) {
-          console.error("Error matching with backend:", matchError);
-          console.log("Falling back to client-side matching");
+  //       } catch (matchError) {
+  //         console.error("Error matching with backend:", matchError);
+  //         console.log("Falling back to client-side matching");
           
-          // Fallback to client-side matching
-          const movieMap = new Map<string, Movie>();
+  //         // Fallback to client-side matching
+  //         const movieMap = new Map<string, Movie>();
           
-          // Simple mapping of titles to movies for fallback
-          movies.forEach(movie => {
-            if (movie.title) {
-              movieMap.set(movie.title.toLowerCase().trim(), movie);
-            }
-          });
+  //         // Simple mapping of titles to movies for fallback
+  //         movies.forEach(movie => {
+  //           if (movie.title) {
+  //             movieMap.set(movie.title.toLowerCase().trim(), movie);
+  //           }
+  //         });
           
-          // Simple matching algorithm for fallback
-          const matchedMovies: Movie[] = [];
-          const matchedIds = new Set<string>();
+  //         // Simple matching algorithm for fallback
+  //         const matchedMovies: Movie[] = [];
+  //         const matchedIds = new Set<string>();
           
-          for (const title of recommendedTitles) {
-            if (!title || title.trim() === '') continue;
+  //         for (const title of recommendedTitles) {
+  //           if (!title || title.trim() === '') continue;
             
-            const normalizedTitle = title.toLowerCase().trim();
+  //           const normalizedTitle = title.toLowerCase().trim();
             
-            // Try exact match
-            let foundMovie = movieMap.get(normalizedTitle);
+  //           // Try exact match
+  //           let foundMovie = movieMap.get(normalizedTitle);
             
-            // If no exact match, try partial matching
-            if (!foundMovie) {
-              foundMovie = movies.find(m => 
-                m.title && (
-                  m.title.toLowerCase().includes(normalizedTitle) || 
-                  normalizedTitle.includes(m.title.toLowerCase())
-                )
-              );
-            }
+  //           // If no exact match, try partial matching
+  //           if (!foundMovie) {
+  //             foundMovie = movies.find(m => 
+  //               m.title && (
+  //                 m.title.toLowerCase().includes(normalizedTitle) || 
+  //                 normalizedTitle.includes(m.title.toLowerCase())
+  //               )
+  //             );
+  //           }
             
-            if (foundMovie && !matchedIds.has(foundMovie.showId)) {
-              matchedMovies.push(foundMovie);
-              matchedIds.add(foundMovie.showId);
-              console.log(`Matched movie in fallback: ${foundMovie.title}`);
-            }
-          }
+  //           if (foundMovie && !matchedIds.has(foundMovie.showId)) {
+  //             matchedMovies.push(foundMovie);
+  //             matchedIds.add(foundMovie.showId);
+  //             console.log(`Matched movie in fallback: ${foundMovie.title}`);
+  //           }
+  //         }
           
-          console.log(`Fallback matching found ${matchedMovies.length} movies`);
+  //         console.log(`Fallback matching found ${matchedMovies.length} movies`);
           
-          // Reset poster errors for matched movies
-          const resetErrorsObj: Record<string, boolean> = {};
-          matchedMovies.forEach(movie => {
-            resetErrorsObj[movie.showId] = false;
-          });
+  //         // Reset poster errors for matched movies
+  //         const resetErrorsObj: Record<string, boolean> = {};
+  //         matchedMovies.forEach(movie => {
+  //           resetErrorsObj[movie.showId] = false;
+  //         });
           
-          setPosterErrors(prev => ({
-            ...prev,
-            ...resetErrorsObj
-          }));
+  //         setPosterErrors(prev => ({
+  //           ...prev,
+  //           ...resetErrorsObj
+  //         }));
           
-          setSimilarMovies(matchedMovies);
-        }
+  //         setSimilarMovies(matchedMovies);
+  //       }
         
-      } else {
-        console.log(`No recommendation object found for "${movieTitle}"`);
+  //     } else {
+  //       console.log(`No recommendation object found for "${movieTitle}"`);
         
-        // If no recommendations found, just show some random movies as fallback
-        const availableMovies = movies.filter(m => m.showId !== selectedMovie?.showId);
-        const shuffled = availableMovies.sort(() => 0.5 - Math.random());
-        const randomMovies = shuffled.slice(0, 8);
+  //       // If no recommendations found, just show some random movies as fallback
+  //       const availableMovies = movies.filter(m => m.showId !== selectedMovie?.showId);
+  //       const shuffled = availableMovies.sort(() => 0.5 - Math.random());
+  //       const randomMovies = shuffled.slice(0, 8);
         
-        console.log("Using random movies as recommendations fallback");
+  //       console.log("Using random movies as recommendations fallback");
         
-        // Reset poster errors for random movies
-        const resetErrorsObj: Record<string, boolean> = {};
-        randomMovies.forEach(movie => {
-          resetErrorsObj[movie.showId] = false;
-        });
+  //       // Reset poster errors for random movies
+  //       const resetErrorsObj: Record<string, boolean> = {};
+  //       randomMovies.forEach(movie => {
+  //         resetErrorsObj[movie.showId] = false;
+  //       });
         
-        setPosterErrors(prev => ({
-          ...prev,
-          ...resetErrorsObj
-        }));
+  //       setPosterErrors(prev => ({
+  //         ...prev,
+  //         ...resetErrorsObj
+  //       }));
         
-        setSimilarMovies(randomMovies);
-      }
+  //       setSimilarMovies(randomMovies);
+  //     }
       
-      // Force update the slider after a short delay
-      setTimeout(() => {
-        if (recommendationsInstanceRef.current) {
-          console.log('Updating recommendations slider');
-          recommendationsInstanceRef.current.update();
-        }
-      }, 100);
+  //     // Force update the slider after a short delay
+  //     setTimeout(() => {
+  //       if (recommendationsInstanceRef.current) {
+  //         console.log('Updating recommendations slider');
+  //         recommendationsInstanceRef.current.update();
+  //       }
+  //     }, 100);
       
-    } catch (error) {
-      console.error('Error fetching similar movies:', error);
+  //   } catch (error) {
+  //     console.error('Error fetching similar movies:', error);
       
-      // Final fallback - if everything fails, just show some random movies
-      console.log("Using random movies as ultimate fallback");
-      const availableMovies = movies.filter(m => m.showId !== selectedMovie?.showId);
-      const shuffled = availableMovies.sort(() => 0.5 - Math.random());
-      const randomMovies = shuffled.slice(0, 8);
+  //     // Final fallback - if everything fails, just show some random movies
+  //     console.log("Using random movies as ultimate fallback");
+  //     const availableMovies = movies.filter(m => m.showId !== selectedMovie?.showId);
+  //     const shuffled = availableMovies.sort(() => 0.5 - Math.random());
+  //     const randomMovies = shuffled.slice(0, 8);
       
-      // Reset poster errors for random movies
-      const resetErrorsObj: Record<string, boolean> = {};
-      randomMovies.forEach(movie => {
-        resetErrorsObj[movie.showId] = false;
-      });
+  //     // Reset poster errors for random movies
+  //     const resetErrorsObj: Record<string, boolean> = {};
+  //     randomMovies.forEach(movie => {
+  //       resetErrorsObj[movie.showId] = false;
+  //     });
       
-      setPosterErrors(prev => ({
-        ...prev,
-        ...resetErrorsObj
-      }));
+  //     setPosterErrors(prev => ({
+  //       ...prev,
+  //       ...resetErrorsObj
+  //     }));
       
-      setSimilarMovies(randomMovies);
-    } finally {
-      setIsLoadingSimilar(false);
-    }
-  };
+  //     setSimilarMovies(randomMovies);
+  //   } finally {
+  //     // setIsLoadingSimilar(false);
+  //   }
+  // };
 
   // Fetch a single user rating for a specific movie
   const fetchUserRatingForMovie = async (showId: string) => {
@@ -775,19 +778,19 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
         console.warn(
           `Server returned 400 Bad Request for movie rating: ${showId}. This may be expected if no user is logged in or ID is invalid.`
         );
-        setUserRating(null);
+        // setUserRating(null);
         return;
       }
 
       if (response.status === 401) {
         // User is not logged in, handle silently
-        setUserRating(null);
+        // setUserRating(null);
         return;
       }
 
       if (response.status === 404) {
         // User hasn't rated this movie yet, handle silently
-        setUserRating(null);
+        // setUserRating(null);
         return;
       }
 
@@ -800,8 +803,8 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
         );
       }
 
-      const rating: MovieRatingData = await response.json();
-      setUserRating(rating.rating);
+      // const rating: MovieRatingData = await response.json();
+      // setUserRating(rating.rating);
     } catch (error) {
       // More detailed error logging
       if (error instanceof DOMException && error.name === 'AbortError') {
@@ -815,7 +818,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
       }
 
       // Always set rating to null when there's an error
-      setUserRating(null);
+      // setUserRating(null);
     } finally {
     }
   };
@@ -826,7 +829,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
 
     // Check if the user has previously rated this movie
     if (userMovieRatings.has(movie.showId)) {
-      setUserRating(userMovieRatings.get(movie.showId) || null);
+      // setUserRating(userMovieRatings.get(movie.showId) || null);
     } else {
       // If not in our local cache, fetch from the server
       fetchUserRatingForMovie(movie.showId);
@@ -866,22 +869,24 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
     // Also fetch movies based on category type
     const fetchMovies = async () => {
       try {
-        let endpoint = 'https://localhost:7156/api/moviestitles';
+        let endpoint =
+          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/moviestitles';
         
         // If we have a user ID and category type, use a more specific endpoint
         if (userId && categoryType) {
           console.log(`Using user-specific endpoint for user ID: ${userId} and category: ${categoryType}`);
           switch(categoryType) {
             case 'personal':
-              endpoint = `https://localhost:7156/api/MoviesTitles/UserRecommendations/${userId}`;
+              endpoint = `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesTitles/UserRecommendations/${userId}`;
               console.log(`Using personal recommendations endpoint for user ${userId}`);
               break;
             case 'trending':
-              endpoint = 'https://localhost:7156/api/MoviesTitles/Trending';
+              endpoint =
+                'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesTitles/Trending';
               console.log('Using trending recommendations endpoint');
               break;
             case 'similar':
-              endpoint = `https://localhost:7156/api/MoviesTitles/UserSimilar/${userId}`;
+              endpoint = `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesTitles/UserSimilar/${userId}`;
               console.log(`Using similar recommendations endpoint for user ${userId}`);
               break;
             default:
@@ -1066,7 +1071,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
                     }
 
                     fetch(
-                      `https://localhost:7156/api/moviewatchlist/add/${encodeURIComponent(user.email)}`,
+                      `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/moviewatchlist/add/${encodeURIComponent(user.email)}`,
                       {
                         method: 'POST',
                         headers: {
@@ -1080,7 +1085,9 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
                         if (res.ok) {
                           alert(`✅ Added "${movie.title}" to your watchlist!`);
                         } else if (res.status === 409) {
-                          alert(`⚠️ "${movie.title}" is already in your watchlist.`);
+                          alert(
+                            `⚠️ "${movie.title}" is already in your watchlist.`
+                          );
                         } else {
                           alert('❌ Failed to add to watchlist.');
                         }

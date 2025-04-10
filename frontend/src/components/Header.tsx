@@ -9,10 +9,13 @@ const Header: React.FC = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('https://localhost:7156/pingauth', {
-          method: 'GET',
-          credentials: 'include',
-        });
+        const response = await fetch(
+          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/pingauth',
+          {
+            method: 'GET',
+            credentials: 'include',
+          }
+        );
         
         setIsAuthenticated(response.ok);
       } catch (error) {

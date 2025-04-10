@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { X } from 'lucide-react';
+import { useEffect, useState, useContext } from 'react';
 import { UserContext } from './AuthorizeView';
 import fallbackImage from '../assets/Fallback.png';
 import './Profile.css';
 import './MovieCarousel.css';
-import Header from '../components/header';
+import Header from '../components/Header';
 import MovieOverlay from '../components/MovieOverlay'; // adjust path if needed
 
 
@@ -89,10 +88,16 @@ const Profile = () => {
     const fetchData = async () => {
       if (!user?.email) return;
 
-      const ratingsRes = await fetch(`https://localhost:7156/api/movieratings/userratings/${encodeURIComponent(user.email)}`, { credentials: 'include' });
+      const ratingsRes = await fetch(
+        `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/movieratings/userratings/${encodeURIComponent(user.email)}`,
+        { credentials: 'include' }
+      );
       if (ratingsRes.ok) setRatings(await ratingsRes.json());
 
-      const watchlistRes = await fetch(`https://localhost:7156/api/moviewatchlist/${encodeURIComponent(user.email)}`, { credentials: 'include' });
+      const watchlistRes = await fetch(
+        `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/moviewatchlist/${encodeURIComponent(user.email)}`,
+        { credentials: 'include' }
+      );
       if (watchlistRes.ok) setWatchlist(await watchlistRes.json());
     };
 

@@ -41,7 +41,7 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
   const [userRating, setUserRating] = useState<number | null>(initialRating ?? null);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [similarMovies, setSimilarMovies] = useState<Movie[]>([]);
-  const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
+  // const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
   const [posterErrors, setPosterErrors] = useState<Record<string, boolean>>({});
   
   // Recommendations slider for similar movies
@@ -60,14 +60,18 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
       return;
     }
 
-    fetch('https://localhost:7156/api/movieratings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ showId: movie.showId, rating: userRating }),
-    })
+    fetch(
+      'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/movieratings',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ showId: movie.showId, rating: userRating }),
+      }
+    )
       .then((response) => {
-        if (response.ok) alert(`Your rating of ${userRating}/5 has been submitted!`);
+        if (response.ok)
+          alert(`Your rating of ${userRating}/5 has been submitted!`);
         else alert('Failed to submit rating.');
       })
       .catch((error) => console.error('Rating submit error:', error));
@@ -75,7 +79,7 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
 
   // Similar movies
   const fetchSimilarMovies = async (movieTitle: string) => {
-    setIsLoadingSimilar(true);
+    // setIsLoadingSimilar(true);
     console.log(`Fetching recommendations for movie: "${movieTitle}"`);
     
     try {
@@ -114,7 +118,7 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
       console.error('Error fetching similar movies:', error);
       setSimilarMovies([]);
     } finally {
-      setIsLoadingSimilar(false);
+      // setIsLoadingSimilar(false);
     }
   };
   
@@ -122,10 +126,10 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
   const fetchRecommendationsData = async (movieTitle: string): Promise<any[]> => {
     try {
       const response = await fetch(
-        'https://localhost:7156/api/Recommendations/AllRecommendations1',
+        'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/Recommendations/AllRecommendations1',
         {
           credentials: 'include',
-          signal: AbortSignal.timeout(3000) // 3 second timeout
+          signal: AbortSignal.timeout(3000), // 3 second timeout
         }
       );
       
@@ -199,10 +203,10 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
     try {
       // First try to get all movies and match by title
       const allMoviesResponse = await fetch(
-        'https://localhost:7156/api/MoviesTitles',
+        'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesTitles',
         {
           credentials: 'include',
-          signal: AbortSignal.timeout(3000)
+          signal: AbortSignal.timeout(3000),
         }
       );
       
@@ -238,10 +242,10 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
         try {
           // As a fallback, try using the title as an ID
           const response = await fetch(
-            `https://localhost:7156/api/MoviesTitles/${encodeURIComponent(recTitle)}`,
+            `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesTitles/${encodeURIComponent(recTitle)}`,
             {
               credentials: 'include',
-              signal: AbortSignal.timeout(2000)
+              signal: AbortSignal.timeout(2000),
             }
           );
           
@@ -282,10 +286,10 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
     // Get more details for the selected movie if needed
     try {
       const response = await fetch(
-        `https://localhost:7156/api/MoviesTitles/${recommendedMovie.showId}`,
+        `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesTitles/${recommendedMovie.showId}`,
         {
           credentials: 'include',
-          signal: AbortSignal.timeout(3000)
+          signal: AbortSignal.timeout(3000),
         }
       );
       
@@ -353,7 +357,7 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
                   return;
                 }
                 fetch(
-                  `https://localhost:7156/api/moviewatchlist/add/${encodeURIComponent(user.email)}`,
+                  `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/moviewatchlist/add/${encodeURIComponent(user.email)}`,
                   {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -362,7 +366,8 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
                   }
                 )
                   .then((res) => {
-                    if (res.ok) alert(`✅ Added "${movie.title}" to your watchlist!`);
+                    if (res.ok)
+                      alert(`✅ Added "${movie.title}" to your watchlist!`);
                     else alert('❌ Failed to add to watchlist.');
                   })
                   .catch((err) => console.error('Watchlist error:', err));

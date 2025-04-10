@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Header from '../components/header';
+import Header from '../components/Header';
 import HeaderSearch from '../components/HeaderSearch';
 import fallbackImage from '../assets/Fallback.png';
 import { MovieTitle } from '../types/MovieTitle';
 import '../components/MovieCarousel.css';
-import MovieOverlay from '../components/MovieOverlay';
 
 const genres = [
   'Action & Adventure',
@@ -55,14 +54,17 @@ const SearchPage: React.FC = () => {
       const response = await axios.get<{
         movies: MovieTitle[];
         totalCount: number;
-      }>('https://localhost:7156/api/MoviesCategories/AllMovies', {
-        params: {
-          type: type || undefined,
-          category: genre || undefined,
-          titleFilter: titleFilter || undefined,
-        },
-        withCredentials: true,
-      });
+      }>(
+        'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesCategories/AllMovies',
+        {
+          params: {
+            type: type || undefined,
+            category: genre || undefined,
+            titleFilter: titleFilter || undefined,
+          },
+          withCredentials: true,
+        }
+      );
       setMovies(response.data.movies);
     } catch (error) {
       console.error('Error fetching movies:', error);
