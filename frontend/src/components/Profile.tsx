@@ -4,6 +4,7 @@ import { UserContext } from './AuthorizeView';
 import fallbackImage from '../assets/Fallback.png';
 import './Profile.css';
 import './MovieCarousel.css';
+import Header from '../components/header';
 
 const BLOB_STORAGE_URL = 'https://movieposterblob.blob.core.windows.net';
 const BLOB_SAS_TOKEN =
@@ -110,6 +111,8 @@ const Profile = () => {
   }, [user]);
 
   return (
+  <div>
+    <Header/>
     <div className="profile-container">
       <h1 className="profile-header">Your Ratings</h1>
       <div className="ratings-grid">
@@ -130,6 +133,7 @@ const Profile = () => {
       </div>
 
       {showOverlay && selectedMovie && <MovieOverlay movie={selectedMovie} closeOverlay={() => setShowOverlay(false)} />}
+    </div>
     </div>
   );
 };

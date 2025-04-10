@@ -561,7 +561,6 @@
   background-color: #f40612;
 }
 
-<<<<<<< HEAD
 /* Media Queries for Overlay */
 @media (max-width: 768px) {
   .overlay-content {
@@ -696,9 +695,7 @@
   font-size: 80px;
 }
 
-=======
 /* Fallback wrapper styling */
->>>>>>> 7de601ad797b55104cee7e88023a390f1812fe71
 .fallback-wrapper {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
@@ -717,9 +714,7 @@
   animation: fadeIn 0.5s ease-in-out both;
 }
 
-<<<<<<< HEAD
 
-=======
 .fallback-overlay-title {
   position: absolute;
   bottom: 0;
@@ -742,7 +737,6 @@
   border-radius: 8px;
   margin-top: 20px;
 }
->>>>>>> 7de601ad797b55104cee7e88023a390f1812fe71
 
 .similar-movies .keen-slider {
   height: 200px;
@@ -813,7 +807,6 @@
   width: 100%;
   padding: 40px;
   text-align: center;
-<<<<<<< HEAD
   color: #888;
 }
 
@@ -961,10 +954,8 @@
   display: flex;
   flex-direction: column;
   padding-bottom: 20px;
-=======
   color: #777;
   font-size: 16px;
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 8px;
->>>>>>> 7de601ad797b55104cee7e88023a390f1812fe71
 }
