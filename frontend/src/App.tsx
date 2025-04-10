@@ -7,43 +7,13 @@ import AdminMoviesPage from './pages/AdminMoviesPage';
 // import "keen-slider/keen-slider.min.css";
 import { TestPoster } from "./components/TestPoster";
 import { MovieCarousel } from "./components/MovieCarousel";
-import HomePage from './pages/HomePage';
 import MoviesPage from './pages/MoviesPage';
 import Profile from './components/Profile';
 import AuthorizeView from './components/AuthorizeView';
-import { useState, useEffect } from 'react';
+import HomeRedirect from './HomeRedirect';
 
 // Component to handle authentication-based redirects
-const HomeRedirect = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await fetch('https://localhost:7156/pingauth', {
-          method: 'GET',
-          credentials: 'include',
-        });
-        
-        if (response.ok) {
-          setIsAuthenticated(true);
-        } else {
-          setIsAuthenticated(false);
-        }
-      } catch (error) {
-        setIsAuthenticated(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
-
-  if (isAuthenticated === null) {
-    return <div>Loading...</div>;
-  }
-
-  return isAuthenticated ? <Navigate to="/movies" /> : <HomePage />;
-};
 
 function App() {
   return (
