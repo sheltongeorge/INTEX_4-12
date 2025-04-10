@@ -5,31 +5,14 @@ import Header from '../components/header';
 function HomePage() {
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    navigate('/login');
-  };
-
   const handleSignup = () => {
     navigate('/register');
   };
 
   return (<div>
     <Header/>
-    <div className="homepage-container d-flex flex-column min-vh-100">
-      <header className="d-flex justify-content-between align-items-center p-4">
-        <h1 className="fw-bold">CineNiche</h1>
-        <div>
-          <button
-            className="btn btn-outline-primary me-2"
-            onClick={handleLogin}
-          >
-            Login
-          </button>
-          <button className="btn btn-primary" onClick={handleSignup}>
-            Sign Up
-          </button>
-        </div>
-      </header>
+    <div style={{ color: 'white' }} className="homepage-container d-flex flex-column min-vh-100">
+
 
       <main className="flex-grow-1 d-flex flex-column justify-content-center align-items-center text-center px-3">
         <h2 className="display-5 fw-bold mb-4">

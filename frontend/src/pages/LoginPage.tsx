@@ -11,7 +11,7 @@ function LoginPage() {
   const [rememberme, setRememberme] = useState<boolean>(false);
   const [showAnimation, setShowAnimation] = useState<boolean>(true);
   const [isLogoSpinning, setIsLogoSpinning] = useState<boolean>(false);
-  
+
   // Always show animation on login page
   useEffect(() => {
     setShowAnimation(true);
@@ -70,7 +70,7 @@ function LoginPage() {
         throw new Error(data?.message || 'Invalid email or password.');
       }
 
-      navigate('/recommendations'); // Redirect to recommendations page on success
+      navigate('/movies'); // Redirect to recommendations page on success
     } catch (error: any) {
       setError(error.message || 'Error logging in.');
       console.error('Fetch attempt failed:', error);
@@ -79,7 +79,9 @@ function LoginPage() {
 
   return (
     <div className="container">
-      <div className={`card border-0 shadow rounded-3 ${showAnimation ? 'card-animate' : ''}`}>
+      <div
+        className={`card border-0 shadow rounded-3 ${showAnimation ? 'card-animate' : ''}`}
+      >
         <div className="card-body p-4 p-sm-5">
           <div className="text-center mb-4 position-relative">
             <div style={{ position: 'relative', display: 'inline-block' }}>
@@ -90,7 +92,7 @@ function LoginPage() {
                 onClick={() => {
                   if (!isLogoSpinning) {
                     setIsLogoSpinning(true);
-                    
+
                     // Reset the animation after it completes
                     setTimeout(() => {
                       setIsLogoSpinning(false);
@@ -100,9 +102,7 @@ function LoginPage() {
               />
             </div>
           </div>
-          <h5 className="card-title text-center mb-5 fw-light fs-5">
-            Sign In
-          </h5>
+          <h5 className="card-title text-center mb-5 fw-light fs-5">Sign In</h5>
           <form onSubmit={handleSubmit}>
             <div className="form-floating mb-3">
               <input
