@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace INTEXApp.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class MovieUsersController : ControllerBase
