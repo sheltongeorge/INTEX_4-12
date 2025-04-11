@@ -4,6 +4,8 @@ import Header from '../components/header';
 import LazyCarousel from '../components/LazyCarousel';
 import HeaderSearch from '../components/HeaderSearch';
 import './MoviesPage.css'; 
+import { UserContext } from '../components/AuthorizeView';
+
 
 const MoviesPage: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
@@ -155,7 +157,9 @@ const MoviesPage: React.FC = () => {
   }, [topRatedMovies]);
 
   return (
+    <UserContext.Provider value={{ email: userEmail }}>
     <div>
+      
       <Header />
       <HeaderSearch />
       <div
@@ -201,7 +205,8 @@ const MoviesPage: React.FC = () => {
           )
         )}
       </div>
-    </div>
+      </div>
+      </UserContext.Provider>
   );
   
 };
