@@ -1,5 +1,5 @@
 ﻿using INTEXApp.Data;
-using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace INTEXApp.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     //[EnableCors("AllowFrontend")]
@@ -63,7 +64,8 @@ namespace INTEXApp.Controllers
 
         // POST - Add a new movie
         [HttpPost("AddMovie")]
-        public async Task<IActionResult> AddMovie([FromBody] MovieTitle newMovie)
+        [Authorize(Roles = "Administrator")]
+        public IActionResult AddMovie([FromBody] MovieTitle newMovie)
         {
             //_context.MoviesTitles.Add(newMovie);
             //_context.SaveChanges();
@@ -96,6 +98,7 @@ namespace INTEXApp.Controllers
         }
 
         // PUT - Update a movie
+        [Authorize(Roles = "Administrator")]
         [HttpPut("UpdateMovie/{id}")]
         public IActionResult UpdateMovie(string id, [FromBody] MovieTitle updatedMovie)
         {
@@ -109,6 +112,7 @@ namespace INTEXApp.Controllers
         }
 
         // DELETE - Delete a movie
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("DeleteMovie/{id}")]
         public IActionResult DeleteMovie(string id)
         {

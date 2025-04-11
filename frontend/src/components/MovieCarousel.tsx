@@ -10,8 +10,7 @@ import MovieOverlay from './MovieOverlay';
 
 
 const BLOB_STORAGE_URL = 'https://movieposterblob.blob.core.windows.net';
-const BLOB_SAS_TOKEN =
-  'sv=2024-11-04&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-05-15T09:35:14Z&st=2025-04-09T01:35:14Z&spr=https,http&sig=N%2FAK8dhBBarxwU9qBSd0aI0B5iEOqmpnKUJ6Ek1yv0k%3D';
+const BLOB_SAS_TOKEN = import.meta.env.VITE_BLOB_SAS_TOKEN;
 const CONTAINER_NAME = 'movieposters';
 
 // Add this utility function for getting poster URLs
@@ -93,17 +92,20 @@ type MovieRatingData = {
 export interface MovieCarouselProps {
   categoryTitle?: string;
   categoryType?: string;
+  customMovies?: Movie[]; 
 }
 
-export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProps) => {
+export const MovieCarousel = ({ categoryTitle, categoryType, customMovies  }: MovieCarouselProps) => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [showOverlay, setShowOverlay] = useState(false);
   // const [userRating, setUserRating] = useState<number | null>(null);
   const [posterErrors, setPosterErrors] = useState<Record<string, boolean>>({});
   const user = useContext(UserContext);
-  const [similarMovies] = useState<Movie[]>([]);//removed setSimilarMovies as it was not used
-  // const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
+  console.log("🔍 MovieCarousel user:", user);
+  const [isLoading, setIsLoading] = useState(true);
+  const [similarMovies, setSimilarMovies] = useState<Movie[]>([]);
+  const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
   const [isSliderReady, setIsSliderReady] = useState(false);
 
   
@@ -121,10 +123,10 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   
   // Main carousel slider
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
-    loop: true,
+    loop: false,
     slides: { perView: 6, spacing: 10 },
     drag: true,
-    rubberband: true,
+    rubberband: false,
     breakpoints: {
       '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
       '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
@@ -133,7 +135,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   
   // Recommendations slider for similar movies
   const [_, recommendationsInstanceRef] = useKeenSlider<HTMLDivElement>({
-    loop: true,
+    loop: false,
     slides: { perView: 5, spacing: 16 },
     breakpoints: {
       '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
@@ -266,32 +268,33 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
     setIsLoadingRecommendations(true);
     try {
       // First get the user's ID from the auth endpoint
-      let userIdForRecommendations = null;
-      
-      try {
-        const userResponse = await fetch(
-          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/pingauth',
-          {
+      let userIdForRecommendations = user?.userId;
+
+      if (!userIdForRecommendations) {
+        try {
+          const userResponse = await fetch('https://localhost:7156/pingauth', {
             method: 'GET',
             credentials: 'include',
+          });
+      
+          if (userResponse.ok) {
+            const userData = await userResponse.json();
+            if (userData && userData.id) {
+              userIdForRecommendations = userData.id;
+      
+              // ✅ only overwrite context userId if it was missing
+              if (!user?.userId) {
+                setUserId(userData.id);
+              }
+            }
           }
-        );
-        
-        if (userResponse.ok) {
-          const userData = await userResponse.json();
-          if (userData && userData.id) {
-            userIdForRecommendations = userData.id;
-            setUserId(userData.id);
-            console.log('Successfully authenticated user with ID:', userData.id);
-          } else {
-            console.warn('User authenticated but no ID found in response:', userData);
-          }
-        } else {
-          console.warn(`Authentication failed with status: ${userResponse.status}`);
+        } catch (userError) {
+          console.error('Error fetching user data:', userError);
         }
-      } catch (userError) {
-        console.error('Error fetching user data:', userError);
       }
+      console.log("✅ Using userId for recommendations:", userIdForRecommendations);
+
+      
       
       // Use user ID for recommendations if available
       const recommendationsUrl = userIdForRecommendations
@@ -848,6 +851,8 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
 
   // Add this effect to update the recommendations slider when similar movies change
   useEffect(() => {
+
+    
     if (recommendationsInstanceRef.current && similarMovies.length > 0) {
       // Small timeout to ensure DOM is ready
       setTimeout(() => {
@@ -861,6 +866,14 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
   useEffect(() => {
     // Fetch recommendations but only for the personal type carousel
     // This ensures the hook is always called in the same order
+    if (customMovies && customMovies.length > 0) {
+      console.log("✅ Using customMovies prop:", customMovies.map(m => m.title));
+      setMovies(customMovies);
+      setIsLoadingRatings(true);
+      setIsSliderReady(true);
+      return; // ⛔ Exit early, avoid backend fetch
+    }
+    
     const shouldFetchRecommendations = categoryType === 'personal';
     if (shouldFetchRecommendations) {
       fetchRecommendationCategories();
@@ -889,6 +902,14 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
               endpoint = `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesTitles/UserSimilar/${userId}`;
               console.log(`Using similar recommendations endpoint for user ${userId}`);
               break;
+            case 'recently_added':
+              endpoint = 'https://localhost:7156/api/MoviesTitles/AllMovies?pageSize=30&pageNum=1';
+              console.log('Using recently added movies endpoint');
+              break;
+            case 'top_rated':
+              endpoint = 'https://localhost:7156/api/MoviesTitles/AllMovies?pageSize=30&pageNum=1';
+              console.log('Using top rated movies endpoint');
+              break;
             default:
               console.log(`Using default endpoint for category type: ${categoryType}`);
               break;
@@ -910,8 +931,81 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
             credentials: 'include',
           }
         );
-        const data = await response.json();
-        setMovies(Array.isArray(data) ? data.slice(0, 30) : []);
+        
+        let data = await response.json();
+        let processedMovies = [];
+        
+        // Handle specific category types with custom processing
+        if (categoryType === 'recently_added') {
+          // For "Recently Added", we need to process the response which includes 'Movies' property
+          let movies = Array.isArray(data) ? data : (data.Movies || []);
+          
+          // Sort by release year (descending - newest first)
+          movies.sort((a: Movie, b: Movie) => {
+            const yearA = a.releaseYear || 0;
+            const yearB = b.releaseYear || 0;
+            return yearB - yearA; // Newest first
+          });
+          
+          console.log('Recently added movies sorted by release year:',
+            movies.slice(0, 5).map((m: Movie) => `${m.title} (${m.releaseYear})`));
+          
+          processedMovies = movies.slice(0, 30); // Take top 30
+        }
+        else if (categoryType === 'top_rated') {
+          // For "Top Rated", we need to get movies and combine with ratings
+          let movies = Array.isArray(data) ? data : (data.Movies || []);
+          
+          try {
+            // Fetch all ratings averages
+            const ratingsResponse = await fetch(
+              'https://localhost:7156/api/movieratings/averages',
+              { credentials: 'include' }
+            );
+            
+            if (ratingsResponse.ok) {
+              const ratingsData = await ratingsResponse.json();
+              
+              // Map movies with their average ratings
+              const moviesWithRatings = movies.map((movie: Movie) => {
+                const ratingInfo = ratingsData[movie.showId];
+                return {
+                  ...movie,
+                  averageRating: ratingInfo ? ratingInfo.avg : 0,
+                  ratingCount: ratingInfo ? ratingInfo.count : 0
+                };
+              });
+              
+              // Filter out unrated movies (optional - remove this if you want to include unrated movies)
+              const ratedMovies = moviesWithRatings.filter((m: Movie & {averageRating: number}) => m.averageRating > 0);
+              
+              // Sort by average rating (highest first)
+              ratedMovies.sort((a: Movie & {averageRating: number}, b: Movie & {averageRating: number}) =>
+                b.averageRating - a.averageRating
+              );
+              
+              console.log('Top rated movies:',
+                ratedMovies.slice(0, 5).map((m: Movie & {averageRating: number}) =>
+                  `${m.title} (${m.averageRating.toFixed(1)})`
+                )
+              );
+              
+              processedMovies = ratedMovies.slice(0, 30); // Take top 30
+            } else {
+              console.error('Failed to fetch movie ratings');
+              processedMovies = movies.slice(0, 30);
+            }
+          } catch (error) {
+            console.error('Error fetching ratings:', error);
+            processedMovies = movies.slice(0, 30);
+          }
+        }
+        else {
+          // For all other categories, use the default approach
+          processedMovies = Array.isArray(data) ? data.slice(0, 30) : [];
+        }
+        
+        setMovies(processedMovies);
         setIsLoadingRatings(true);
 
         // Force KeenSlider to recalculate dimensions after movies are set
@@ -926,8 +1020,10 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
       }
     };
 
+
+
     fetchMovies();
-  }, [categoryType, userId]);
+  }, [categoryType, userId, customMovies]);
 
   // Fetch ratings after movies are loaded
   useEffect(() => {
@@ -946,7 +1042,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
         // Map through each category and render a carousel
         Object.entries(recommendationCategories).map(([category, categoryMovies]) => (
           <div key={category} className="category-carousel-container">
-            <h2 className="category-title">{category}</h2>
+            <h2 className="category-title"></h2>
             <div className={`carousel-wrapper ${showOverlay ? 'overlay-active' : ''}`}>
               <div className="keen-slider" ref={sliderRef}>
                 {categoryMovies.map((movie) => (
@@ -985,13 +1081,45 @@ export const MovieCarousel = ({ categoryTitle, categoryType }: MovieCarouselProp
                         <h3 className="poster-title">{movie.title}</h3>
                         <p className="poster-rating">Rating: {movie.rating}</p>
                         <div className="action-buttons">
-                          <button
-                            className="circular-button"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <span className="button-icon plus-icon"></span>
-                            <span className="button-tooltip">Add to Watchlist</span>
-                          </button>
+                        <button
+  className="circular-button"
+  onClick={(e) => {
+    e.stopPropagation();
+
+    if (!user?.email || !movie?.showId) {
+      alert("You must be logged in to use the watchlist.");
+      return;
+    }
+
+    fetch(
+      `https://localhost:7156/api/moviewatchlist/add/${encodeURIComponent(user.email)}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(movie.showId),
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          alert(`✅ Added "${movie.title}" to your watchlist!`);
+        } else if (res.status === 409) {
+          alert(`⚠️ "${movie.title}" is already in your watchlist.`);
+        } else {
+          alert('❌ Failed to add to watchlist.');
+        }
+      })
+      .catch((err) => {
+        console.error('Watchlist error:', err);
+        alert('❌ An error occurred. Please try again.');
+      });
+  }}
+>
+  <span className="button-icon plus-icon"></span>
+  <span className="button-tooltip">Add to Watchlist</span>
+</button>
                           <button
   className="circular-button"
   onClick={(e) => {

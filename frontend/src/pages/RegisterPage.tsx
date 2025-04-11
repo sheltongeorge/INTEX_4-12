@@ -78,61 +78,31 @@ function Register() {
       setError('Please fill in all fields.');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setError('Please enter a valid email address.');
+    } else if (password.length < 12) {
+      setError('Password must be at least 12 characters long.');
     } else if (password !== confirmPassword) {
       setError('Passwords do not match.');
     } else {
       setError('');
       try {
-        // Log the request payload for debugging
-        console.log('Identity registration request payload:', {
-          email,
-          password,
+        const response = await fetch('https://localhost:7156/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
         });
-
-        // Register user in Identity database
-        const response = await fetch(
-          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/register',
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
-          }
-        );
-
-        // Log the status code
-        console.log('Identity registration status code:', response.status);
-
-        // Get the response body as text first
-        const responseText = await response.text();
-        console.log('Identity registration raw response:', responseText);
-
-        // Try to parse as JSON if possible
-        let responseData;
-        try {
-          responseData = JSON.parse(responseText);
-          console.log('Identity registration parsed JSON:', responseData);
-        } catch (e) {
-          console.log('Response is not valid JSON');
-        }
 
         if (!response.ok) {
-          const errorMessage =
-            responseData?.title ||
-            responseData?.message ||
-            responseData?.error ||
-            'Registration failed';
-          throw new Error(`Registration failed: ${errorMessage}`);
+          const errorText = await response.text();
+          if (errorText.toLowerCase().includes('password')) {
+            throw new Error('Password must be at least 12 characters long.');
+          }
+          throw new Error(
+            'Registration failed. Please check your information.'
+          );
         }
 
-        // Log the movie user request payload
-        console.log('Movie user registration request payload:', {
-          name: fullName,
-          email,
-        });
-
-        // Register user in movies_users database
         const moviesUserResponse = await fetch(
-          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MovieUsers/AddUser',
+          'https://localhost:7156/api/MovieUsers/AddUser',
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -140,39 +110,8 @@ function Register() {
           }
         );
 
-        // Log the status code
-        console.log(
-          'Movie user registration status code:',
-          moviesUserResponse.status
-        );
-
-        // Get the response body as text first
-        const moviesResponseText = await moviesUserResponse.text();
-        console.log(
-          'Movie user registration raw response:',
-          moviesResponseText
-        );
-
-        // Try to parse as JSON if possible
-        let moviesResponseData;
-        try {
-          moviesResponseData = JSON.parse(moviesResponseText);
-          console.log(
-            'Movie user registration parsed JSON:',
-            moviesResponseData
-          );
-        } catch (e) {
-          console.log('Response is not valid JSON');
-        }
-
-        if (!moviesUserResponse.ok) {
-          const errorMessage =
-            moviesResponseData?.title ||
-            moviesResponseData?.message ||
-            moviesResponseData?.error ||
-            'Failed to add user to movie database';
-          throw new Error(`Movie user registration failed: ${errorMessage}`);
-        }
+        if (!moviesUserResponse.ok)
+          throw new Error('Failed to add user to movie database.');
 
         setError('Successful registration. Please log in.');
       } catch (err) {
@@ -192,6 +131,9 @@ function Register() {
       <div
         className={`card border-0 shadow rounded-3 ${showAnimation ? 'card-animate' : ''}`}
       >
+      <div
+        className={`card border-0 shadow rounded-3 ${showAnimation ? 'card-animate' : ''}`}
+      >
         <div className="card-body p-4 p-sm-5">
           <div className="text-center mb-4 position-relative">
             <div style={{ position: 'relative', display: 'inline-block' }}>
@@ -208,6 +150,9 @@ function Register() {
               />
             </div>
           </div>
+          <h5 className="card-title text-center mb-5 fw-light fs-5">
+            Register
+          </h5>
           <h5 className="card-title text-center mb-5 fw-light fs-5">
             Register
           </h5>
@@ -258,6 +203,10 @@ function Register() {
             </div>
 
             <div className="d-grid mb-2">
+              <button
+                className="btn btn-login custom-login-btn text-uppercase fw-bold"
+                type="submit"
+              >
               <button
                 className="btn btn-login custom-login-btn text-uppercase fw-bold"
                 type="submit"
