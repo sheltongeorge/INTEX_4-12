@@ -1,0 +1,64 @@
+/* MoviesPage.css */
+
+/* Extreme reduction of vertical space between carousels */
+.carousel-container {
+    margin: 0 !important;
+    padding: 0 !important; /* Removed all padding */
+    gap: 0 !important;
+  }
+  
+  /* Minimal gap under titles */
+    .category-title {
+      margin-bottom: 0 !important; /* Removed bottom margin entirely */
+      font-size: 1.5rem;
+    }
+  
+  /* Ultra-tight spacing for welcome header */
+    .movies-welcome-header {
+      margin: 8px 0 0; /* Further reduced margin */
+      position: relative;
+    z-index: 1;
+  }
+  
+  /* LazyCarousel container fix */
+.lazy-carousel-container {
+    position: relative;
+    z-index: 1; /* default */
+    transform-style: preserve-3d;
+    transition: z-index 0s;
+  }
+  
+  .lazy-carousel-container:hover {
+    z-index: 9000; /* 🔥 much higher value to float above other carousels */
+  }
+
+  /* Wrapper for all content in lazy carousel */
+    .lazy-carousel-wrapper {
+      position: relative;
+      z-index: inherit;
+      transform-style: preserve-3d;
+      margin-bottom: 0; /* Removed negative margin that was causing interaction issues */
+      pointer-events: auto; /* Ensure each carousel receives its own events */
+      isolation: isolate; /* Create a new stacking context */
+    }
+    
+    /* Style for personalized recommendation carousels ("Because you liked") */
+    .lazy-carousel-wrapper:nth-child(n+4) {
+      margin-top: 15px; /* Add a little more space before personalized recommendations */
+      border-top: 1px solid rgba(255, 255, 255, 0.1); /* Add a subtle separator */
+      padding-top: 10px;
+    }
+    
+    /* Style for personalized recommendation titles */
+    .lazy-carousel-wrapper:nth-child(n+4) h2 {
+      font-style: italic; /* Make "Because you liked" titles stand out */
+      color: #a3e0ff; /* Light blue color to distinguish from other carousels */
+    }
+  
+    /* Add spacing adjustment to LazyCarousel component */
+    .lazy-carousel-container {
+      margin-bottom: 0 !important; /* Removed margin completely */
+      isolation: isolate; /* Create stacking context for proper event handling */
+      pointer-events: auto;
+    }
+  
