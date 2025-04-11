@@ -1,0 +1,30 @@
+/* MoviesPage.css */
+
+/* Just remove extra vertical space between carousels */
+.carousel-container {
+    margin: 0 !important;
+    padding: 12px 0 !important;
+    gap: 12px !important;
+  }
+  
+  /* Optional: reduce gap under titles if needed */
+  .category-title {
+    margin-bottom: 8px !important;
+    font-size: 1.5rem;
+  }
+  
+  /* Optional tighter spacing for welcome header */
+  .movies-welcome-header {
+    margin: 16px 0 8px;
+  }
+  
+  /* LazyCarousel container fix */
+.lazy-carousel-container {
+    position: relative;
+    z-index: 1; /* default */
+  }
+  
+  .lazy-carousel-container:hover {
+    z-index: 999; /* 🔥 float above other carousels */
+  }
+  

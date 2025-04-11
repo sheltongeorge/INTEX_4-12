@@ -122,3 +122,13 @@ body,
   height: 100%;
   overflow: auto !important;
 }
+
+.lazy-carousel-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.lazy-carousel-wrapper:hover {
+  z-index: 9999; /* 🔥 Brings the whole carousel row above the next one */
+}
+

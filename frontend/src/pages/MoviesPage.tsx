@@ -3,6 +3,7 @@ import { MovieCarousel } from '../components/MovieCarousel';
 import Header from '../components/header';
 import LazyCarousel from '../components/LazyCarousel';
 import HeaderSearch from '../components/HeaderSearch';
+import './MoviesPage.css'; 
 
 const MoviesPage: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
@@ -157,43 +158,52 @@ const MoviesPage: React.FC = () => {
     <div>
       <Header />
       <HeaderSearch />
-      <div className="overflow-y-auto hide-scrollbar" style={{ height: '100vh', padding: '0 16px' }}>
-        <h1 className="text-2xl font-bold mt-4 mb-3 text-white">
+      <div
+        className="overflow-y-auto hide-scrollbar"
+        style={{ height: '100vh', padding: '0 16px', overflow: 'visible' }} // <--- important
+      >
+        <h1 className="text-2xl font-bold movies-welcome-header text-white">
           {userName ? `Welcome back, ${userName}!` : 'Welcome to CineNiche!'}
         </h1>
-
-        {/* First carousel loads immediately since it's at the top */}
-        <LazyCarousel title="Top Picks For You" marginTop={false}>
-          <MovieCarousel categoryTitle="Top Picks for You" categoryType="personal" />
-        </LazyCarousel>
-
+  
+        {/* First carousel */}
+        <div className="lazy-carousel-wrapper">
+          <LazyCarousel title="Top Picks For You">
+            <MovieCarousel categoryTitle="Top Picks for You" categoryType="personal" />
+          </LazyCarousel>
+        </div>
+  
         {/* Second carousel */}
-        <LazyCarousel title="Recently Added">
-          <MovieCarousel categoryTitle="Recently Added" categoryType="recently_added" />
-        </LazyCarousel>
-
+        <div className="lazy-carousel-wrapper">
+          <LazyCarousel title="Recently Added">
+            <MovieCarousel categoryTitle="Recently Added" categoryType="recently_added" />
+          </LazyCarousel>
+        </div>
+  
         {/* Third carousel */}
-        <LazyCarousel title="Top Reviewed">
-          <MovieCarousel categoryTitle="Top Reviewed" categoryType="top_rated" />
-        </LazyCarousel>
-
-        {/* Generate a lazy-loaded carousel for each of the top 5 rated movies */}
-        {topRatedMovies.map((movie, index) => (
+        <div className="lazy-carousel-wrapper">
+          <LazyCarousel title="Top Reviewed">
+            <MovieCarousel categoryTitle="Top Reviewed" categoryType="top_rated" />
+          </LazyCarousel>
+        </div>
+  
+        {/* Personalized recommendations */}
+        {topRatedMovies.map((movie) =>
           recommendationsMap[movie.title] && recommendationsMap[movie.title].length > 0 && (
-            <LazyCarousel
-              key={movie.showId}
-              title={`Because you liked "${movie.title}"`}
-            >
-              <MovieCarousel
-                categoryTitle={`Because you liked ${movie.title}`}
-                customMovies={recommendationsMap[movie.title]}
-              />
-            </LazyCarousel>
+            <div key={movie.showId} className="lazy-carousel-wrapper">
+              <LazyCarousel title={`Because you liked "${movie.title}"`}>
+                <MovieCarousel
+                  categoryTitle={`Because you liked ${movie.title}`}
+                  customMovies={recommendationsMap[movie.title]}
+                />
+              </LazyCarousel>
+            </div>
           )
-        ))}
+        )}
       </div>
     </div>
   );
+  
 };
 
 export default MoviesPage;

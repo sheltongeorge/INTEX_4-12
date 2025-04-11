@@ -48,7 +48,7 @@
 
 /* Slide styling */
 .slide {
-  padding: 20px 2px 100px 2px; /* Increased bottom padding to provide more space for hover content */
+  padding: 20px 2px 2px 2px; /* Increased bottom padding to provide more space for hover content */
   transform-origin: center center;
   transition: all 0.3s ease;
   position: relative;
