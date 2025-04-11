@@ -7,7 +7,8 @@ import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
 
 const BLOB_STORAGE_URL = 'https://movieposterblob.blob.core.windows.net';
-const BLOB_SAS_TOKEN = 'sv=2024-11-04&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-05-15T09:35:14Z&st=2025-04-09T01:35:14Z&spr=https,http&sig=N%2FAK8dhBBarxwU9qBSd0aI0B5iEOqmpnKUJ6Ek1yv0k%3D';
+const BLOB_SAS_TOKEN =
+  'sv=2024-11-04&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-05-15T09:35:14Z&st=2025-04-09T01:35:14Z&spr=https,http&sig=N%2FAK8dhBBarxwU9qBSd0aI0B5iEOqmpnKUJ6Ek1yv0k%3D';
 const CONTAINER_NAME = 'movieposters';
 
 const getPosterImageUrl = (movieTitle: string): string => {
@@ -30,20 +31,27 @@ type Movie = {
 };
 
 type OverlayProps = {
-    movie: Movie;
-    onClose: () => void;
-    initialRating?: number | null;
-    setMovie?: (movie: Movie) => void;
-  };
+  movie: Movie;
+  onClose: () => void;
+  initialRating?: number | null;
+  setMovie?: (movie: Movie) => void;
+};
 
-const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, setMovie }) => {
+const MovieOverlay: React.FC<OverlayProps> = ({
+  movie,
+  onClose,
+  initialRating,
+  setMovie,
+}) => {
   const user = useContext(UserContext);
-  const [userRating, setUserRating] = useState<number | null>(initialRating ?? null);
+  const [userRating, setUserRating] = useState<number | null>(
+    initialRating ?? null
+  );
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [similarMovies, setSimilarMovies] = useState<Movie[]>([]);
   // const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
   const [posterErrors, setPosterErrors] = useState<Record<string, boolean>>({});
-  
+
   // Recommendations slider options
   const sliderOptions = {
     loop: false,
@@ -54,10 +62,11 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
       '(max-width: 768px)': { slides: { perView: 1.5, spacing: 16 } },
     },
   };
-  
+
   // Create a new slider instance every time the recommendationKey changes
   const [_, setRecommendationKey] = useState(0);
-  const [recommendationsSliderRef, recommendationsInstanceRef] = useKeenSlider<HTMLDivElement>(sliderOptions);
+  const [recommendationsSliderRef, recommendationsInstanceRef] =
+    useKeenSlider<HTMLDivElement>(sliderOptions);
 
   const submitRating = () => {
     if (!userRating) {
@@ -86,17 +95,20 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
   const fetchSimilarMovies = async (movieTitle: string) => {
     // setIsLoadingSimilar(true);
     console.log(`Fetching recommendations for movie: "${movieTitle}"`);
-    
+
     try {
       // Step 1: Get recommendations from API or use mock data
       let allRecommendations = await fetchRecommendationsData(movieTitle);
-      
+
       // Step 2: Find the best recommendation match for this movie
-      let movieRecommendation = findBestRecommendationMatch(allRecommendations, movieTitle);
-      
+      let movieRecommendation = findBestRecommendationMatch(
+        allRecommendations,
+        movieTitle
+      );
+
       if (movieRecommendation) {
         console.log('Found recommendation:', movieRecommendation);
-        
+
         // Step 3: Extract recommendation titles
         const recommendationTitles = [
           movieRecommendation.recommendation1,
@@ -106,13 +118,15 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
           movieRecommendation.recommendation5,
           movieRecommendation.recommendation6,
           movieRecommendation.recommendation7,
-          movieRecommendation.recommendation8
+          movieRecommendation.recommendation8,
         ].filter(Boolean); // Remove any empty recommendations
-        
+
         // Step 4: Get movie details for these titles
         const limitedRecommendations = recommendationTitles.slice(0, 8);
-        const foundMovies = await fetchMovieDetailsForTitles(limitedRecommendations);
-        
+        const foundMovies = await fetchMovieDetailsForTitles(
+          limitedRecommendations
+        );
+
         console.log(`Found ${foundMovies.length} movies from recommendations`);
         setSimilarMovies(foundMovies);
       } else {
@@ -126,9 +140,11 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
       // setIsLoadingSimilar(false);
     }
   };
-  
+
   // Helper function to get recommendation data
-  const fetchRecommendationsData = async (movieTitle: string): Promise<any[]> => {
+  const fetchRecommendationsData = async (
+    movieTitle: string
+  ): Promise<any[]> => {
     try {
       const response = await fetch(
         'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/Recommendations/AllRecommendations1',
@@ -137,42 +153,50 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
           signal: AbortSignal.timeout(3000), // 3 second timeout
         }
       );
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch similar movies');
       }
 
       const recommendations = await response.json();
-      console.log('API response received, recommendations count:', recommendations.length);
+      console.log(
+        'API response received, recommendations count:',
+        recommendations.length
+      );
       return recommendations;
     } catch (apiError) {
-      console.error("API connection error:", apiError);
-      console.log("Using mock recommendations data instead");
-      
+      console.error('API connection error:', apiError);
+      console.log('Using mock recommendations data instead');
+
       // Provide mock recommendation data when API is not available
       return [
         {
           if_you_liked: movieTitle,
-          recommendation1: "The Shawshank Redemption",
-          recommendation2: "The Godfather",
-          recommendation3: "Pulp Fiction",
-          recommendation4: "The Dark Knight",
-          recommendation5: "Fight Club",
-          recommendation6: "Forrest Gump",
-          recommendation7: "Inception",
-          recommendation8: "The Matrix"
-        }
+          recommendation1: 'The Shawshank Redemption',
+          recommendation2: 'The Godfather',
+          recommendation3: 'Pulp Fiction',
+          recommendation4: 'The Dark Knight',
+          recommendation5: 'Fight Club',
+          recommendation6: 'Forrest Gump',
+          recommendation7: 'Inception',
+          recommendation8: 'The Matrix',
+        },
       ];
     }
   };
-  
+
   // Helper function to find the best recommendation match
-  const findBestRecommendationMatch = (recommendations: any[], movieTitle: string): any => {
+  const findBestRecommendationMatch = (
+    recommendations: any[],
+    movieTitle: string
+  ): any => {
     // First look for an exact match
     let match = recommendations.find(
-      (rec: any) => rec.if_you_liked.toLowerCase().trim() === movieTitle.toLowerCase().trim()
+      (rec: any) =>
+        rec.if_you_liked.toLowerCase().trim() ===
+        movieTitle.toLowerCase().trim()
     );
-    
+
     // If not found, try a looser match (title contains)
     if (!match) {
       match = recommendations.find(
@@ -180,31 +204,40 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
           movieTitle.toLowerCase().includes(rec.if_you_liked.toLowerCase()) ||
           rec.if_you_liked.toLowerCase().includes(movieTitle.toLowerCase())
       );
-      
+
       // If still not found, just use the first recommendation or find partial matches
       if (!match && recommendations.length > 0) {
-        console.log("No similar movies found for this title, using random recommendations");
-        
+        console.log(
+          'No similar movies found for this title, using random recommendations'
+        );
+
         // Look for partial matches in all recommendation titles
         let partialMatches: any[] = [];
         recommendations.forEach((rec: any) => {
-          if (rec.if_you_liked.toLowerCase().includes(movieTitle.toLowerCase().split(' ')[0])) {
+          if (
+            rec.if_you_liked
+              .toLowerCase()
+              .includes(movieTitle.toLowerCase().split(' ')[0])
+          ) {
             partialMatches.push(rec);
           }
         });
-        
+
         // Use a partial match if found, otherwise use the first recommendation
-        match = partialMatches.length > 0 ? partialMatches[0] : recommendations[0];
+        match =
+          partialMatches.length > 0 ? partialMatches[0] : recommendations[0];
       }
     }
-    
+
     return match;
   };
-  
+
   // Helper function to fetch movie details for recommended titles
-  const fetchMovieDetailsForTitles = async (titles: string[]): Promise<Movie[]> => {
+  const fetchMovieDetailsForTitles = async (
+    titles: string[]
+  ): Promise<Movie[]> => {
     const foundMovies: Movie[] = [];
-    
+
     try {
       // First try to get all movies and match by title
       const allMoviesResponse = await fetch(
@@ -214,17 +247,18 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
           signal: AbortSignal.timeout(3000),
         }
       );
-      
+
       if (allMoviesResponse.ok) {
         const allMovies: Movie[] = await allMoviesResponse.json();
-        
+
         // For each recommended title, find the matching movie by title
         for (const recTitle of titles) {
           // Find the movie with a matching title (case-insensitive)
           const matchingMovie = allMovies.find(
-            m => m.title.toLowerCase().trim() === recTitle.toLowerCase().trim()
+            (m) =>
+              m.title.toLowerCase().trim() === recTitle.toLowerCase().trim()
           );
-          
+
           if (matchingMovie) {
             foundMovies.push(matchingMovie);
             // Set poster image error state to false initially
@@ -241,7 +275,7 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
       }
     } catch (err) {
       console.error('Error fetching all movies:', err);
-      
+
       // Fallback: Try to get each movie by ID directly if titles don't work
       for (const recTitle of titles) {
         try {
@@ -253,7 +287,7 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
               signal: AbortSignal.timeout(2000),
             }
           );
-          
+
           if (response.ok) {
             const movieData = await response.json();
             if (movieData) {
@@ -266,38 +300,41 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
             }
           }
         } catch (fetchError) {
-          console.error(`Error fetching movie data for ${recTitle}:`, fetchError);
+          console.error(
+            `Error fetching movie data for ${recTitle}:`,
+            fetchError
+          );
         }
       }
     }
-    
+
     return foundMovies;
   };
-  
+
   // Handler for when a recommended movie is clicked
   const handleRecommendedMovieClick = async (recommendedMovie: Movie) => {
     console.log('Switching to movie:', recommendedMovie.title);
-    
+
     // Reset user interaction states
     setUserRating(null);
     setHoverRating(null);
     setPosterErrors({}); // Reset error states for posters
-    
+
     // If setMovie prop is provided, use it to update the movie in parent component
     if (setMovie) {
       // This updates the movie in the parent component (MovieCarousel)
       setMovie(recommendedMovie);
     }
-    
+
     // Reset similar movies to force a complete re-render
     setSimilarMovies([]);
-    
+
     // Wait a moment for DOM to update before fetching new data
     setTimeout(() => {
       // Immediately fetch similar movies for the newly selected movie
       fetchSimilarMovies(recommendedMovie.title);
     }, 50);
-    
+
     // Get more details for the selected movie if needed
     try {
       const response = await fetch(
@@ -307,7 +344,7 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
           signal: AbortSignal.timeout(3000),
         }
       );
-      
+
       if (response.ok) {
         const fullMovieData = await response.json();
         // We might get more complete data from the API than what we have in the carousel
@@ -317,13 +354,13 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
       console.error('Error fetching full movie details:', err);
     }
   };
-  
+
   // Completely recreate the carousel when similar movies change
   useEffect(() => {
     if (similarMovies.length > 0) {
       // Force the carousel to completely reinitialize by changing its key
-      setRecommendationKey(prev => prev + 1);
-      
+      setRecommendationKey((prev) => prev + 1);
+
       // Also update the existing instance if available
       if (recommendationsInstanceRef.current) {
         setTimeout(() => {
@@ -332,7 +369,6 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
       }
     }
   }, [similarMovies]);
-
 
   // Effect to fetch similar movies when movie changes
   useEffect(() => {
@@ -356,7 +392,35 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
         </div>
         <div className="overlay-details">
           <h2>{movie.title}</h2>
-          <p>{movie.description}</p>
+
+          {/* Movie metadata section */}
+          <div className="movie-metadata">
+            {movie.rating && (
+              <span className="movie-rating">{movie.rating}</span>
+            )}
+            {movie.releaseYear && (
+              <span className="movie-year">{movie.releaseYear}</span>
+            )}
+            {movie.duration && (
+              <span className="movie-duration">{movie.duration}</span>
+            )}
+          </div>
+
+          {/* Movie crew information */}
+          <div className="movie-crew-info">
+            {movie.director && (
+              <div className="movie-director">
+                <span className="info-label">Director:</span> {movie.director}
+              </div>
+            )}
+            {movie.cast && (
+              <div className="movie-cast">
+                <span className="info-label">Cast:</span> {movie.cast}
+              </div>
+            )}
+          </div>
+
+          <p className="movie-description">{movie.description}</p>
 
           <div className="rate-movie-section">
             <h3>Rate this movie</h3>
@@ -407,7 +471,7 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
               Submit Rating
             </button>
           </div>
-        
+
           {/* Similar Movies Carousel */}
           {similarMovies.length > 0 && (
             <div className="similar-movies-section">
@@ -423,7 +487,7 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
                   >
                     &lt;
                   </button>
-                  
+
                   <div className="recommendations-container">
                     <div
                       key={movie.showId + '-recommendations'}
@@ -431,15 +495,24 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
                       className="keen-slider recommendations-slider"
                     >
                       {similarMovies.map((movie) => (
-                        <div key={movie.showId} className="keen-slider__slide recommendation-slide">
+                        <div
+                          key={movie.showId}
+                          className="keen-slider__slide recommendation-slide"
+                        >
                           <div className="recommendation-card">
                             <div className="poster-image-container">
                               <div className="fixed-ratio-container">
                                 <img
-                                  src={posterErrors[movie.showId] ? fallbackImage : getPosterImageUrl(movie.title)}
+                                  src={
+                                    posterErrors[movie.showId]
+                                      ? fallbackImage
+                                      : getPosterImageUrl(movie.title)
+                                  }
                                   alt={movie.title}
                                   className="poster-image"
-                                  onClick={() => handleRecommendedMovieClick(movie)}
+                                  onClick={() =>
+                                    handleRecommendedMovieClick(movie)
+                                  }
                                   onError={() =>
                                     setPosterErrors((prev) => ({
                                       ...prev,
@@ -450,14 +523,16 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
                               </div>
                             </div>
                             <div className="recommendation-info">
-                              <div className="recommendation-title">{movie.title}</div>
+                              <div className="recommendation-title">
+                                {movie.title}
+                              </div>
                             </div>
                           </div>
                         </div>
                       ))}
                     </div>
                   </div>
-                  
+
                   <button
                     className="rec-right-arrow"
                     onClick={(e) => {
@@ -473,7 +548,6 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
           )}
         </div>
       </div>
-      
     </div>
   );
 };

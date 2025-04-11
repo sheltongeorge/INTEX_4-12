@@ -1,4 +1,4 @@
-﻿namespace INTEXApp
+﻿namespace INTEXApp.Data
 {
     public class MovieUser
     {

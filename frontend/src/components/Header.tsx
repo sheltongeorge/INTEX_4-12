@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logout from './Logout';
 import { AuthorizedUser } from './AuthorizeView';
-
+import "../assets/cineniche.png";
 
 const Header: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

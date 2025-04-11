@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
-using INTEXApp.Data;
 using System.Security.Claims;
 using INTEXApp.Services;
 

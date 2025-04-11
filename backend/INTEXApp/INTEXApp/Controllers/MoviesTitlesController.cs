@@ -65,7 +65,7 @@ namespace INTEXApp.Controllers
         // POST - Add a new movie
         [HttpPost("AddMovie")]
         [Authorize(Roles = "Administrator")]
-        public IActionResult AddMovie([FromBody] MovieTitle newMovie)
+        public async Task<IActionResult> AddMovie([FromBody] MovieTitle newMovie)
         {
             //_context.MoviesTitles.Add(newMovie);
             //_context.SaveChanges();
