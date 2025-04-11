@@ -46,7 +46,8 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
   
   // Recommendations slider options
   const sliderOptions = {
-    loop: true,
+    loop: false,
+    rubberband: false,
     slides: { perView: 3.5, spacing: 16 }, // Reduced from 5 to 3.5 since images are 50% larger
     breakpoints: {
       '(max-width: 1024px)': { slides: { perView: 2.5, spacing: 16 } },
