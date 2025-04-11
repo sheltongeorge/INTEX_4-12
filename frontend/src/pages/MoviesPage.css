@@ -1,30 +1,47 @@
 /* MoviesPage.css */
 
-/* Just remove extra vertical space between carousels */
+/* Extreme reduction of vertical space between carousels */
 .carousel-container {
     margin: 0 !important;
-    padding: 12px 0 !important;
-    gap: 12px !important;
+    padding: 0 !important; /* Removed all padding */
+    gap: 0 !important;
   }
   
-  /* Optional: reduce gap under titles if needed */
-  .category-title {
-    margin-bottom: 8px !important;
-    font-size: 1.5rem;
-  }
+  /* Minimal gap under titles */
+    .category-title {
+      margin-bottom: 0 !important; /* Removed bottom margin entirely */
+      font-size: 1.5rem;
+    }
   
-  /* Optional tighter spacing for welcome header */
-  .movies-welcome-header {
-    margin: 16px 0 8px;
+  /* Ultra-tight spacing for welcome header */
+    .movies-welcome-header {
+      margin: 8px 0 0; /* Further reduced margin */
+      position: relative;
+    z-index: 1;
   }
   
   /* LazyCarousel container fix */
 .lazy-carousel-container {
     position: relative;
     z-index: 1; /* default */
+    transform-style: preserve-3d;
+    transition: z-index 0s;
   }
   
   .lazy-carousel-container:hover {
-    z-index: 999; /* 🔥 float above other carousels */
+    z-index: 9000; /* 🔥 much higher value to float above other carousels */
   }
+
+  /* Wrapper for all content in lazy carousel */
+    .lazy-carousel-wrapper {
+      position: relative;
+      z-index: inherit;
+      transform-style: preserve-3d;
+      margin-bottom: -30px; /* More aggressive negative margin */
+    }
+  
+    /* Add spacing adjustment to LazyCarousel component */
+    .lazy-carousel-container {
+      margin-bottom: 0 !important; /* Removed margin completely */
+    }
   
