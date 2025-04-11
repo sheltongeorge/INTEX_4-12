@@ -272,10 +272,13 @@ export const MovieCarousel = ({ categoryTitle, categoryType, customMovies  }: Mo
 
       if (!userIdForRecommendations) {
         try {
-          const userResponse = await fetch('https://localhost:7156/pingauth', {
-            method: 'GET',
-            credentials: 'include',
-          });
+          const userResponse = await fetch(
+            'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/pingauth',
+            {
+              method: 'GET',
+              credentials: 'include',
+            }
+          );
       
           if (userResponse.ok) {
             const userData = await userResponse.json();
@@ -903,11 +906,13 @@ export const MovieCarousel = ({ categoryTitle, categoryType, customMovies  }: Mo
               console.log(`Using similar recommendations endpoint for user ${userId}`);
               break;
             case 'recently_added':
-              endpoint = 'https://localhost:7156/api/MoviesTitles/AllMovies?pageSize=30&pageNum=1';
+              endpoint =
+                'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesTitles/AllMovies?pageSize=30&pageNum=1';
               console.log('Using recently added movies endpoint');
               break;
             case 'top_rated':
-              endpoint = 'https://localhost:7156/api/MoviesTitles/AllMovies?pageSize=30&pageNum=1';
+              endpoint =
+                'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesTitles/AllMovies?pageSize=30&pageNum=1';
               console.log('Using top rated movies endpoint');
               break;
             default:
@@ -959,7 +964,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType, customMovies  }: Mo
           try {
             // Fetch all ratings averages
             const ratingsResponse = await fetch(
-              'https://localhost:7156/api/movieratings/averages',
+              'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/movieratings/averages',
               { credentials: 'include' }
             );
             
@@ -1092,7 +1097,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType, customMovies  }: Mo
     }
 
     fetch(
-      `https://localhost:7156/api/moviewatchlist/add/${encodeURIComponent(user.email)}`,
+      `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/moviewatchlist/add/${encodeURIComponent(user.email)}`,
       {
         method: 'POST',
         headers: {

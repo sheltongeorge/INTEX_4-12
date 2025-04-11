@@ -62,10 +62,13 @@ const MoviesPage: React.FC = () => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const response = await fetch('https://localhost:7156/pingauth', {
-          method: 'GET',
-          credentials: 'include',
-        });
+        const response = await fetch(
+          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/pingauth',
+          {
+            method: 'GET',
+            credentials: 'include',
+          }
+        );
     
         if (response.ok) {
           const userData = await response.json();
@@ -77,7 +80,9 @@ const MoviesPage: React.FC = () => {
     
               // ✅ Add this block to resolve movies_users.UserId
               try {
-                const idRes = await fetch(`https://localhost:7156/api/moviewatchlist/resolve-id/${encodeURIComponent(userData.email)}`);
+                const idRes = await fetch(
+                  `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/moviewatchlist/resolve-id/${encodeURIComponent(userData.email)}`
+                );
                 if (idRes.ok) {
                   const idData = await idRes.json();
                   setUserId(idData.userId); // ✅ use real MovieUser ID
@@ -103,9 +108,12 @@ const MoviesPage: React.FC = () => {
   useEffect(() => {
     const fetchTopRatedMovies = async () => {
       try {
-        const response = await fetch(`https://localhost:7156/api/movieratings/userratings/${encodeURIComponent(userEmail)}`, {
-          credentials: 'include',
-        });
+        const response = await fetch(
+          `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/movieratings/userratings/${encodeURIComponent(userEmail)}`,
+          {
+            credentials: 'include',
+          }
+        );
 
         if (response.ok) {
           const ratings = await response.json();
@@ -139,10 +147,13 @@ const MoviesPage: React.FC = () => {
   useEffect(() => {
     const fetchRecommendationsData = async (movieTitle: string): Promise<any[]> => {
       try {
-        const response = await fetch('https://localhost:7156/api/Recommendations/AllRecommendations1', {
-          credentials: 'include',
-          signal: AbortSignal.timeout(3000)
-        });
+        const response = await fetch(
+          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/Recommendations/AllRecommendations1',
+          {
+            credentials: 'include',
+            signal: AbortSignal.timeout(3000),
+          }
+        );
         if (!response.ok) throw new Error('Failed to fetch recommendations');
         return await response.json();
       } catch (err) {
@@ -161,10 +172,13 @@ const MoviesPage: React.FC = () => {
 
     const fetchMovieDetailsForTitles = async (titles: string[]): Promise<Movie[]> => {
       try {
-        const res = await fetch('https://localhost:7156/api/MoviesTitles', {
-          credentials: 'include',
-          signal: AbortSignal.timeout(3000)
-        });
+        const res = await fetch(
+          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesTitles',
+          {
+            credentials: 'include',
+            signal: AbortSignal.timeout(3000),
+          }
+        );
         const allMovies = await res.json();
         return titles.map(t => allMovies.find((m: Movie) => m.title.toLowerCase() === t.toLowerCase())).filter(Boolean);
       } catch (err) {

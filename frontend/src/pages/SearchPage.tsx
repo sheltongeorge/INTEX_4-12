@@ -194,17 +194,20 @@ const SearchPage: React.FC = () => {
       const response = await axios.get<{
         movies: MovieTitle[];
         totalCount: number;
-      }>('https://localhost:7156/api/MoviesCategories/AllMovies', {
-        params: {
-          type: type || undefined,
-          category: genre || undefined,
-          titleFilter: titleFilter || undefined,
-          pageNum: currentPage,
-          pageSize: PAGE_SIZE,
-          _t: new Date().getTime() // Add timestamp to prevent caching
-        },
-        withCredentials: true,
-      });
+      }>(
+        'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MoviesCategories/AllMovies',
+        {
+          params: {
+            type: type || undefined,
+            category: genre || undefined,
+            titleFilter: titleFilter || undefined,
+            pageNum: currentPage,
+            pageSize: PAGE_SIZE,
+            _t: new Date().getTime(), // Add timestamp to prevent caching
+          },
+          withCredentials: true,
+        }
+      );
       
       // console.log(`Response received - Total count: ${response.data.totalCount}, Movies returned: ${response.data.movies.length}`);
       

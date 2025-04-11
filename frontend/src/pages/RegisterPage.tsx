@@ -85,7 +85,7 @@ function Register() {
     } else {
       setError('');
       try {
-        const response = await fetch('https://localhost:7156/register', {
+        const response = await fetch('https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password }),
@@ -102,7 +102,7 @@ function Register() {
         }
 
         const moviesUserResponse = await fetch(
-          'https://localhost:7156/api/MovieUsers/AddUser',
+          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MovieUsers/AddUser',
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -223,7 +223,7 @@ function Register() {
               </button>
             </div>
           </form>
-          <strong>{error && <p className="error">{error}</p>}</strong>
+          <strong>{error} && <p className="error">{error}</p></strong>
         </div>
       </div>
     </div>

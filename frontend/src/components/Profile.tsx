@@ -103,7 +103,7 @@ const [profileTitle, setProfileTitle] = useState('Movie Enthusiast');
     
         // 1. Fetch ratings
         const ratingsRes = await fetch(
-          `https://localhost:7156/api/movieratings/userratings/${encodeURIComponent(user.email)}`,
+          `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/movieratings/userratings/${encodeURIComponent(user.email)}`,
           { credentials: 'include' }
         );
     
@@ -123,11 +123,14 @@ const [profileTitle, setProfileTitle] = useState('Movie Enthusiast');
     
           // 4. Fetch genres based on rated movie titles
           const titles = ratingsData.map((r: any) => r.title);
-          const genreRes = await fetch(`https://localhost:7156/api/moviestitles/FindByTitles`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(titles),
-          });
+          const genreRes = await fetch(
+            `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/moviestitles/FindByTitles`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(titles),
+            }
+          );
     
           let genre = 'N/A';
           let genreCounts: Record<string, number> = {};
@@ -176,7 +179,7 @@ const [profileTitle, setProfileTitle] = useState('Movie Enthusiast');
     
         // 6. Fetch watchlist
         const watchlistRes = await fetch(
-          `https://localhost:7156/api/moviewatchlist/${encodeURIComponent(user.email)}`,
+          `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/moviewatchlist/${encodeURIComponent(user.email)}`,
           { credentials: 'include' }
         );
         if (watchlistRes.ok) setWatchlist(await watchlistRes.json());
