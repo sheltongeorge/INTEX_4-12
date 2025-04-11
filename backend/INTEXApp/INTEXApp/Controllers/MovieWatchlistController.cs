@@ -1,10 +1,12 @@
 ﻿using INTEXApp;
 using INTEXApp.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace INTEXApp.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MovieWatchlistController : ControllerBase
@@ -80,6 +82,19 @@ namespace INTEXApp.Controllers
             _context.SaveChanges();
             return NoContent();
         }
+        [AllowAnonymous]
+        [HttpGet("resolve-id/{email}")]
+        public IActionResult ResolveUserId(string email)
+        {
+            var normalizedEmail = email.ToUpper();
+            var user = _context.MoviesUsers.FirstOrDefault(u => u.Email.ToUpper() == normalizedEmail);
+            if (user == null)
+                return NotFound("User not found.");
+
+            return Ok(new { userId = user.UserId });
+        }
+
+
     }
 
 }

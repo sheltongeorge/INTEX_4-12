@@ -34,28 +34,40 @@ function Register() {
       setError('Please fill in all fields.');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setError('Please enter a valid email address.');
+    } else if (password.length < 12) {
+      setError('Password must be at least 12 characters long.');
     } else if (password !== confirmPassword) {
       setError('Passwords do not match.');
     } else {
       setError('');
       try {
-        // Register user in Identity database
         const response = await fetch('https://localhost:7156/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
+          body: JSON.stringify({ email, password }),
         });
 
-        if (!response.ok) throw new Error('Registration failed.');
+        if (!response.ok) {
+          const errorText = await response.text();
+          if (errorText.toLowerCase().includes('password')) {
+            throw new Error('Password must be at least 12 characters long.');
+          }
+          throw new Error(
+            'Registration failed. Please check your information.'
+          );
+        }
 
-        // Register user in movies_users database
-        const moviesUserResponse = await fetch('https://localhost:7156/api/MovieUsers/AddUser', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: fullName, email: email })
-        });
+        const moviesUserResponse = await fetch(
+          'https://localhost:7156/api/MovieUsers/AddUser',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: fullName, email: email }),
+          }
+        );
 
-        if (!moviesUserResponse.ok) throw new Error('Failed to add user to movie database.');
+        if (!moviesUserResponse.ok)
+          throw new Error('Failed to add user to movie database.');
 
         setError('Successful registration. Please log in.');
       } catch (err) {
@@ -67,7 +79,9 @@ function Register() {
 
   return (
     <div className="container">
-      <div className={`card border-0 shadow rounded-3 ${showAnimation ? 'card-animate' : ''}`}>
+      <div
+        className={`card border-0 shadow rounded-3 ${showAnimation ? 'card-animate' : ''}`}
+      >
         <div className="card-body p-4 p-sm-5">
           <div className="text-center mb-4 position-relative">
             <div style={{ position: 'relative', display: 'inline-block' }}>
@@ -84,7 +98,9 @@ function Register() {
               />
             </div>
           </div>
-          <h5 className="card-title text-center mb-5 fw-light fs-5">Register</h5>
+          <h5 className="card-title text-center mb-5 fw-light fs-5">
+            Register
+          </h5>
           <form onSubmit={handleSubmit}>
             <div className="form-floating mb-3">
               <input
@@ -132,12 +148,18 @@ function Register() {
             </div>
 
             <div className="d-grid mb-2">
-              <button className="btn btn-login custom-login-btn text-uppercase fw-bold" type="submit">
+              <button
+                className="btn btn-login custom-login-btn text-uppercase fw-bold"
+                type="submit"
+              >
                 Register
               </button>
             </div>
             <div className="d-grid mb-2">
-              <button className="btn btn-login custom-login-btn text-uppercase fw-bold" onClick={handleLoginClick}>
+              <button
+                className="btn btn-login custom-login-btn text-uppercase fw-bold"
+                onClick={handleLoginClick}
+              >
                 Go to Login
               </button>
             </div>

@@ -7,6 +7,7 @@ using System.Security.Claims;
 namespace INTEXApp.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class MovieRatingsController : ControllerBase
     {

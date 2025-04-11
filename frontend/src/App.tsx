@@ -11,6 +11,7 @@ import MoviesPage from './pages/MoviesPage';
 import Profile from './components/Profile';
 import AuthorizeView from './components/AuthorizeView';
 import HomeRedirect from './HomeRedirect';
+import SearchPage from './pages/SearchPage';
 
 // Component to handle authentication-based redirects
 
@@ -20,13 +21,14 @@ function App() {
     <Router>
       {/* <AuthorizeView> */}
       <Routes>
+        <Route path="/search" element={<AuthorizeView><SearchPage /></AuthorizeView>} />
         <Route path="/" element={<HomeRedirect />} />
         <Route path="/recommendations" element={<AuthorizeView><RecommendationsPage /></AuthorizeView>} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/test" element={<TestPoster />} />
         <Route path="/admin" element={<AdminMoviesPage/>} />
-        <Route path="/carousel" element={<MovieCarousel />} />
+        <Route path="/carousel" element={<AuthorizeView><MovieCarousel /></AuthorizeView>} />
         <Route path="/movies" element={<AuthorizeView><MoviesPage /></AuthorizeView>} />
         <Route path="/profile" element={<AuthorizeView><Profile /></AuthorizeView>} />
       </Routes>

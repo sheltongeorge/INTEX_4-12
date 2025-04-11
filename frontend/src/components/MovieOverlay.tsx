@@ -44,15 +44,20 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
   const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
   const [posterErrors, setPosterErrors] = useState<Record<string, boolean>>({});
   
-  // Recommendations slider for similar movies
-  const [recommendationsSliderRef, recommendationsInstanceRef] = useKeenSlider<HTMLDivElement>({
-    loop: true,
-    slides: { perView: 5, spacing: 16 },
+  // Recommendations slider options
+  const sliderOptions = {
+    loop: false,
+    rubberband: false,
+    slides: { perView: 3.5, spacing: 16 }, // Reduced from 5 to 3.5 since images are 50% larger
     breakpoints: {
-      '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
-      '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
+      '(max-width: 1024px)': { slides: { perView: 2.5, spacing: 16 } },
+      '(max-width: 768px)': { slides: { perView: 1.5, spacing: 16 } },
     },
-  });
+  };
+  
+  // Create a new slider instance every time the recommendationKey changes
+  const [recommendationKey, setRecommendationKey] = useState(0);
+  const [recommendationsSliderRef, recommendationsInstanceRef] = useKeenSlider<HTMLDivElement>(sliderOptions);
 
   const submitRating = () => {
     if (!userRating) {
@@ -272,12 +277,22 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
     // Reset user interaction states
     setUserRating(null);
     setHoverRating(null);
+    setPosterErrors({}); // Reset error states for posters
     
     // If setMovie prop is provided, use it to update the movie in parent component
     if (setMovie) {
       // This updates the movie in the parent component (MovieCarousel)
       setMovie(recommendedMovie);
     }
+    
+    // Reset similar movies to force a complete re-render
+    setSimilarMovies([]);
+    
+    // Wait a moment for DOM to update before fetching new data
+    setTimeout(() => {
+      // Immediately fetch similar movies for the newly selected movie
+      fetchSimilarMovies(recommendedMovie.title);
+    }, 50);
     
     // Get more details for the selected movie if needed
     try {
@@ -297,10 +312,23 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
     } catch (err) {
       console.error('Error fetching full movie details:', err);
     }
-    
-    // Immediately fetch similar movies for the newly selected movie
-    fetchSimilarMovies(recommendedMovie.title);
   };
+  
+  // Completely recreate the carousel when similar movies change
+  useEffect(() => {
+    if (similarMovies.length > 0) {
+      // Force the carousel to completely reinitialize by changing its key
+      setRecommendationKey(prev => prev + 1);
+      
+      // Also update the existing instance if available
+      if (recommendationsInstanceRef.current) {
+        setTimeout(() => {
+          recommendationsInstanceRef.current?.update();
+        }, 100);
+      }
+    }
+  }, [similarMovies]);
+
 
   // Effect to fetch similar movies when movie changes
   useEffect(() => {
@@ -313,7 +341,7 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
     <div className="movie-overlay">
       <div className="overlay-content">
         <button className="close-overlay" onClick={onClose}>
-          <X size={24} />
+          ✕
         </button>
         <div className="overlay-poster">
           <img
@@ -388,29 +416,35 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
                       recommendationsInstanceRef.current?.prev();
                     }}
                   >
-                    <ArrowLeft size={16} />
+                    &lt;
                   </button>
                   
                   <div className="recommendations-container">
-                    <div ref={recommendationsSliderRef} className="keen-slider recommendations-slider">
+                    <div
+                      key={movie.showId + '-recommendations'}
+                      ref={recommendationsSliderRef}
+                      className="keen-slider recommendations-slider"
+                    >
                       {similarMovies.map((movie) => (
                         <div key={movie.showId} className="keen-slider__slide recommendation-slide">
                           <div className="recommendation-card">
                             <div className="poster-image-container">
-                              <img
-                                src={posterErrors[movie.showId] ? fallbackImage : getPosterImageUrl(movie.title)}
-                                alt={movie.title}
-                                className="poster-image"
-                                onClick={() => handleRecommendedMovieClick(movie)}
-                                onError={() =>
-                                  setPosterErrors((prev) => ({
-                                    ...prev,
-                                    [movie.showId]: true,
-                                  }))
-                                }
-                              />
+                              <div className="fixed-ratio-container">
+                                <img
+                                  src={posterErrors[movie.showId] ? fallbackImage : getPosterImageUrl(movie.title)}
+                                  alt={movie.title}
+                                  className="poster-image"
+                                  onClick={() => handleRecommendedMovieClick(movie)}
+                                  onError={() =>
+                                    setPosterErrors((prev) => ({
+                                      ...prev,
+                                      [movie.showId]: true,
+                                    }))
+                                  }
+                                />
+                              </div>
                             </div>
-                            <div className="recommendation-info" onClick={() => handleRecommendedMovieClick(movie)}>
+                            <div className="recommendation-info">
                               <div className="recommendation-title">{movie.title}</div>
                             </div>
                           </div>
@@ -426,7 +460,7 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
                       recommendationsInstanceRef.current?.next();
                     }}
                   >
-                    <ArrowRight size={16} />
+                    &gt;
                   </button>
                 </div>
               </div>
