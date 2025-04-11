@@ -1,6 +1,7 @@
 {
   "Version": 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
   "WorkspaceRootPath": "C:\\Users\\Owner\\Documents\\INTEX_4-12\\backend\\INTEXApp\\",
   "Documents": [
     {
@@ -79,6 +80,10 @@
 >>>>>>> origin/dev
     }
   ],
+=======
+  "WorkspaceRootPath": "C:\\Users\\thebi\\Desktop\\New folder (2)\\INTEX_4-12\\backend\\INTEXApp\\",
+  "Documents": [],
+>>>>>>> origin/dev
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -86,6 +91,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< HEAD
 <<<<<<< HEAD
           "SelectedChildIndex": 3,
           "Children": [
@@ -321,6 +327,13 @@
               "ViewState": "AgIAADAAAAAAAAAAAAAmwEMAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-09T20:15:22.274Z"
+>>>>>>> origin/dev
+=======
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
 >>>>>>> origin/dev
             }
           ]

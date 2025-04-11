@@ -73,4 +73,24 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+/* Fix for dropdown menus and title input */
+.search-results-container select,
+.p-4 select,
+.p-4 input[type="text"] {
+  background-color: #1e1e1e;
+  color: white;
+  border: 1px solid #444;
+}
+
+/* Style the dropdown options */
+.search-results-container select option,
+.p-4 select option {
+  background-color: #2a2a2a;
+  color: white;
+}
+
+/* Placeholder text color for inputs */
+.p-4 input[type="text"]::placeholder {
+  color: #aaa;
+}
   

@@ -48,6 +48,7 @@ const getPosterImageUrl = (title: string) => {
   const blobPath = `${encodeURIComponent(title)}.jpg`;
   return `${BLOB_STORAGE_URL}/${CONTAINER_NAME}/${blobPath}?${BLOB_SAS_TOKEN}`;
 };
+
 // LazyMovieCard component - Only renders full content when visible in viewport
 const LazyMovieCard = memo(({
   movie,
@@ -167,6 +168,24 @@ const SearchPage: React.FC = () => {
   const [hasMore, setHasMore] = useState(true);
   const [totalMoviesCount, setTotalMoviesCount] = useState(0);
   const [loadedMovieIds, setLoadedMovieIds] = useState<Set<string>>(new Set());
+  
+  // Helper function to convert Movie type from MovieOverlay back to MovieTitle
+  const convertToMovieTitle = (movie: any): MovieTitle => {
+    return {
+      showId: movie.showId || '',
+      title: movie.title || '',
+      type: movie.type || '',
+      director: movie.director || '',
+      cast: movie.cast || '',
+      country: movie.country || '',
+      releaseYear: movie.releaseYear || 0,
+      rating: movie.rating || 'NR',
+      duration: movie.duration || '',
+      description: movie.description || '',
+      posterUrl: movie.posterUrl,
+      genres: selectedMovie?.genres || [] // Keep original genres
+    };
+  };
   
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -289,10 +308,11 @@ const SearchPage: React.FC = () => {
           placeholder="Title"
           value={title}
           onChange={(e) => {
-            setTitle(e.target.value);
+            const newValue = e.target.value;
+            setTitle(newValue);
             // Auto-search while typing with debounce
-            if (e.target.value.length > 2 || e.target.value.length === 0) {
-              debouncedSearch(type, genre, e.target.value);
+            if (newValue.length > 2 || newValue.length === 0) {
+              debouncedSearch(type, genre, newValue);
             }
           }}
           className="bg-gray-800 text-white p-2 rounded"
@@ -301,8 +321,9 @@ const SearchPage: React.FC = () => {
         <select
           value={type}
           onChange={(e) => {
-            setType(e.target.value);
-            debouncedSearch(e.target.value, genre, title);
+            const newValue = e.target.value;
+            setType(newValue);
+            debouncedSearch(newValue, genre, title);
           }}
           className="bg-gray-800 text-white p-2 rounded"
         >
@@ -314,8 +335,9 @@ const SearchPage: React.FC = () => {
         <select
           value={genre}
           onChange={(e) => {
-            setGenre(e.target.value);
-            debouncedSearch(type, e.target.value, title);
+            const newValue = e.target.value;
+            setGenre(newValue);
+            debouncedSearch(type, newValue, title);
           }}
           className="bg-gray-800 text-white p-2 rounded"
         >
@@ -358,6 +380,10 @@ const SearchPage: React.FC = () => {
                   }}
                   onClose={() => setShowOverlay(false)}
                   initialRating={null}
+                  setMovie={(newMovie) => {
+                    // Convert and set the selected movie, ensuring all required properties
+                    setSelectedMovie(convertToMovieTitle(newMovie));
+                  }}
                 />
               )}
 
