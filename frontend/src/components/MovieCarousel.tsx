@@ -123,10 +123,10 @@ export const MovieCarousel = ({ categoryTitle, categoryType, customMovies  }: Mo
   
   // Main carousel slider
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
-    loop: true,
+    loop: false,
     slides: { perView: 6, spacing: 10 },
     drag: true,
-    rubberband: true,
+    rubberband: false,
     breakpoints: {
       '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
       '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
@@ -135,7 +135,7 @@ export const MovieCarousel = ({ categoryTitle, categoryType, customMovies  }: Mo
   
   // Recommendations slider for similar movies
   const [_, recommendationsInstanceRef] = useKeenSlider<HTMLDivElement>({
-    loop: true,
+    loop: false,
     slides: { perView: 5, spacing: 16 },
     breakpoints: {
       '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },

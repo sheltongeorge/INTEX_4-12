@@ -157,7 +157,7 @@ const MoviesPage: React.FC = () => {
   }, [topRatedMovies]);
 
   return (
-    <UserContext.Provider value={{ email: userEmail }}>
+    <UserContext.Provider value={{ email: userEmail, roles: [], userId: 0 }}>
     <div>
       
       <Header />
