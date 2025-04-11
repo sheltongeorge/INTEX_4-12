@@ -102,6 +102,8 @@ export const MovieCarousel = ({ categoryTitle, categoryType, customMovies  }: Mo
   const [userRating, setUserRating] = useState<number | null>(null);
   const [posterErrors, setPosterErrors] = useState<Record<string, boolean>>({});
   const user = useContext(UserContext);
+  console.log("🔍 MovieCarousel user:", user);
+  const [isLoading, setIsLoading] = useState(true);
   const [similarMovies, setSimilarMovies] = useState<Movie[]>([]);
   const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
   const [isSliderReady, setIsSliderReady] = useState(false);
@@ -267,29 +269,33 @@ export const MovieCarousel = ({ categoryTitle, categoryType, customMovies  }: Mo
     setIsLoadingRecommendations(true);
     try {
       // First get the user's ID from the auth endpoint
-      let userIdForRecommendations = null;
+      let userIdForRecommendations = user?.userId;
+
+      if (!userIdForRecommendations) {
+        try {
+          const userResponse = await fetch('https://localhost:7156/pingauth', {
+            method: 'GET',
+            credentials: 'include',
+          });
       
-      try {
-        const userResponse = await fetch('https://localhost:7156/pingauth', {
-          method: 'GET',
-          credentials: 'include',
-        });
-        
-        if (userResponse.ok) {
-          const userData = await userResponse.json();
-          if (userData && userData.id) {
-            userIdForRecommendations = userData.id;
-            setUserId(userData.id);
-            console.log('Successfully authenticated user with ID:', userData.id);
-          } else {
-            console.warn('User authenticated but no ID found in response:', userData);
+          if (userResponse.ok) {
+            const userData = await userResponse.json();
+            if (userData && userData.id) {
+              userIdForRecommendations = userData.id;
+      
+              // ✅ only overwrite context userId if it was missing
+              if (!user?.userId) {
+                setUserId(userData.id);
+              }
+            }
           }
-        } else {
-          console.warn(`Authentication failed with status: ${userResponse.status}`);
+        } catch (userError) {
+          console.error('Error fetching user data:', userError);
         }
-      } catch (userError) {
-        console.error('Error fetching user data:', userError);
       }
+      console.log("✅ Using userId for recommendations:", userIdForRecommendations);
+
+      
       
       // Use user ID for recommendations if available
       const recommendationsUrl = userIdForRecommendations
@@ -1076,13 +1082,45 @@ export const MovieCarousel = ({ categoryTitle, categoryType, customMovies  }: Mo
                         <h3 className="poster-title">{movie.title}</h3>
                         <p className="poster-rating">Rating: {movie.rating}</p>
                         <div className="action-buttons">
-                          <button
-                            className="circular-button"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <span className="button-icon plus-icon"></span>
-                            <span className="button-tooltip">Add to Watchlist</span>
-                          </button>
+                        <button
+  className="circular-button"
+  onClick={(e) => {
+    e.stopPropagation();
+
+    if (!user?.email || !movie?.showId) {
+      alert("You must be logged in to use the watchlist.");
+      return;
+    }
+
+    fetch(
+      `https://localhost:7156/api/moviewatchlist/add/${encodeURIComponent(user.email)}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(movie.showId),
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          alert(`✅ Added "${movie.title}" to your watchlist!`);
+        } else if (res.status === 409) {
+          alert(`⚠️ "${movie.title}" is already in your watchlist.`);
+        } else {
+          alert('❌ Failed to add to watchlist.');
+        }
+      })
+      .catch((err) => {
+        console.error('Watchlist error:', err);
+        alert('❌ An error occurred. Please try again.');
+      });
+  }}
+>
+  <span className="button-icon plus-icon"></span>
+  <span className="button-tooltip">Add to Watchlist</span>
+</button>
                           <button
   className="circular-button"
   onClick={(e) => {
