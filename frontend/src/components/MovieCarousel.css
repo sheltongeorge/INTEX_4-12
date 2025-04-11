@@ -29,10 +29,11 @@
   z-index: 1; /* Base z-index for stacking context */
   transform-style: preserve-3d; /* Create new stacking context */
 }
-
 /* Override keen-slider constraints */
 .keen-slider {
   overflow: visible !important; /* Allow slides to overflow */
+  isolation: isolate; /* Create a new stacking context */
+  pointer-events: auto;
 }
 
 .keen-slider__slide {
