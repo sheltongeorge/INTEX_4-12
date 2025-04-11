@@ -21,7 +21,7 @@ function App() {
     <Router>
       {/* <AuthorizeView> */}
       <Routes>
-        <Route path="/search" element={<SearchPage />} />
+        <Route path="/search" element={<AuthorizeView><SearchPage /></AuthorizeView>} />
         <Route path="/" element={<HomeRedirect />} />
         <Route path="/recommendations" element={<AuthorizeView><RecommendationsPage /></AuthorizeView>} />
         <Route path="/login" element={<LoginPage />} />

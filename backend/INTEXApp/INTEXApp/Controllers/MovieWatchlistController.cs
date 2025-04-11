@@ -1,10 +1,12 @@
 ﻿using INTEXApp;
 using INTEXApp.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace INTEXApp.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MovieWatchlistController : ControllerBase
