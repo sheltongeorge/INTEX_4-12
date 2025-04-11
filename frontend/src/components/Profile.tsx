@@ -88,7 +88,7 @@ const Profile = () => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<WatchlistMovie | UserRating | null>(null);
     const [userRating, setUserRating] = useState<number | null>(null);
-    const totalWatched = ratings.length;
+    // const totalWatched = ratings.length;
     const [favoriteGenre, setFavoriteGenre] = useState<string>('Loading...');
     const [averageRating, setAverageRating] = useState('N/A');
 const [timeWatchedHours, setTimeWatchedHours] = useState(0);
@@ -125,12 +125,15 @@ const [profileTitle, setProfileTitle] = useState('Movie Enthusiast');
           const titles = ratingsData.map((r: any) => r.title);
           try {
             // First fetch the detailed movie data for all rated movies
-            const genreRes = await fetch(`https://localhost:7156/api/moviestitles/FindByTitles`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(titles),
-              credentials: 'include'
-            });
+            const genreRes = await fetch(
+              `https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/moviestitles/FindByTitles`,
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(titles),
+                credentials: 'include',
+              }
+            );
       
             let genre = 'N/A';
             let genreCounts: Record<string, number> = {};

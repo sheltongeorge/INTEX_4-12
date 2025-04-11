@@ -1,15 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import './HomePage.css';
 import Header from '../components/Header';
-import CookieConsent from '../components/cookies/CookieConsent';
 import "../components/cookies/CookieConsent.css";
 
 function HomePage() {
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    navigate('/login');
-  };
+  // const handleLogin = () => {
+  //   navigate('/login');
+  // };
 
   const handleSignup = () => {
     navigate('/register');

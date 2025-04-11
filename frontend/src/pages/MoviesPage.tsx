@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import LazyCarousel from '../components/LazyCarousel';
 import HeaderSearch from '../components/HeaderSearch';
 import './MoviesPage.css'; 
+import { UserContext } from '../components/AuthorizeView';
 
 const MoviesPage: React.FC = () => {
 
@@ -145,7 +146,7 @@ const MoviesPage: React.FC = () => {
   }, [userEmail]);
 
   useEffect(() => {
-    const fetchRecommendationsData = async (movieTitle: string): Promise<any[]> => {
+    const fetchRecommendationsData = async (): Promise<any[]> => {
       try {
         const response = await fetch(
           'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/Recommendations/AllRecommendations1',
@@ -191,7 +192,7 @@ const MoviesPage: React.FC = () => {
       if (topRatedMovies.length === 0) return;
       
       // Get all recommendations data once (to avoid multiple API calls)
-      const allRecsData = await fetchRecommendationsData("");
+      const allRecsData = await fetchRecommendationsData();
       const newRecommendationsMap: Record<string, any[]> = {};
       
       // Process each top rated movie

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logout from './Logout';
 import { AuthorizedUser } from './AuthorizeView';
 
@@ -8,7 +8,7 @@ const Header: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRoles, setUserRoles] = useState<string[]>([]);
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
 
   useEffect(() => {
     const checkAuth = async () => {

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/cineniche.png';
-
 function Register() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -11,15 +10,12 @@ function Register() {
   const [isLogoSpinning, setIsLogoSpinning] = useState<boolean>(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
   useEffect(() => {
     setShowAnimation(false);
   }, []);
-
   const handleLoginClick = () => {
     navigate('/login');
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === 'fullName') setFullName(value);
@@ -27,51 +23,6 @@ function Register() {
     if (name === 'password') setPassword(value);
     if (name === 'confirmPassword') setConfirmPassword(value);
   };
-
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   if (!fullName || !email || !password || !confirmPassword) {
-  //     setError('Please fill in all fields.');
-  //   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-  //     setError('Please enter a valid email address.');
-  //   } else if (password !== confirmPassword) {
-  //     setError('Passwords do not match.');
-  //   } else {
-  //     setError('');
-  //     try {
-  //       // Register user in Identity database
-  //       const response = await fetch(
-  //         'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/register',
-  //         {
-  //           method: 'POST',
-  //           headers: { 'Content-Type': 'application/json' },
-  //           body: JSON.stringify({ email, password }),
-  //         }
-  //       );
-
-  //       if (!response.ok) throw new Error('Registration failed.');
-
-  //       // Register user in movies_users database
-  //       const moviesUserResponse = await fetch(
-  //         'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MovieUsers/AddUser',
-  //         {
-  //           method: 'POST',
-  //           headers: { 'Content-Type': 'application/json' },
-  //           body: JSON.stringify({ name: fullName, email: email }),
-  //         }
-  //       );
-
-  //       if (!moviesUserResponse.ok)
-  //         throw new Error('Failed to add user to movie database.');
-
-  //       setError('Successful registration. Please log in.');
-  //     } catch (err) {
-  //       setError((err as Error).message);
-  //       console.error(err);
-  //     }
-  //   }
-  // };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!fullName || !email || !password || !confirmPassword) {
@@ -85,12 +36,14 @@ function Register() {
     } else {
       setError('');
       try {
-        const response = await fetch('https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-        });
-
+        const response = await fetch(
+          'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/register',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+          }
+        );
         if (!response.ok) {
           const errorText = await response.text();
           if (errorText.toLowerCase().includes('password')) {
@@ -100,7 +53,6 @@ function Register() {
             'Registration failed. Please check your information.'
           );
         }
-
         const moviesUserResponse = await fetch(
           'https://intex-group-4-12-backend-hqhrgeg0acc9hyhb.eastus-01.azurewebsites.net/api/MovieUsers/AddUser',
           {
@@ -109,28 +61,17 @@ function Register() {
             body: JSON.stringify({ name: fullName, email: email }),
           }
         );
-
         if (!moviesUserResponse.ok)
           throw new Error('Failed to add user to movie database.');
-
         setError('Successful registration. Please log in.');
       } catch (err) {
-        console.error('Registration error:', err);
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError('An unknown error occurred during registration');
-        }
+        setError((err as Error).message);
+        console.error(err);
       }
     }
   };
-
-
   return (
     <div className="container">
-      <div
-        className={`card border-0 shadow rounded-3 ${showAnimation ? 'card-animate' : ''}`}
-      >
       <div
         className={`card border-0 shadow rounded-3 ${showAnimation ? 'card-animate' : ''}`}
       >
@@ -150,9 +91,6 @@ function Register() {
               />
             </div>
           </div>
-          <h5 className="card-title text-center mb-5 fw-light fs-5">
-            Register
-          </h5>
           <h5 className="card-title text-center mb-5 fw-light fs-5">
             Register
           </h5>
@@ -201,12 +139,7 @@ function Register() {
               />
               <label htmlFor="confirmPassword">Confirm Password</label>
             </div>
-
             <div className="d-grid mb-2">
-              <button
-                className="btn btn-login custom-login-btn text-uppercase fw-bold"
-                type="submit"
-              >
               <button
                 className="btn btn-login custom-login-btn text-uppercase fw-bold"
                 type="submit"
@@ -223,11 +156,10 @@ function Register() {
               </button>
             </div>
           </form>
-          <strong>{error} && <p className="error">{error}</p></strong>
+          <strong>{error && <p className="error">{error}</p>}</strong>
         </div>
       </div>
     </div>
   );
 }
-
 export default Register;

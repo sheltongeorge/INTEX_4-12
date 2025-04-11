@@ -103,9 +103,9 @@ export const MovieCarousel = ({ categoryTitle, categoryType, customMovies  }: Mo
   const [posterErrors, setPosterErrors] = useState<Record<string, boolean>>({});
   const user = useContext(UserContext);
   console.log("🔍 MovieCarousel user:", user);
-  const [isLoading, setIsLoading] = useState(true);
-  const [similarMovies, setSimilarMovies] = useState<Movie[]>([]);
-  const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [similarMovies, setSimilarMovies] = useState<Movie[]>([]);
+  // const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
   const [isSliderReady, setIsSliderReady] = useState(false);
 
   
@@ -134,14 +134,14 @@ export const MovieCarousel = ({ categoryTitle, categoryType, customMovies  }: Mo
   });
   
   // Recommendations slider for similar movies
-  const [_, recommendationsInstanceRef] = useKeenSlider<HTMLDivElement>({
-    loop: false,
-    slides: { perView: 5, spacing: 16 },
-    breakpoints: {
-      '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
-      '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
-    },
-  });
+  // const [_, recommendationsInstanceRef] = useKeenSlider<HTMLDivElement>({
+  //   loop: false,
+  //   slides: { perView: 5, spacing: 16 },
+  //   breakpoints: {
+  //     '(max-width: 1024px)': { slides: { perView: 3, spacing: 12 } },
+  //     '(max-width: 768px)': { slides: { perView: 2, spacing: 10 } },
+  //   },
+  // });
 
   // Fetch movie ratings from backend
   const fetchMovieRatings = async () => {
@@ -853,17 +853,17 @@ export const MovieCarousel = ({ categoryTitle, categoryType, customMovies  }: Mo
   }, []);
 
   // Add this effect to update the recommendations slider when similar movies change
-  useEffect(() => {
+  // useEffect(() => {
 
     
-    if (recommendationsInstanceRef.current && similarMovies.length > 0) {
-      // Small timeout to ensure DOM is ready
-      setTimeout(() => {
-        recommendationsInstanceRef.current?.update();
-        console.log("Recommendations slider updated with", similarMovies.length, "movies");
-      }, 100);
-    }
-  }, [similarMovies]);
+  //   if (recommendationsInstanceRef.current && similarMovies.length > 0) {
+  //     // Small timeout to ensure DOM is ready
+  //     setTimeout(() => {
+  //       recommendationsInstanceRef.current?.update();
+  //       console.log("Recommendations slider updated with", similarMovies.length, "movies");
+  //     }, 100);
+  //   }
+  // }, [similarMovies]);
 
   // Always call hooks in the same order - don't conditionally call hooks
   useEffect(() => {

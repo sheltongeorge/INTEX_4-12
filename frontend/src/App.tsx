@@ -39,6 +39,7 @@ function App() {
         <Route path="/carousel" element={<AuthorizeView><MovieCarousel /></AuthorizeView>} />
         <Route path="/movies" element={<AuthorizeView><MoviesPage /></AuthorizeView>} />
         <Route path="/profile" element={<AuthorizeView><Profile /></AuthorizeView>} />
+        <Route path="/privacy" element={<PrivacyPolicyPage />} />
       </Routes>
       {/* </AuthorizeView> */}
     </Router>

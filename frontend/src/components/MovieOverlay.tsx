@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { X, ArrowLeft, ArrowRight } from 'lucide-react';
+// import { X, ArrowLeft, ArrowRight } from 'lucide-react';
 import { UserContext } from './AuthorizeView';
 import fallbackImage from '../assets/Fallback.png';
 import './MovieCarousel.css';
@@ -56,7 +56,7 @@ const MovieOverlay: React.FC<OverlayProps> = ({ movie, onClose, initialRating, s
   };
   
   // Create a new slider instance every time the recommendationKey changes
-  const [recommendationKey, setRecommendationKey] = useState(0);
+  const [_, setRecommendationKey] = useState(0);
   const [recommendationsSliderRef, recommendationsInstanceRef] = useKeenSlider<HTMLDivElement>(sliderOptions);
 
   const submitRating = () => {
