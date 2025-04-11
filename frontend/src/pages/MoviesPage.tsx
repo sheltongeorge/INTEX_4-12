@@ -195,24 +195,6 @@ const MoviesPage: React.FC = () => {
   }, [topRatedMovies]);
 
   return (
-<<<<<<< HEAD
-    <div>
-      <Header />
-      <HeaderSearch />
-      <div
-        className="overflow-y-auto hide-scrollbar"
-        style={{ height: '100vh', padding: '0 16px', overflow: 'visible' }} // <--- important
-      >
-        <h1 className="text-2xl font-bold movies-welcome-header text-white">
-          {userName ? `Welcome back, ${userName}!` : 'Welcome to CineNiche!'}
-        </h1>
-  
-        {/* First carousel */}
-        <div className="lazy-carousel-wrapper">
-          <LazyCarousel title="Top Picks For You">
-            <MovieCarousel categoryTitle="Top Picks for You" categoryType="personal" />
-          </LazyCarousel>
-=======
     <UserContext.Provider value={{ email: userEmail || '', roles: [], userId: 0 }}>
       <div>
         <Header />
@@ -334,14 +316,9 @@ const MoviesPage: React.FC = () => {
               </div>
             </>
           )}
->>>>>>> 9b4b2d141db2d176cdf2422af3a53d3989bb08f0
         </div>
       </div>
-<<<<<<< HEAD
-    </div>
-=======
     </UserContext.Provider>
->>>>>>> 9b4b2d141db2d176cdf2422af3a53d3989bb08f0
   );
 };
 
