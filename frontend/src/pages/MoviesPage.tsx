@@ -7,8 +7,10 @@ import './MoviesPage.css';
 import { UserContext } from '../components/AuthorizeView';
 
 const MoviesPage: React.FC = () => {
+
   const [userName, setUserName] = useState<string>('');
   const [userEmail, setUserEmail] = useState<string>('');
+  const [userId, setUserId] = useState<number>(0);
   const [topRatedMovies, setTopRatedMovies] = useState<{title: string, showId: string}[]>([]);
   const [recommendationsMap, setRecommendationsMap] = useState<Record<string, any[]>>({});
 
@@ -65,7 +67,7 @@ const MoviesPage: React.FC = () => {
           method: 'GET',
           credentials: 'include',
         });
-
+    
         if (response.ok) {
           const userData = await response.json();
           if (userData) {
@@ -73,6 +75,20 @@ const MoviesPage: React.FC = () => {
               setUserEmail(userData.email);
               const name = userData.email.split('@')[0];
               setUserName(name);
+    
+              // ✅ Add this block to resolve movies_users.UserId
+              try {
+                const idRes = await fetch(`https://localhost:7156/api/moviewatchlist/resolve-id/${encodeURIComponent(userData.email)}`);
+                if (idRes.ok) {
+                  const idData = await idRes.json();
+                  setUserId(idData.userId); // ✅ use real MovieUser ID
+                  console.log("✅ Resolved movies_userId:", idData.userId);
+                } else {
+                  console.warn("⚠️ Could not resolve movies_users ID");
+                }
+              } catch (err) {
+                console.error("❌ Error resolving userId:", err);
+              }
             }
           }
         }
@@ -80,6 +96,7 @@ const MoviesPage: React.FC = () => {
         console.error('Error fetching user data:', error);
       }
     };
+    
 
     getUserData();
   }, []);
@@ -195,7 +212,7 @@ const MoviesPage: React.FC = () => {
   }, [topRatedMovies]);
 
   return (
-    <UserContext.Provider value={{ email: userEmail || '', roles: [], userId: 0 }}>
+    <UserContext.Provider value={{ email: userEmail || '', roles: [], userId }}>
       <div>
         <Header />
         <HeaderSearch />
