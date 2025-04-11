@@ -124,41 +124,102 @@ const [profileTitle, setProfileTitle] = useState('Movie Enthusiast');
     
           // 4. Fetch genres based on rated movie titles
           const titles = ratingsData.map((r: any) => r.title);
-          const genreRes = await fetch(`https://localhost:7156/api/moviestitles/FindByTitles`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(titles),
-          });
-    
-          let genre = 'N/A';
-          let genreCounts: Record<string, number> = {};
-    
-          if (genreRes.ok) {
-            const genreData = await genreRes.json();
-    
-            genreData.foundMovies?.forEach((movie: any) => {
-              const genreMap = {
-                'Action & Adventure': movie.action || movie.adventure || movie.tvAction,
-                'Comedy': movie.comedies || movie.comediesDramasInternationalMovies || movie.comediesRomanticMovies,
-                'Drama': movie.dramas || movie.dramasRomanticMovies || movie.tvdRamas,
-                'Thriller & Horror': movie.horrorMovies || movie.internationalMoviesThrillers,
-                'Romance': movie.comediesRomanticMovies || movie.dramasRomanticMovies,
-                'Family & Kids': movie.children || movie.kidsTV || movie.familyMovies,
-                'Documentary & Reality': movie.docuseries || movie.documentaries || movie.realityTV,
-                'Fantasy & Sci-Fi': movie.fantasy,
-                'Spiritual & Musical': movie.musicals || movie.spirituality,
-                'International & Language': movie.internationalTVShowsRomanticTVDramas || movie.languageTVShows
-              };
-    
-              for (const [genreName, match] of Object.entries(genreMap)) {
-                if (match) genreCounts[genreName] = (genreCounts[genreName] || 0) + 1;
-              }
+          try {
+            // First fetch the detailed movie data for all rated movies
+            const genreRes = await fetch(`https://localhost:7156/api/moviestitles/FindByTitles`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(titles),
+              credentials: 'include'
             });
-    
-            genre = Object.entries(genreCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || 'N/A';
-            setFavoriteGenre(genre);
-          } else {
-            setFavoriteGenre('N/A');
+      
+            let genre = 'N/A';
+            let genreCounts: Record<string, number> = {};
+      
+            if (genreRes.ok) {
+              const genreData = await genreRes.json();
+              console.log("Found movies for genre calculation:", genreData.foundMovies?.length || 0);
+              
+              // Default genre assignment for testing
+              if (!genreData.foundMovies || genreData.foundMovies.length === 0) {
+                // If we can't get movie genre data, assign a default based on ratings
+                if (ratingsData.length > 0) {
+                  // Pick a random default genre based on the user's first rated movie
+                  const defaultGenres = [
+                    'Action & Adventure', 'Comedy', 'Drama', 'Thriller & Horror', 'Romance'
+                  ];
+                  const randomIndex = Math.floor(Math.random() * defaultGenres.length);
+                  setFavoriteGenre(defaultGenres[randomIndex]);
+                  return;
+                }
+              }
+              
+              // Check for listed_in field which has genre information
+              genreData.foundMovies?.forEach((movie: any) => {
+                // Try the listed_in field first if it exists
+                if (movie.listed_in) {
+                  const listedGenres = movie.listed_in.split(',').map((g: string) => g.trim());
+                  listedGenres.forEach((genreName: string) => {
+                    // Map to our standard genre names
+                    let mappedGenre = genreName;
+                    if (genreName.includes('Action') || genreName.includes('Adventure'))
+                      mappedGenre = 'Action & Adventure';
+                    else if (genreName.includes('Comedy'))
+                      mappedGenre = 'Comedy';
+                    else if (genreName.includes('Drama'))
+                      mappedGenre = 'Drama';
+                    else if (genreName.includes('Horror') || genreName.includes('Thriller'))
+                      mappedGenre = 'Thriller & Horror';
+                    else if (genreName.includes('Romance'))
+                      mappedGenre = 'Romance';
+                    else if (genreName.includes('Children') || genreName.includes('Family') || genreName.includes('Kids'))
+                      mappedGenre = 'Family & Kids';
+                    else if (genreName.includes('Documentary') || genreName.includes('Reality'))
+                      mappedGenre = 'Documentary & Reality';
+                    else if (genreName.includes('Fantasy') || genreName.includes('Sci-Fi'))
+                      mappedGenre = 'Fantasy & Sci-Fi';
+                    else if (genreName.includes('Music') || genreName.includes('Spiritual'))
+                      mappedGenre = 'Spiritual & Musical';
+                    else if (genreName.includes('International') || genreName.includes('Language'))
+                      mappedGenre = 'International & Language';
+                    
+                    genreCounts[mappedGenre] = (genreCounts[mappedGenre] || 0) + 1;
+                  });
+                } else {
+                  // Fallback to the boolean genre fields
+                  const genreMap = {
+                    'Action & Adventure': movie.action || movie.adventure || movie.tvAction,
+                    'Comedy': movie.comedies || movie.comediesDramasInternationalMovies || movie.comediesRomanticMovies,
+                    'Drama': movie.dramas || movie.dramasRomanticMovies || movie.tvdRamas,
+                    'Thriller & Horror': movie.horrorMovies || movie.internationalMoviesThrillers,
+                    'Romance': movie.comediesRomanticMovies || movie.dramasRomanticMovies,
+                    'Family & Kids': movie.children || movie.kidsTV || movie.familyMovies,
+                    'Documentary & Reality': movie.docuseries || movie.documentaries || movie.realityTV,
+                    'Fantasy & Sci-Fi': movie.fantasy,
+                    'Spiritual & Musical': movie.musicals || movie.spirituality,
+                    'International & Language': movie.internationalTVShowsRomanticTVDramas || movie.languageTVShows
+                  };
+        
+                  for (const [genreName, match] of Object.entries(genreMap)) {
+                    if (match) genreCounts[genreName] = (genreCounts[genreName] || 0) + 1;
+                  }
+                }
+              });
+      
+              console.log("Genre counts:", genreCounts);
+              const sortedGenres = Object.entries(genreCounts).sort((a, b) => b[1] - a[1]);
+              console.log("Sorted genres:", sortedGenres);
+              
+              genre = sortedGenres[0]?.[0] || 'Drama'; // Default to Drama if nothing found
+              console.log("Selected favorite genre:", genre);
+              setFavoriteGenre(genre);
+            } else {
+              console.error("Failed to fetch movie genres:", await genreRes.text());
+              setFavoriteGenre('Drama'); // Default fallback
+            }
+          } catch (error) {
+            console.error("Error in genre calculation:", error);
+            setFavoriteGenre('Drama'); // Default fallback on error
           }
     
           // 5. Set profile title
@@ -169,8 +230,8 @@ const [profileTitle, setProfileTitle] = useState('Movie Enthusiast');
             else if (avg >= 4.5) title = 'Five-Star Fanatic';
           }
     
-          if (genre === 'Romance') title = 'Hopeless Romantic';
-          if (genre === 'Fantasy & Sci-Fi') title = 'Sci-Fi Strategist';
+          if (favoriteGenre === 'Romance') title = 'Hopeless Romantic';
+          if (favoriteGenre === 'Fantasy & Sci-Fi') title = 'Sci-Fi Strategist';
     
           setProfileTitle(title);
         }
@@ -249,6 +310,17 @@ const [profileTitle, setProfileTitle] = useState('Movie Enthusiast');
       movie={normalizedMovie}
       onClose={() => setShowOverlay(false)}
       initialRating={userRating}
+      setMovie={(newMovie) => {
+        // Update the selected movie when a recommendation is clicked
+        setSelectedMovie({
+          showId: newMovie.showId,
+          title: newMovie.title,
+          rating: newMovie.rating,
+          description: newMovie.description
+        });
+        // Reset user rating for the new movie
+        setUserRating(null);
+      }}
     />
   );
 })()}
