@@ -8,7 +8,7 @@ import AuthorizeView, {
   AuthorizedUser,
   UserContext,
 } from '../components/AuthorizeView';
-import Logout from '../components/Logout';
+import Header from '../components/header';
 
 const AdminMoviesPageContent = () => {
   const user = useContext(UserContext);
@@ -65,11 +65,7 @@ const AdminMoviesPageContent = () => {
 
   return (
     <>
-      <span>
-        <Logout>
-          Logout <AuthorizedUser value="email" />
-        </Logout>
-      </span>
+    <Header/>
 
       <div style={{ maxHeight: 'calc(100vh - 100px)', overflowY: 'auto' }}>
         <h1 style={{ color: 'white' }}>Admin - Movies</h1>
