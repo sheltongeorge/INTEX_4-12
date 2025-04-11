@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logout from './Logout';
 import { AuthorizedUser } from './AuthorizeView';
-import "../assets/cineniche.png";
+import "../../public/cineniche.png";
 
 const Header: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -43,7 +43,7 @@ const Header: React.FC = () => {
       <header className="flex items-center justify-between bg-black text-white px-4 shadow-md" style={{ height: '8vh' }}>
         <div className="flex items-center h-full">
           <Link to={isAuthenticated ? '/movies' : '/'} className="flex items-center h-full">
-            <img src="src/assets/cineniche.png" alt="Logo" className="h-full w-auto" />
+            <img src="public/cineniche.png" alt="Logo" className="h-full w-auto" />
           </Link>
         </div>
 
