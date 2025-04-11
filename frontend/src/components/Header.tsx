@@ -43,7 +43,7 @@ const Header: React.FC = () => {
       <header className="flex items-center justify-between bg-black text-white px-4 shadow-md" style={{ height: '8vh' }}>
         <div className="flex items-center h-full">
           <Link to={isAuthenticated ? '/movies' : '/'} className="flex items-center h-full">
-            <img src="../../public/cineniche.png" alt="Logo" className="h-full w-auto" />
+            <img src="../../cineniche.png" alt="Logo" className="h-full w-auto" />
           </Link>
         </div>
 
