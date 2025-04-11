@@ -1276,3 +1276,11 @@ C:\Users\Owner\Documents\INTEX_4-12\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\S
 C:\Users\Owner\Documents\INTEX_4-12\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\System.Text.Encodings.Web.dll
 C:\Users\Owner\Documents\INTEX_4-12\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\System.Text.Json.dll
 C:\Users\Owner\Documents\INTEX_4-12\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+C:\Users\Owner\Documents\INTEX_4-12\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\publish\web.config
+C:\Users\Owner\Documents\INTEX_4-12\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\publish\appsettings.Development.json
+C:\Users\Owner\Documents\INTEX_4-12\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\publish\appsettings.json
+C:\Users\Owner\Documents\INTEX_4-12\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\publish\INTEXApp.deps.json
+C:\Users\Owner\Documents\INTEX_4-12\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\publish\INTEXApp.runtimeconfig.json
+C:\Users\Owner\Documents\INTEX_4-12\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\publish\INTEXApp.staticwebassets.endpoints.json
+C:\Users\Owner\Documents\INTEX_4-12\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\Identity.sqlite-shm
+C:\Users\Owner\Documents\INTEX_4-12\backend\INTEXApp\INTEXApp\bin\Debug\net8.0\Identity.sqlite-wal
