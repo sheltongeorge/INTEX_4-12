@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import './HomePage.css';
 import Header from '../components/Header';
 import "../components/cookies/CookieConsent.css";
+import CookieConsent from '../components/cookies/CookieConsent';
 
 function HomePage() {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ function HomePage() {
         </button>
       </main>
     </div>
+    <CookieConsent/>
   </div>
   );
 }
