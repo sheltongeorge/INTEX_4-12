@@ -10,8 +10,7 @@ import MovieOverlay from './MovieOverlay';
 
 
 const BLOB_STORAGE_URL = 'https://movieposterblob.blob.core.windows.net';
-const BLOB_SAS_TOKEN =
-  'sv=2024-11-04&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-05-15T09:35:14Z&st=2025-04-09T01:35:14Z&spr=https,http&sig=N%2FAK8dhBBarxwU9qBSd0aI0B5iEOqmpnKUJ6Ek1yv0k%3D';
+const BLOB_SAS_TOKEN = import.meta.env.VITE_BLOB_SAS_TOKEN;
 const CONTAINER_NAME = 'movieposters';
 
 // Add this utility function for getting poster URLs
