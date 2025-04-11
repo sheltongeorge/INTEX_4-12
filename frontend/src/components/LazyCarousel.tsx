@@ -21,13 +21,38 @@ const LazyCarousel: React.FC<LazyCarouselProps> = ({ title, children }) => {
   }, [isVisible]);
 
   return (
-    <div ref={containerRef}>
-      <h2 className="text-xl font-bold text-white" style={{ marginBottom: '6px' }}>
+    <div
+      ref={containerRef}
+      className="lazy-carousel-container"
+      style={{
+        position: 'relative',
+        zIndex: 1,
+        marginBottom: '10px',
+        marginTop: '0',
+        isolation: 'isolate',
+        pointerEvents: 'auto'
+      }}
+    >
+      <h2 className="text-xl font-bold text-white" style={{
+        marginBottom: '0',
+        marginTop: '0',
+        position: 'relative',
+        zIndex: 1
+      }}>
         {title}
       </h2>
       <div
-        className="overflow-x-auto overflow-y-hidden hide-scrollbar"
-        style={{ height: 'auto', overflow: 'visible' }}
+        className="lazy-carousel-wrapper"
+        style={{
+          height: 'auto',
+          overflow: 'visible',
+          position: 'relative',
+          zIndex: 5,
+          perspective: '1000px',
+          marginTop: '0',
+          isolation: 'isolate',
+          pointerEvents: 'auto'
+        }}
       >
         {shouldRender ? (
           children

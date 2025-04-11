@@ -2,36 +2,38 @@
 .carousel-container {
   position: relative;
   width: 100%;
-  padding: 30px 0 60px 0; /* Increased bottom padding */
-  margin: 30px 0 50px 0; /* Increased bottom margin */
+  padding: 5px 0 10px 0; /* Extremely reduced padding */
+  margin: 0; /* Removed all margins */
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 0; /* Removed gap completely */
 }
 
 /* Category carousels */
 .category-carousel-container {
-  margin-bottom: 50px; /* Increased from 20px to allow more space */
+  margin-bottom: 5px; /* Further reduced from 20px */
 }
 
 .category-title {
   font-size: 1.8rem;
   font-weight: 600;
-  margin: 0 0 15px 40px;
+  margin: 0 0 5px 40px; /* Reduced bottom margin from 15px to 5px */
   color: #333;
 }
 
 .carousel-wrapper {
   position: relative;
-  margin: 0 40px 40px 40px; /* Added bottom margin */
+  margin: 0 40px 5px 40px; /* Drastically reduced bottom margin from 25px to 5px */
   overflow: visible !important; /* Important to allow overflow */
-  min-height: 300px; /* Ensure minimum height for the carousel wrapper */
+  min-height: 240px; /* Further reduced from 280px */
   z-index: 1; /* Base z-index for stacking context */
+  transform-style: preserve-3d; /* Create new stacking context */
 }
-
 /* Override keen-slider constraints */
 .keen-slider {
   overflow: visible !important; /* Allow slides to overflow */
+  isolation: isolate; /* Create a new stacking context */
+  pointer-events: auto;
 }
 
 .keen-slider__slide {
@@ -39,20 +41,22 @@
   z-index: 5;
   transition: transform 0.3s ease, z-index 0s 0.1s; /* Smooth transform, delayed z-index */
   position: relative;
+  transform-style: preserve-3d;
 }
 
 .keen-slider__slide:hover {
-  z-index: 10; /* Higher than other slides when hovered */
+  z-index: 9500; /* Very high z-index - higher than other slides when hovered */
   transition: transform 0.3s ease, z-index 0s; /* Immediate z-index change on hover */
 }
 
 /* Slide styling */
 .slide {
-  padding: 20px 2px 2px 2px; /* Increased bottom padding to provide more space for hover content */
+  padding: 5px 2px 2px 2px; /* Minimum top padding */
   transform-origin: center center;
   transition: all 0.3s ease;
   position: relative;
-  margin-bottom: 30px; /* Additional margin to ensure space for hover info */
+  margin-bottom: 30px; /* Further reduced while ensuring space for hover info */
+  transform-style: preserve-3d;
 }
 
 /* Poster card styling */
@@ -66,13 +70,14 @@
   cursor: pointer;
   background-color: #111;
   transform-origin: center center;
+  transform-style: preserve-3d; /* Create new stacking context */
 }
 
 /* Hover effects - Apply to .poster-card directly */
 .slide:hover .poster-card {
-  transform: scale(1.15); /* Slightly smaller scale to prevent overflow issues */
+  transform: scale(1.15) translateZ(20px); /* Scale and move forward in 3D space */
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-  z-index: 90; /* Further increased to ensure it's above all other content */
+  z-index: 9000; /* Very high z-index to ensure it's above other content */
 }
 
 /* Poster image styling */
@@ -109,9 +114,10 @@
   top: calc(100% + 8px); /* Position it below the card with a small gap */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   pointer-events: none;
-  z-index: 99; /* Using higher z-index to ensure it appears above everything */
+  z-index: 9999; /* Extremely high z-index to ensure it appears above everything */
   max-height: none; /* Ensure it's not constrained by height */
   overflow: visible; /* Allow content to overflow if needed */
+  transform: translateZ(50px); /* Push it forward in 3D space */
 }
 
 /* Create continuous hover area */
@@ -151,7 +157,8 @@
   gap: 16px;
   margin-top: 10px;
   position: relative;
-  z-index: 100; /* Higher z-index for buttons */
+  z-index: 10000; /* Extremely high z-index for buttons */
+  transform: translateZ(60px); /* Push buttons even further forward */
 }
 
 /* Circular button styling */
@@ -169,6 +176,7 @@
   transition: background-color 0.2s ease;
   z-index: 100; /* Ensure buttons are above everything */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Add shadow for visibility */
+  pointer-events: all;
 }
 
 .circular-button:hover {
@@ -226,8 +234,8 @@
 .slide:hover .hover-info {
   opacity: 1;
   pointer-events: auto;
-  z-index: 95; /* Even higher z-index when visible */
-  transform: translateZ(0); /* Force hardware acceleration */
+  z-index: 9999; /* Keep extremely high z-index when visible */
+  transform: translateZ(50px); /* Keep it pushed forward in 3D space */
 }
 
 /* Navigation arrows styling */
