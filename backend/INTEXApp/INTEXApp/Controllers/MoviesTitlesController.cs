@@ -1,7 +1,9 @@
 ﻿using INTEXApp.Data;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +13,16 @@ namespace INTEXApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    //[EnableCors("AllowFrontend")]
     public class MoviesTitlesController : ControllerBase
     {
         private readonly MoviesDbContext _context;
+        private readonly ILogger<MoviesTitlesController> _logger;
 
-        public MoviesTitlesController(MoviesDbContext context)
+        public MoviesTitlesController(MoviesDbContext context, ILogger<MoviesTitlesController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET with pagination and optional title filter
@@ -58,11 +63,36 @@ namespace INTEXApp.Controllers
 
         // POST - Add a new movie
         [HttpPost("AddMovie")]
-        public IActionResult AddMovie([FromBody] MovieTitle newMovie)
+        public async Task<IActionResult> AddMovie([FromBody] MovieTitle newMovie)
         {
-            _context.MoviesTitles.Add(newMovie);
-            _context.SaveChanges();
-            return Ok(newMovie);
+            //_context.MoviesTitles.Add(newMovie);
+            //_context.SaveChanges();
+            //return Ok(newMovie);
+            try
+            {
+                // Add validation
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                // Log the incoming data
+                _logger.LogInformation("Attempting to add movie: {Title}", newMovie.Title);
+
+                // Add the movie to the database
+                _context.MoviesTitles.Add(newMovie);
+                await _context.SaveChangesAsync();
+
+                return Ok(newMovie);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                _logger.LogError(ex, "Error adding movie");
+
+                // Return a more informative error
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         // PUT - Update a movie

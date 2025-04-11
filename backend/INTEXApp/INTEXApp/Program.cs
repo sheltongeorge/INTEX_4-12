@@ -85,15 +85,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseRouting();
+
 // Middleware
-app.UseCors("AllowFrontend");
 
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseAuthentication();
-app.UseAuthorization();
+
+app.UseHttpsRedirection(); //1
+app.UseStaticFiles(); // 2
+app.UseCors("AllowFrontend"); // 3
+app.UseRouting(); // 4
+app.UseAuthentication(); // 5
+app.UseAuthorization(); // 6
 
 app.MapControllers();
 app.MapIdentityApi<IdentityUser>();

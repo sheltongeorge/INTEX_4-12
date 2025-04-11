@@ -21,7 +21,10 @@ const NewMovieForm = ({
   const [description, setDescription] = useState('');
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
 
-  const [errors, setErrors] = useState<{ title?: string; releaseYear?: string }>({});
+  const [errors, setErrors] = useState<{
+    title?: string;
+    releaseYear?: string;
+  }>({});
 
   const generateShowId = () => `s${Date.now()}`;
 
@@ -110,10 +113,13 @@ const NewMovieForm = ({
             value={title}
             onChange={(e) => {
               setTitle(e.target.value);
-              if (errors.title) setErrors((prev) => ({ ...prev, title: undefined }));
+              if (errors.title)
+                setErrors((prev) => ({ ...prev, title: undefined }));
             }}
           />
-          {errors.title && <div className="invalid-feedback">{errors.title}</div>}
+          {errors.title && (
+            <div className="invalid-feedback">{errors.title}</div>
+          )}
         </div>
       </div>
 
@@ -122,7 +128,9 @@ const NewMovieForm = ({
       {renderField('Country', country, setCountry)}
 
       <div className="row mb-2 align-items-start">
-        <label className="col-sm-3 col-form-label text-white">Release Year</label>
+        <label className="col-sm-3 col-form-label text-white">
+          Release Year
+        </label>
         <div className="col-sm-9">
           <input
             type="text"
@@ -149,7 +157,9 @@ const NewMovieForm = ({
       {renderField('Duration', duration, setDuration)}
 
       <div className="row mb-2 align-items-start">
-        <label className="col-sm-3 col-form-label text-white">Description</label>
+        <label className="col-sm-3 col-form-label text-white">
+          Description
+        </label>
         <div className="col-sm-9">
           <textarea
             className="form-control"
@@ -159,7 +169,10 @@ const NewMovieForm = ({
         </div>
       </div>
 
-      <GenreChecklist selected={selectedGenres} setSelected={setSelectedGenres} />
+      <GenreChecklist
+        selected={selectedGenres}
+        setSelected={setSelectedGenres}
+      />
 
       <div className="d-flex justify-content-start mt-3">
         <button className="btn btn-success me-2" type="submit">

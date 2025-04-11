@@ -138,6 +138,78 @@
     ]
   },
   {
+    "ContainingType": "INTEXApp.Controllers.MovieRatingsController",
+    "Method": "GetRatingsByEmail",
+    "RelativePath": "api/MovieRatings/userratings/{email}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "INTEXApp.Controllers.MoviesCategoriesController",
+    "Method": "GetMovies",
+    "RelativePath": "api/MoviesCategories/AllMovies",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "category",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "titleFilter",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageNum",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "INTEXApp.Controllers.MoviesTitlesController",
+    "Method": "GetAll",
+    "RelativePath": "api/MoviesTitles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "INTEXApp.Controllers.MoviesTitlesController",
     "Method": "GetById",
     "RelativePath": "api/MoviesTitles/{id}",
@@ -153,7 +225,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "INTEXApp.MovieTitle",
+        "Type": "INTEXApp.Data.MovieTitle",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -173,7 +245,7 @@
     "Parameters": [
       {
         "Name": "newMovie",
-        "Type": "INTEXApp.MovieTitle",
+        "Type": "INTEXApp.Data.MovieTitle",
         "IsRequired": true
       }
     ],
@@ -223,6 +295,58 @@
   },
   {
     "ContainingType": "INTEXApp.Controllers.MoviesTitlesController",
+    "Method": "FindByTitle",
+    "RelativePath": "api/MoviesTitles/FindByTitle",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "title",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "INTEXApp.Data.MovieTitle",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "INTEXApp.Controllers.MoviesTitlesController",
+    "Method": "FindByTitles",
+    "RelativePath": "api/MoviesTitles/FindByTitles",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "titles",
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[INTEXApp.Data.MovieTitle, INTEXApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "INTEXApp.Controllers.MoviesTitlesController",
     "Method": "UpdateMovie",
     "RelativePath": "api/MoviesTitles/UpdateMovie/{id}",
     "HttpMethod": "PUT",
@@ -236,23 +360,153 @@
       },
       {
         "Name": "updatedMovie",
-        "Type": "INTEXApp.MovieTitle",
+        "Type": "INTEXApp.Data.MovieTitle",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "NewsRecommenderApp.Controllers.RecommendationsController",
-    "Method": "GetRecommendations",
-    "RelativePath": "api/Recommendations/AllRecommendations",
+    "ContainingType": "INTEXApp.Controllers.MoviesTitlesController",
+    "Method": "GetUserRecommendations",
+    "RelativePath": "api/MoviesTitles/UserRecommendations/{identityId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "identityId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[INTEXApp.Data.MovieTitle, INTEXApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "INTEXApp.Controllers.MovieWatchlistController",
+    "Method": "GetWatchlist",
+    "RelativePath": "api/MovieWatchlist/{email}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "INTEXApp.Controllers.MovieWatchlistController",
+    "Method": "RemoveFromWatchlist",
+    "RelativePath": "api/MovieWatchlist/{email}/{showId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "showId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "INTEXApp.Controllers.MovieWatchlistController",
+    "Method": "AddToWatchlist",
+    "RelativePath": "api/MovieWatchlist/add/{email}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "showId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "INTEXApp.Controllers.RecommendationsController",
+    "Method": "GetRecommendations1",
+    "RelativePath": "api/Recommendations/AllRecommendations1",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[NewsRecommenderApp.Data.Recommendation, INTEXApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[INTEXApp.Data.recommendation1class, INTEXApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "INTEXApp.Controllers.RecommendationsController",
+    "Method": "GetRecommendations2",
+    "RelativePath": "api/Recommendations/AllRecommendations2",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[INTEXApp.Data.recommendation2class, INTEXApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "INTEXApp.Controllers.RecommendationsController",
+    "Method": "GetUserRecommendations",
+    "RelativePath": "api/Recommendations/UserRecommendations/{identityId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "identityId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[INTEXApp.Data.recommendation2class, INTEXApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -634,7 +888,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "NewsRecommenderApp.Controllers.WeatherForecastController",
+    "ContainingType": "INTEXApp.Controllers.WeatherForecastController",
     "Method": "Get",
     "RelativePath": "WeatherForecast",
     "HttpMethod": "GET",
@@ -643,7 +897,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[NewsRecommenderApp.WeatherForecast, INTEXApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[INTEXApp.WeatherForecast, INTEXApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

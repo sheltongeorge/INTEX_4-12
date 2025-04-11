@@ -51,7 +51,7 @@ function App() {
             </AuthorizeView>
           }
         />
-        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/privacy" element={<PrivacyPolicyPage />} />
       </Routes>
       {/* </AuthorizeView> */}
     </Router>

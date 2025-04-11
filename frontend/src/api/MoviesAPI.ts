@@ -100,24 +100,52 @@ export const fetchMovies = async (
   }
 };
 
+// export const addMovie = async (
+//   newMovie: Partial<MovieTitle>
+// ): Promise<MovieTitle> => {
+//   const body = mapMovieToApiFormat(newMovie);
+//   console.log('Request payload:', JSON.stringify(body, null, 2));
+//   const response = await fetch(`${API_URL}/AddMovie`, {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     credentials: 'include',
+//     body: JSON.stringify(body),
+//   });
+
+//   if (!response.ok) throw new Error('Failed to add movie');
+//   const m = await response.json();
+//   return {
+//     ...m,
+//     genres: genreFields.filter((g) => m[g.apiKey] === 1).map((g) => g.label),
+//   };
+// };
+
 export const addMovie = async (
   newMovie: Partial<MovieTitle>
 ): Promise<MovieTitle> => {
-  const body = mapMovieToApiFormat(newMovie);
-  const response = await fetch(`${API_URL}/AddMovie`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify(body),
-  });
+  try {
+    const body = mapMovieToApiFormat(newMovie);
+    console.log('Request payload:', JSON.stringify(body, null, 2));
+    const response = await fetch(`${API_URL}/AddMovie`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(body),
+    });
 
-  if (!response.ok) throw new Error('Failed to add movie');
-  const m = await response.json();
-  return {
-    ...m,
-    genres: genreFields.filter((g) => m[g.apiKey] === 1).map((g) => g.label),
-  };
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Server response:', response.status, errorText);
+      throw new Error(`Failed to add movie: ${response.status} ${errorText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error in addMovie:', error);
+    throw new Error('Failed to add movie');
+  }
 };
+
 
 export const updateMovie = async (
   id: string,

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace INTEXApp
+namespace INTEXApp.Data
 {
     public class MovieTitle
     {
